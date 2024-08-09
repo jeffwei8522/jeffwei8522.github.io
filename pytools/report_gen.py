@@ -2,8 +2,8 @@ import os
 import sys
 import re
 import json
-
-# prepare 2022_election_report.html base
+year = 2022
+# prepare election_report.html base
 base = """
 <!DOCTYPE html>
 <html lang="en">
@@ -82,21 +82,27 @@ base = """
 """
 
 # 寫入基本模板
-with open(r"2022_election\2022_election_report.html".replace("\\", "/"), "w", encoding="utf-8-sig") as f:
+with open(f"{year}_election\{year}_election_report.html".replace("\\", "/"), "w", encoding="utf-8-sig") as f:
     f.write("")
 
 
-html_list = os.listdir(r"C:\Users\Jeff\github\jeffwei8522.github.io\2022_election\2022_candidates_power\0806_revised".replace("\\", "/"))
+html_list = os.listdir(f"C:/Users/Jeff/github/jeffwei8522.github.io/{year}_election/{year}_candidates_power/0806_revised".replace("\\", "/"))
 # 將 "各里票倉.html" 移動到列表開頭
 element_to_move = "各里票倉.html"
 if element_to_move in html_list:
     html_list.remove(element_to_move)
     html_list.insert(0, element_to_move)
 
+# 將 "各里里長資訊.html" 移動到列表index1位置
+element_to_move = "各里里長資訊.html"
+if element_to_move in html_list:
+    html_list.remove(element_to_move)
+    html_list.insert(1, element_to_move)
+
 # 建立候選人紀錄簿
 
 # 定義候選人紀錄簿的路徑
-record_path = "2022_election/候選人紀錄簿.json"
+record_path = f"{year}_election/候選人紀錄簿.json"
 
 # 初始化候選人紀錄簿函數
 def 初始化候選人紀錄簿():
@@ -142,7 +148,7 @@ for file in html_list:
         <section>
             <h2>{name}</h2>
             <p>{候選人紀錄簿["名單"].get(name, "")}</p>
-            <iframe src="2022_candidates_power/0806_revised/{file}" width="600" height="400"></iframe>
+            <iframe src="{year}_candidates_power/0806_revised/{file}" width="600" height="400"></iframe>
         </section>
         """
     elif file == "各里票倉.html":
@@ -151,13 +157,22 @@ for file in html_list:
         <section>
             <h2>第四選區所有票倉</h2>
             <p>{候選人紀錄簿["名單"].get(name, "")}</p>
-            <iframe src="2022_candidates_power/0806_revised/{file}" width="500" height="400"></iframe>
+            <iframe src="{year}_candidates_power/0806_revised/{file}" width="500" height="400"></iframe>
+        </section>
+        """
+    elif file == "各里里長資訊.html":
+        name = "各里里長資訊"
+        content = f"""
+        <section>
+            <h2>2018 vs 2022 各里里長資訊</h2>
+            <p>{候選人紀錄簿["名單"].get(name, "")}</p>
+            <iframe src="{year}_candidates_power/0806_revised/{file}" width="500" height="400"></iframe>
         </section>
         """
     text += content
 
 # 寫入
-with open(r"2022_election\2022_election_report.html".replace("\\", "/"), "w", encoding="utf-8-sig") as f:
+with open(f"{year}_election\{year}_election_report.html".replace("\\", "/"), "w", encoding="utf-8-sig") as f:
     updated_base = base.format(content_position=text)
     f.write(updated_base)
     print("done")

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「綠色小徑」增聘營運專員互動式分析報告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Green Accent (Amber, Stone, Teal) -->
+    <!-- Application Structure Plan: A thematic, single-page dashboard designed to compellingly present a business proposal. It transforms the linear report into an interactive journey, starting with the core problem, presenting the solution and its financial viability, and ending with a clear action plan and conclusion. This structure prioritizes immediate understanding and impact for decision-makers over simply replicating the report's sections. Key interactions include tabbed content for phased goals and charts visualizing ROI. -->
+    <!-- Visualization & Content Choices: 
+    - Problem Analysis -> Goal: Impactful Problem Framing -> Viz: 3-column infographic layout (HTML/CSS/Unicode icons) -> Interaction: None, static visual -> Justification: More engaging than a text block.
+    - Financial Projection -> Goal: Compare Revenue vs. Cost -> Viz: Bar Chart (Chart.js/Canvas) -> Interaction: Tooltips on hover -> Justification: Clearly shows profitability.
+    - Revenue Breakdown -> Goal: Show Revenue Composition -> Viz: Donut Chart (Chart.js/Canvas) -> Interaction: Tooltips on hover -> Justification: Easy to understand proportions.
+    - Development Plan -> Goal: Organize Phased Approach -> Viz: Tabbed Interface (HTML/CSS/JS) -> Interaction: Click to toggle content -> Justification: Organizes complex information cleanly.
+    - Conclusion -> Goal: Reinforce Key Takeaways -> Viz: Icon-based key points (HTML/CSS/Unicode) -> Interaction: None, static visual -> Justification: Strong, scannable final message.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #fdfbf7;
+            color: #44403c;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 40vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #0d9488;
+        }
+        .active-tab {
+            border-color: #0d9488;
+            color: #0d9488;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-lg font-bold text-stone-700">綠色小徑轉型計畫</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#problem" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600">核心問題</a>
+                        <a href="#solution" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600">解決方案</a>
+                        <a href="#roi" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600">投資效益</a>
+                        <a href="#action" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600">行動計畫</a>
+                        <a href="#conclusion" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600">最終結論</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 bg-amber-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold tracking-tight text-stone-800 sm:text-5xl md:text-6xl">
+                    從<span class="text-red-600">成本中心</span>到<span class="text-teal-600">獲利引擎</span>
+                </h2>
+                <p class="mt-6 max-w-2xl mx-auto text-lg text-stone-600">
+                    本計畫旨在闡述增聘一名營運專員，如何將「綠色小徑」從一個持續消耗資源的資產，轉型為具備獨立獲利能力的新事業體，並釋放核心團隊潛力。
+                </p>
+            </div>
+        </section>
+
+        <section id="problem" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">當前的三大營運挑戰</h2>
+                    <p class="mt-4 text-lg text-stone-600">不作為的代價遠超想像，正持續侵蝕公司的核心競爭力與未來潛力。</p>
+                </div>
+                <div class="mt-16 grid gap-12 md:grid-cols-3">
+                    <div class="text-center p-6 bg-white rounded-xl shadow-lg">
+                        <div class="text-4xl text-amber-500 mb-4">⚠️</div>
+                        <h3 class="text-xl font-bold text-stone-800">資源錯置與營運空轉</h3>
+                        <p class="mt-2 text-stone-600">高階幕僚的時間精力，正持續消耗於可由專員執行的例行性庶務，導致客運本業的多項關鍵專案被迫延宕，形同營運空轉。</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl shadow-lg">
+                        <div class="text-4xl text-red-500 mb-4">📉</div>
+                        <h3 class="text-xl font-bold text-stone-800">持續擴大的機會成本</h3>
+                        <p class="mt-2 text-stone-600">每多一天由高階幕僚處理低階庶務，就多一天的機會成本，體現在錯失的客運商機、延誤的策略佈局與遲緩的市場反應。</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl shadow-lg">
+                        <div class="text-4xl text-teal-500 mb-4">🚀</div>
+                        <h3 class="text-xl font-bold text-stone-800">新事業的投資本質</h3>
+                        <p class="mt-2 text-stone-600">經營莊園是一項新事業投資，而非彌補成本。任何新事業的啟動，都必然需要專職人力投入，這是成功的先決條件。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-16 sm:py-24 bg-teal-50/50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">兩階段發展藍圖</h2>
+                    <p class="mt-4 text-lg text-stone-600">透過分階段執行，我們能將人力投資，從初期的「止損防護」，逐步轉化為「穩定獲利」的長期目標。</p>
+                </div>
+
+                <div class="mt-12 max-w-4xl mx-auto">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-8 justify-center" aria-label="Tabs">
+                            <button id="tab-phase1" class="tab-btn active-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">
+                                前期目標：止損防護
+                            </button>
+                            <button id="tab-phase2" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-lg">
+                                後期目標：穩定增長
+                            </button>
+                        </nav>
+                    </div>
+
+                    <div id="content-phase1" class="tab-content mt-8">
+                        <div class="bg-white p-8 rounded-lg shadow-lg">
+                            <h3 class="text-2xl font-bold text-teal-700">立即中止資源錯置</h3>
+                            <p class="mt-4 text-stone-600">此階段的核心是將辦公室幕僚從莊園的日常維護中解放，回歸客運本業。這項投資並非為了創造新營收，而是為了**停止虧損**。透過聘用專員，公司能立即中止因資源錯置而產生的巨大機會成本，讓核心團隊專注於本業，這本身就是一項重大的「隱性獲利」。</p>
+                            <div class="mt-6 flow-root">
+                                <div class="flex items-center justify-around text-center text-sm font-medium text-stone-600">
+                                    <div class="w-28">專員<br>接管庶務</div>
+                                    <div class="text-teal-500 text-2xl font-bold">→</div>
+                                    <div class="w-28">幕僚<br>精力釋放</div>
+                                    <div class="text-teal-500 text-2xl font-bold">→</div>
+                                    <div class="w-28">專注<br>客運本業</div>
+                                    <div class="text-teal-500 text-2xl font-bold">→</div>
+                                    <div class="w-28 text-teal-600 font-bold">中止<br>機會成本</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="content-phase2" class="tab-content mt-8 hidden">
+                         <div class="bg-white p-8 rounded-lg shadow-lg">
+                            <h3 class="text-2xl font-bold text-teal-700">釋放產能，邁向獲利</h3>
+                            <p class="mt-4 text-stone-600">當市場口碑發酵，訂單穩定提升後，專員的存在將確保營運規模能從「穩定」邁向「爆發性增長」，避免陷入「有訂單卻無力處理」的增長瓶頸。下圖展示了在穩健財務模型下，月營收與人力成本的比較，清晰地證明了此投資的獲利潛力。</p>
+                            <div class="mt-6 chart-container">
+                                <canvas id="revenueCostChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roi" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">清晰的投資效益與財務模型</h2>
+                    <p class="mt-4 text-lg text-stone-600">此項投資不僅能止損，更具備明確的獲利前景與穩健的財務基礎。</p>
+                </div>
+                <div class="mt-16 grid lg:grid-cols-5 gap-8 items-center">
+                    <div class="lg:col-span-2">
+                         <div class="chart-container h-80 max-h-[320px]">
+                            <canvas id="revenueSourceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-3 grid grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <p class="text-sm font-medium text-stone-500">預估月營收</p>
+                            <p class="mt-1 text-3xl font-bold text-teal-600">$152,400</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <p class="text-sm font-medium text-stone-500">月薪資成本</p>
+                            <p class="mt-1 text-3xl font-bold text-red-500">~$40,000</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow col-span-2">
+                            <p class="text-sm font-medium text-stone-500">預估月淨利 (營收 - 薪資)</p>
+                            <p class="mt-1 text-3xl font-bold text-green-600">~$112,400</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow col-span-2">
+                             <p class="text-sm font-medium text-stone-500">成本轉嫁時程</p>
+                             <p class="mt-1 text-2xl font-bold text-stone-800">目標 <span class="text-teal-600">6-12</span> 個月後，由莊園自身營收支應薪資</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="action" class="py-16 sm:py-24 bg-stone-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">具體行動計畫</h2>
+                    <p class="mt-4 text-lg text-stone-600">我們已規劃了清晰的時程、成本與人員需求，確保計畫順利推行。</p>
+                </div>
+                <div class="mt-16 grid lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-stone-800 mb-4">🗓️ 時程規劃</h3>
+                        <p class="text-teal-600 font-bold text-lg">2025年 Q4 立即啟動</p>
+                        <p class="mt-2 text-stone-600">確保新進人員能完整參與開業前的關鍵籌備期，降低初期磨合成本。</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold text-stone-800 mb-4">💰 成本結構</h3>
+                        <ul class="space-y-2 text-stone-600">
+                            <li><span class="font-medium">本薪：</span>$34,000</li>
+                            <li><span class="font-medium">職務加給：</span>$5,000 - $6,000</li>
+                            <li class="border-t pt-2 mt-2"><span class="font-bold text-stone-800">合計月薪：</span><span class="font-bold text-stone-800">約 $39,000 - $40,000</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg lg:col-span-3">
+                        <h3 class="text-xl font-bold text-stone-800 mb-4">👤 人員職責</h3>
+                        <div class="grid sm:grid-cols-2 gap-x-8 gap-y-4 text-stone-600">
+                           <p>✓ 莊園設施日常巡檢、維護與簡易修繕</p>
+                           <p>✓ 環境清潔、植栽與景觀維護</p>
+                           <p>✓ 犬隻日常照護</p>
+                           <p>✓ 物料採購、庫存管理</p>
+                           <p>✓ 外部廠商叫修、監工與驗收</p>
+                           <p>✓ (後期) 客戶接待、入住引導與活動支援</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                 <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">結論：一項勢在必行的策略投資</h2>
+                    <p class="mt-4 text-lg text-stone-600">增聘營運專員，是將「綠色小徑」從消耗資源的資產，轉變為獨立獲利事業體的關鍵第一步。</p>
+                </div>
+                <div class="mt-16 grid gap-8 md:grid-cols-3">
+                     <div class="text-center">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 text-teal-600 text-3xl mx-auto">✓</div>
+                        <h3 class="mt-5 text-xl font-bold">立即止損</h3>
+                        <p class="mt-2 text-stone-600">中止辦公室幕僚的資源錯置，釋放其精力回歸客運本業。</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 text-teal-600 text-3xl mx-auto">✓</div>
+                        <h3 class="mt-5 text-xl font-bold">奠定基礎</h3>
+                        <p class="mt-2 text-stone-600">為「綠色小徑」的商業化營運建立穩固的後勤支援。</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 text-teal-600 text-3xl mx-auto">✓</div>
+                        <h3 class="mt-5 text-xl font-bold">創造未來</h3>
+                        <p class="mt-2 text-stone-600">為後續的營收增長與規模化發展鋪平道路。</p>
+                    </div>
+                </div>
+                <div class="mt-20 text-center">
+                    <button class="bg-teal-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-teal-700 transition-colors shadow-lg">
+                        核准此增聘計畫
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const tabs = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(item => {
+                item.classList.remove('active-tab');
+                item.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+            });
+            tab.classList.add('active-tab');
+            tab.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+
+            const target = document.querySelector(tab.id.replace('tab-', '#content-'));
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            target.classList.remove('hidden');
+        });
+    });
+
+    const revenueCostCtx = document.getElementById('revenueCostChart').getContext('2d');
+    new Chart(revenueCostCtx, {
+        type: 'bar',
+        data: {
+            labels: ['月度財務比較'],
+            datasets: [
+                {
+                    label: '預估月營收',
+                    data: [152400],
+                    backgroundColor: 'rgba(13, 148, 136, 0.6)',
+                    borderColor: 'rgba(13, 148, 136, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: '預估人力成本',
+                    data: [40000],
+                    backgroundColor: 'rgba(239, 68, 68, 0.6)',
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '後期目標：月營收 vs 人力成本',
+                    font: { size: 16 }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 }).format(context.parsed.y);
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0, maximumFractionDigits:0 }).format(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const revenueSourceCtx = document.getElementById('revenueSourceChart').getContext('2d');
+    new Chart(revenueSourceCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['假日訂單 (2筆)', '平日訂單 (4筆)', '住宿加購等額外收入'],
+            datasets: [{
+                label: '營收來源',
+                data: [2 * 26800, 4 * 23800, 152400 - (2*26800 + 4*23800)],
+                backgroundColor: [
+                    'rgba(13, 148, 136, 0.8)',
+                    'rgba(15, 118, 110, 0.8)',
+                    'rgba(14, 159, 110, 0.7)'
+                ],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '預估月營收來源分析 ($152,400)',
+                    font: { size: 16 }
+                },
+                 tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 }).format(context.parsed);
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>

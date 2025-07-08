@@ -1,3 +1,4 @@
+/* style.css */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -28,4 +29,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+#hiddenLink {
+    display: none; /* 完全隱藏元素，不佔空間 */
+    /* 或者使用 visibility: hidden; 它會保留空間但不可見 */
+    /* 或者使用 position: absolute; left: -9999px; 將它移出可視範圍 */
 }

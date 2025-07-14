@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>綠色小徑：資產維護與事業轉型整合計畫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- 
+    Application Logic & Narrative Flow:
+    1.  **Core Premise First (The "Why"):** The report immediately establishes the foundational argument: the manor is a valuable asset requiring a minimum standard of care (2 FTEs). It frames the initial request not as an expansion, but as a necessary step to stop asset degradation and fulfill a basic responsibility.
+    2.  **Present the Solution (The "What"):** It breaks down the required investment into two clear, non-negotiable pillars: Manpower (the specialist) and Tools (the vehicle). Each is justified based on necessity, not just operational benefit. The vehicle purchase is critically linked to successful recruitment.
+    3.  **Introduce the Upside (The "How"):** Only after establishing the necessity of the investment does the report pivot to the future. The interactive ROI section showcases the potential for this "maintenance cost" to become a "profit engine." This positions the operational plan as a value-add, a demonstration of professional foresight.
+    4.  **Data Visualization:** A single, dynamic bar chart is used for the financial scenarios. This is a deliberate choice to make the comparison between scenarios direct and impactful. The user's interaction (clicking a tab) directly causes a visual change, reinforcing the cause-and-effect relationship between operational intensity and profitability.
+    5.  **Clear Call to Action:** The final section summarizes the argument and presents a clear, singular action: approve the foundational investment to both protect the asset and unlock its future potential.
+    -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8f9fa; /* Lighter gray for a more modern feel */
+            color: #212529;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #198754; /* A slightly deeper green */
+        }
+        .active-tab {
+            border-color: #198754 !important;
+            color: #198754 !important;
+            font-weight: 700;
+            background-color: #e9f5ee;
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-lg font-bold text-gray-800">綠色小徑 整合營運計畫</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#reality" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600">當前現實</a>
+                        <a href="#investment" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600">必要投資</a>
+                        <a href="#roi" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600">未來藍圖</a>
+                        <a href="#action" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600">行動方案</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                    <span class="block">從<span class="text-amber-600">資產維護</span>的必要</span>
+                    <span class="block text-green-700 mt-2">到<span class="text-green-700">事業獲利</span>的遠見</span>
+                </h2>
+                <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+                    本計畫旨在闡述，為確保「綠色小徑」這項重要資產維持其應有價值，所必須投入的基礎資源。並基於此，擘劃一套務實的營運藍圖，展示如何將此必要投資，轉化為具備獲利能力的未來事業。
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 1: The Unavoidable Reality -->
+        <section id="reality" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">第一步：正視資產維護的現實</h2>
+                    <p class="mt-4 text-lg text-gray-600">任何頂級莊園都需要專人維護，這是維持其價值的基本前提，而非營運的額外成本。</p>
+                </div>
+                <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div class="stat-card text-center">
+                        <div class="text-5xl text-green-600 font-black">2.0</div>
+                        <h3 class="mt-4 text-xl font-bold text-gray-800">資產維護標準人力</h3>
+                        <p class="mt-2 text-gray-600">要維持莊園隨時處於可供社交、活動的理想狀態，至少需要<strong class="text-gray-800">兩名全職人力</strong>的投入。</p>
+                    </div>
+                    <div class="stat-card text-center">
+                        <div class="text-5xl text-amber-600 font-black">1.0</div>
+                        <h3 class="mt-4 text-xl font-bold text-gray-800">目前投入人力</h3>
+                        <p class="mt-2 text-gray-600">Polo與Jeff以兼職心力投入，僅能視為<strong class="text-gray-800">一名全職人力</strong>，長期處於50%的人力缺口。</p>
+                    </div>
+                    <div class="stat-card text-center bg-red-50 text-red-800">
+                        <div class="text-5xl font-black">-50%</div>
+                        <h3 class="mt-4 text-xl font-bold">持續的人力赤字</h3>
+                        <p class="mt-2">這不僅是人手不足，更是對資產價值的持續耗損，導致環境品質下降、核心團隊精力錯置。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: The Foundational Investment -->
+        <section id="investment" class="py-16 sm:py-24 bg-green-50/50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">第二步：投入必要資源，填補維護缺口</h2>
+                    <p class="mt-4 text-lg text-gray-600">以下投資是為了將人力補足至2.0的標準，是保障資產價值的<strong class="text-green-700">基礎建設</strong>。</p>
+                </div>
+                <div class="mt-16 grid lg:grid-cols-2 gap-12 items-start">
+                    <!-- Pillar 1: Manpower -->
+                    <div class="stat-card p-8">
+                        <div class="flex items-center">
+                            <div class="text-4xl">👤</div>
+                            <h3 class="ml-4 text-2xl font-bold text-gray-800">基礎支柱(一)：營運專員</h3>
+                        </div>
+                        <p class="mt-4 text-gray-600">此職位的首要任務是補足人力缺口，確保莊園的日常維護達到標準，讓資產不再耗損。</p>
+                        <div class="mt-6">
+                            <div class="flex justify-between items-baseline">
+                                <span class="text-gray-500">預估月薪資</span>
+                                <span class="text-2xl font-bold text-green-700">~$40,000</span>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-bold text-gray-700">核心職責：</h4>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li>設施日常巡檢、維護與簡易修繕</li>
+                                    <li>環境清潔、植栽與景觀維護</li>
+                                    <li>物料採購、庫存管理與廠商聯繫</li>
+                                    <li>基礎行政與安全管理</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pillar 2: Vehicle -->
+                    <div class="stat-card p-8">
+                        <div class="flex items-center">
+                            <div class="text-4xl">🚗</div>
+                            <h3 class="ml-4 text-2xl font-bold text-gray-800">基礎支柱(二)：多功能公務車</h3>
+                        </div>
+                        <p class="mt-4 text-gray-600">這不僅是交通工具，更是執行維護任務、成功招募人才的<strong class="text-gray-800">必要裝備</strong>。</p>
+                        <div class="mt-6 space-y-4">
+                            <div class="flex justify-between items-baseline">
+                                <span class="text-gray-500">車款</span>
+                                <span class="text-lg font-bold text-gray-800">中華 JSPACE</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <span class="text-gray-500">購置成本</span>
+                                <span class="text-2xl font-bold text-green-700">$655,000</span>
+                            </div>
+                            <div class="flex justify-between items-baseline border-t pt-4">
+                                <span class="text-gray-500">每月綜合持有成本 (10年攤提)</span>
+                                <span class="text-2xl font-bold text-green-700">~$11,068</span>
+                            </div>
+                            <p class="text-sm text-gray-500 pt-2">此成本已包含車輛折舊、稅金、保險與基礎保養，是一項將多重效益（載人、運貨、安全、招募）整合的划算投資。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Path to Profitability (ROI) -->
+        <section id="roi" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">第三步：擘劃未來藍圖，讓投資增值</h2>
+                    <p class="mt-4 text-lg text-gray-600">在滿足基本維護後，我們已備妥一套專業營運計畫，能將此必要投資轉化為獲利引擎。</p>
+                </div>
+
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <!-- Tabs -->
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-2 sm:space-x-4 justify-center" aria-label="Tabs">
+                            <button id="tab-conservative" data-scenario="conservative" class="scenario-tab active-tab whitespace-nowrap py-3 px-4 border-b-2 font-medium text-base rounded-t-lg">
+                               A. 保守情境
+                            </button>
+                            <button id="tab-balanced" data-scenario="balanced" class="scenario-tab whitespace-nowrap py-3 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-base rounded-t-lg">
+                               B. 均衡情境
+                            </button>
+                            <button id="tab-aggressive" data-scenario="aggressive" class="scenario-tab whitespace-nowrap py-3 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-base rounded-t-lg">
+                               C. 積極情境
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="mt-8">
+                        <div class="grid lg:grid-cols-5 gap-8 items-center">
+                            <div class="lg:col-span-2 text-center lg:text-left">
+                                <h3 class="text-2xl font-bold text-gray-800" id="scenario-title">A. 保守情境：投資自養</h3>
+                                <p class="mt-2 text-gray-600" id="scenario-description">以10%的月佔用率為目標，證明此基礎投資具備自我維持的能力，營收足以覆蓋專員與車輛的成本。</p>
+                                <div class="mt-6 space-y-4">
+                                    <div class="stat-card p-4">
+                                        <p class="text-sm font-medium text-gray-500">預估月營收</p>
+                                        <p class="mt-1 text-3xl font-bold text-green-700" id="scenario-revenue">$67,400</p>
+                                    </div>
+                                    <div class="stat-card p-4">
+                                        <p class="text-sm font-medium text-gray-500">預估月淨利</p>
+                                        <p class="mt-1 text-3xl font-bold text-green-800" id="scenario-profit">$12,548</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-3">
+                                <div class="chart-container">
+                                    <canvas id="roiChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Action Plan -->
+        <section id="action" class="py-16 sm:py-24 bg-gray-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">最終步：具體行動方案</h2>
+                    <p class="mt-4 text-lg text-gray-600">為確保計畫順利推行，我們已規劃清晰的時程與步驟。</p>
+                </div>
+                <div class="mt-16 max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                    <div class="stat-card p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">🗓️ 資源到位時程</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-green-600 font-bold mr-2">→</span>
+                                <div><strong class="text-gray-800">2025 Q4：</strong>啟動營運專員招募，並完成公務車採購。</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 font-bold mr-2">→</span>
+                                <div><strong class="text-gray-800">2026 Q1：</strong>新人員到職，開始與團隊磨合，並正式啟動莊園維護標準化作業。</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="stat-card p-8 bg-green-600 text-white">
+                        <h3 class="text-xl font-bold mb-4">🎯 最終決策</h3>
+                        <p>核准此計畫，代表同意投入<strong class="font-bold">一名專員</strong>與<strong class="font-bold">一台公務車</strong>的基礎資源。</p>
+                        <p class="mt-4">這是一項高回報、低風險的策略決策，它首先解決了資產管理的燃眉之急，更為未來的商業成功鋪平了道路。</p>
+                        <button class="mt-6 w-full bg-white text-green-700 font-bold py-3 px-6 rounded-lg hover:bg-green-50 transition-colors shadow-lg">
+                            核准此基礎投資計畫
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Data for Scenarios ---
+    const scenarios = {
+        conservative: {
+            title: 'A. 保守情境：投資自養',
+            description: '以10%的月佔用率為目標，證明此基礎投資具備自我維持的能力，營收足以覆蓋專員與車輛的成本。',
+            revenue: 67400,
+            variableCost: 14852,
+            fixedCost: 40000,
+            profit: 12548,
+        },
+        balanced: {
+            title: 'B. 均衡情境：穩定獲利',
+            description: '達成20%的月佔用率，莊園開始成為具體貢獻集團利潤的事業體，且人力負荷與風險仍在可控範圍。',
+            revenue: 168400,
+            variableCost: 38888,
+            fixedCost: 40000,
+            profit: 89512,
+        },
+        aggressive: {
+            title: 'C. 積極情境：利潤擴張',
+            description: '挑戰30%的月佔用率，成為公司明確的第二成長曲線。此階段需更精細的管理與備援計畫來支撐高強度營運。',
+            revenue: 280400,
+            variableCost: 63794,
+            fixedCost: 40000,
+            profit: 176606,
+        }
+    };
+
+    // --- Chart.js Initialization ---
+    const ctx = document.getElementById('roiChart').getContext('2d');
+    const roiChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['財務表現'],
+            datasets: [
+                {
+                    label: '月營收',
+                    data: [], // Initially empty
+                    backgroundColor: 'rgba(22, 163, 74, 0.6)',
+                    borderColor: 'rgba(22, 163, 74, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: '月淨利',
+                    data: [], // Initially empty
+                    backgroundColor: 'rgba(21, 128, 61, 0.9)',
+                    borderColor: 'rgba(21, 128, 61, 1)',
+                    borderWidth: 1
+                },
+                 {
+                    label: '人事成本',
+                    data: [], // Initially empty
+                    backgroundColor: 'rgba(245, 158, 11, 0.6)',
+                    borderColor: 'rgba(245, 158, 11, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '營運情境財務分析',
+                    font: { size: 16, family: 'Noto Sans TC' },
+                    color: '#333'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 }).format(context.parsed.y);
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return new Intl.NumberFormat('zh-TW', {
+                                style: 'currency',
+                                currency: 'TWD',
+                                notation: 'compact'
+                            }).format(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // --- UI Elements ---
+    const scenarioTabs = document.querySelectorAll('.scenario-tab');
+    const scenarioTitle = document.getElementById('scenario-title');
+    const scenarioDescription = document.getElementById('scenario-description');
+    const scenarioRevenue = document.getElementById('scenario-revenue');
+    const scenarioProfit = document.getElementById('scenario-profit');
+
+    // --- Function to Update UI and Chart ---
+    function updateScenario(scenarioKey) {
+        const data = scenarios[scenarioKey];
+        
+        // Update text content
+        scenarioTitle.textContent = data.title;
+        scenarioDescription.textContent = data.description;
+        const currencyFormat = (num) => new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 }).format(num);
+        scenarioRevenue.textContent = currencyFormat(data.revenue);
+        scenarioProfit.textContent = currencyFormat(data.profit);
+
+        // Update chart data
+        roiChart.data.datasets[0].data = [data.revenue];
+        roiChart.data.datasets[1].data = [data.profit];
+        roiChart.data.datasets[2].data = [data.fixedCost];
+        roiChart.options.plugins.title.text = `${data.title} 財務分析`;
+        roiChart.update();
+
+        // Update active tab style
+        scenarioTabs.forEach(t => {
+            t.classList.remove('active-tab');
+            t.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+        });
+        document.getElementById(`tab-${scenarioKey}`).classList.add('active-tab');
+        document.getElementById(`tab-${scenarioKey}`).classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+    }
+
+    // --- Event Listeners for Tabs ---
+    scenarioTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const scenarioKey = tab.dataset.scenario;
+            updateScenario(scenarioKey);
+        });
+    });
+    
+    // --- Smooth Scrolling for Nav Links ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // --- Initial Load ---
+    updateScenario('conservative');
+});
+</script>
+
+</body>
+</html>

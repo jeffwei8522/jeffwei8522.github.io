@@ -26,6 +26,11 @@
             --gradient-end:   #f7f9f9; /* 與背景色融合 */
         }
 
+        /* [FIX] Added universal box-sizing for predictable layout */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.8;
@@ -62,15 +67,13 @@
             overflow: hidden;
         }
         
-        /* [UPDATED] Removed background container styling */
         .header .logo-container {
             position: relative;
             display: inline-block;
         }
         
-        /* [UPDATED] Applied drop-shadow directly to the logo image */
         .header img {
-            max-width: 350px; /* Slightly increased size for more presence */
+            max-width: 350px;
             display: block;
             filter: drop-shadow(0px 3px 6px rgba(44, 62, 80, 0.3));
         }
@@ -114,7 +117,7 @@
         .section-alt {
             background-color: var(--bg-white);
             border-radius: 24px;
-            margin: 0 -20px; 
+            margin: 0 20px; 
             padding: 60px 40px;
         }
         .section h2 {

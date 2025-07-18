@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「綠色小徑」專案：混合營運模式綜合效益分析</title>
+    <style>
+        /* --- 全局與字體設定 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+        :root {
+            /* 企業識別與輔助色 */
+            --tech-blue: #1a3a6e;
+            --tech-blue-dark: #0d2a58;
+            --gold-accent: #E0C07E;
+            --text-dark: #2c3e50; /* 更柔和的深灰藍 */
+            --text-light: #f8f9fa;
+            --bg-light: #f7f9f9; /* 帶一點綠的淺灰 */
+            --bg-white: #FFFFFF;
+            --green-accent: #27ae60; /* 更鮮明的綠色 */
+            --red-accent: #e74c3c;   /* 更現代的紅色 */
+            
+            /* Header & Footer 山林漸層 */
+            --gradient-start: #e8f5e9; /* 清新薄荷綠 */
+            --gradient-mid:   #e1f5fe; /* 淡天藍 */
+            --gradient-end:   #f7f9f9; /* 與背景色融合 */
+        }
+
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin: 0;
+            background-color: var(--bg-light);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- 動畫效果 --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Header 區域 --- */
+        .header {
+            text-align: center;
+            padding: 80px 20px 140px;
+            color: var(--text-dark);
+            background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-mid) 55%, var(--gradient-end) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* [UPDATED] Removed background container styling */
+        .header .logo-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* [UPDATED] Applied drop-shadow directly to the logo image */
+        .header img {
+            max-width: 350px; /* Slightly increased size for more presence */
+            display: block;
+            filter: drop-shadow(0px 3px 6px rgba(44, 62, 80, 0.3));
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 25px 0 10px 0;
+            color: var(--tech-blue);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 15px auto 0;
+            opacity: 0.8;
+        }
+
+        .wave-svg {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: auto;
+        }
+        .header .wave-svg {
+            bottom: -1px;
+            z-index: 10;
+        }
+        .header .wave-svg path {
+            fill: var(--bg-light);
+        }
+
+        /* --- Section 通用樣式 --- */
+        main {
+            background-color: var(--bg-light);
+        }
+        .section {
+            padding: 60px 20px;
+            position: relative;
+        }
+        .section-alt {
+            background-color: var(--bg-white);
+            border-radius: 24px;
+            margin: 0 -20px; 
+            padding: 60px 40px;
+        }
+        .section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--tech-blue);
+        }
+        .section .subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+            font-size: 1.1rem;
+            color: #667;
+        }
+        
+        .flex-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        /* --- 卡片樣式 --- */
+        .card {
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.08);
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+            min-width: 280px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eef;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(44, 62, 80, 0.12);
+        }
+        .card h3 { font-size: 1.5rem; color: var(--tech-blue); margin-top: 0; }
+        .card .big-number { font-size: 3.2rem; font-weight: 700; color: var(--red-accent); margin: 15px 0; }
+        .card p, .card ul { text-align: left; color: #556; }
+        .card ul { padding-left: 0; list-style: none; }
+        .card ul li { position: relative; padding-left: 28px; margin-bottom: 10px; }
+        .card ul li::before { content: "✓"; position: absolute; left: 0; color: var(--green-accent); font-weight: bold; font-size: 1.2em; }
+
+        /* --- 互動式頁籤 (Tabs) --- */
+        .tabs-container { width: 100%; }
+        .tab-buttons { display: flex; justify-content: center; margin-bottom: 30px; border-bottom: 1px solid #ddd; }
+        .tab-button { padding: 15px 30px; cursor: pointer; background: none; border: none; font-size: 1.1rem; font-weight: 500; color: #888; position: relative; transition: color 0.3s; }
+        .tab-button:hover { color: var(--tech-blue); }
+        .tab-button.active { color: var(--tech-blue); font-weight: 700; }
+        .tab-button.active::after { content: ''; position: absolute; bottom: -1px; left: 10%; width: 80%; height: 3px; background-color: var(--tech-blue); border-radius: 3px; }
+        .tab-content { display: none; animation: fadeInContent 0.5s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeInContent { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+        .tab-content .card { width: 100%; text-align: left; background-color: #fafdff; }
+        .tab-content .card h3 { text-align: center; }
+
+        /* --- 特定區塊樣式 --- */
+        .roi-section { background-color: #eef5ff; }
+        .strategy-section .card h3 { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        .cta-section .card { 
+            background-color: var(--tech-blue-dark);
+            color: var(--text-light); 
+            border: 1px solid rgba(255,255,255,0.2); 
+        }
+        .cta-section .card h3 { color: var(--gold-accent); font-size: 1.6rem; }
+        .cta-section .card p { color: var(--text-light); text-align: center; opacity: 0.9; }
+
+        /* --- Footer 頁尾 (全新呼應式設計) --- */
+        .footer {
+            text-align: center;
+            padding: 120px 20px 40px;
+            color: var(--text-dark);
+            background: linear-gradient(0deg, var(--gradient-start) 0%, var(--gradient-mid) 55%, var(--gradient-end) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .footer .wave-svg {
+            top: -1px;
+            transform: rotate(180deg);
+            z-index: 1;
+        }
+        .footer .wave-svg path {
+            fill: var(--bg-light);
+        }
+        .footer .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+        .footer .techstar-logo {
+            filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 1));
+            width: 150px;
+            margin-bottom: 15px;
+        }
+        .footer p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="fade-in">
+            <div class="logo-container">
+                <img src="photo/logo_greentrail.png" alt="綠色小徑 Logo">
+            </div>
+            <h1>不僅是民宿，更是集團的戰略資產</h1>
+            <p>「綠色小徑」專案以創新的混合營運模式，將 110 萬投資轉化為每月近 6.5 萬的集團總效益，並預計在 17 個月內實現回本。</p>
+        </div>
+        <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
+            <path d="M1440,89.2c-28.5,9.1-53.2,16.2-74,21.3c-50.2,12.3-158.3,12.3-266.3,0C993.3,98.2,885.3,75.9,777.3,53.7 C669.3,31.4,561.3,9.1,453.3,12.3C345.3,15.5,237.3,44.1,129.3,72.7C73.8,87.4,36.9,98.2,0,105.4V120h1440V89.2z"></path>
+        </svg>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="section fade-in">
+                <h2>傳統思維的侷限</h2>
+                <p class="subtitle">
+                    若將民宿視為獨立事業體，在保守預期下，回本週期長達 36 年，不具備投資吸引力。我們必須跳脫框架，以集團的宏觀視角，重新定義其價值。
+                </p>
+            </section>
+    
+            <section class="section section-alt fade-in">
+                <h2>我們的答案：創新的「混合營運模式」</h2>
+                <p class="subtitle">
+                    我們將民宿視為母公司的策略性資產，在低佔用率時期，將其閒置資源無縫整合至集團營運中，創造 1+1 > 2 的巨大綜效。
+                </p>
+                <div class="tabs-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="1">人力資源整合</button>
+                        <button class="tab-button" data-tab="2">空間資源活化</button>
+                        <button class="tab-button" data-tab="3">車輛資源共享</button>
+                    </div>
+                    <div id="tab-1" class="tab-content active">
+                        <div class="card">
+                            <h3>人力資源整合</h3>
+                            <p>民宿專員在完成每月約 6 天的勤務後，剩餘 80% 工時將調派支援母公司，擔任司機或行政職務。這不僅解決了專員的閒置工時問題，更為母公司提供了一個彈性、低成本的支援人力儲備，有效填補臨時或短期的行政與司機人力缺口。</p>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-content">
+                        <div class="card">
+                            <h3>空間資源活化</h3>
+                            <p>在無訂單期間，民宿將轉型為母公司的「專屬招待所」。這個獨特且私密的空間，可用於高階商務洽談、重要客戶維繫或團隊凝聚活動，不僅節省了外部場地租賃的高昂費用，更大幅提升了企業形象與客戶體驗的精緻度。</p>
+                        </div>
+                    </div>
+                    <div id="tab-3" class="tab-content">
+                        <div class="card">
+                            <h3>車輛資源共享</h3>
+                            <p>專案配置的公務車，在非民宿勤務時，將直接納入母公司的公務車隊進行調度。此舉將資產使用效率最大化，減少了母公司額外租賃或購置公務車的需求，直接降低了集團的營運成本。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="section fade-in">
+                <h2>量化綜合效益：每一分錢都為集團創造價值</h2>
+                <p class="subtitle">
+                    即便在最保守的月佔用率 10% 情境下，混合模式也能為集團帶來極為可觀的經濟效益。
+                </p>
+                <div class="flex-container">
+                    <div class="card">
+                        <h3>民宿自身月淨利</h3>
+                        <div class="big-number" style="color: var(--green-accent);">$2,548</div>
+                        <p>獨立營運下的基礎利潤。</p>
+                    </div>
+                    <div class="card">
+                        <h3>為母公司創造價值</h3>
+                        <div class="big-number" style="color: var(--tech-blue);">$62,000</div>
+                        <ul>
+                            <li><strong>人力支援：</strong>$32,000/月</li>
+                            <li><strong>招待所價值：</strong>$20,000/月</li>
+                            <li><strong>車輛支援：</strong>$10,000/月</li>
+                        </ul>
+                    </div>
+                     <div class="card" style="background-color: var(--tech-blue); color: white;">
+                        <h3 style="color: white;">每月總體經濟效益</h3>
+                        <div class="big-number" style="color: #fff;">$64,548</div>
+                        <p style="color: #eee; text-align:center;">民宿為集團創造的每月總價值。</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="section section-alt roi-section fade-in">
+                <h2>快速回本，低風險的戰略投資</h2>
+                <div class="flex-container">
+                    <div class="card">
+                        <h3>初期總投資</h3>
+                        <div class="big-number">$1,100,000</div>
+                        <p>包含 45 萬整修費用與 65 萬公務車購置成本。</p>
+                    </div>
+                    <div class="card">
+                        <h3>預計回本週期</h3>
+                        <div class="big-number">1年 5個月</div>
+                        <p>此回收速度證明，即便在最保守預期下，專案依然擁有強大的財務生命力。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section strategy-section fade-in">
+                <h2>超越財務報表的戰略價值</h2>
+                 <div class="flex-container">
+                    <div class="card">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--green-accent);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            極高的風險緩衝
+                        </h3>
+                        <p>徹底消除專案初期的虧損風險，確保投入的資源能持續為集團創造價值。</p>
+                    </div>
+                    <div class="card">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tech-blue);"><path d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><path d="M12 18v-6"></path><path d="m15 15-3-3-3 3"></path></svg>
+                            靈活的資源調度
+                        </h3>
+                        <p>建立「人力與資產儲備庫」，可依市場需求在兩種模式間靈活切換。</p>
+                    </div>
+                    <div class="card">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-accent);"><path d="M12.5 22h-1a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h1.5a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"></path><path d="M18.5 22h-1a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h1.5a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"></path><path d="M5.5 22h-1a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h1.5a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"></path><path d="m22 7.5-1.2-1.2a2 2 0 0 0-2.8 0L16.5 8"></path><path d="m2 7.5 1.2-1.2a2 2 0 0 1 2.8 0L7.5 8"></path><path d="M12 2v5"></path></svg>
+                            無形的品牌資產
+                        </h3>
+                        <p>一個獨特且私密的招待所，是提升客戶關係與企業形象的絕佳工具。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section section-alt cta-section fade-in">
+                <h2>建議行動：立即啟動，贏得先機</h2>
+                <p class="subtitle">我們已具備清晰的策略與穩健的財務模型，現在是將計畫付諸實現的最佳時機。</p>
+                <div class="flex-container">
+                     <div class="card">
+                        <h3>1. 正式採納</h3>
+                        <p>將「混合營運模式」作為專案啟動期的官方指導策略。</p>
+                    </div>
+                     <div class="card">
+                        <h3>2. 建立機制</h3>
+                        <p>制定營運專員支援母公司的具體工作流程與績效評估方式。</p>
+                    </div>
+                     <div class="card">
+                        <h3>3. 安心啟動</h3>
+                        <p>充滿信心地啟動專案，從「保守方案」開始，穩健測試市場。</p>
+                    </div>
+                </div>
+            </section>
+    
+        </div>
+    </main>
+
+    <footer class="footer">
+        <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
+            <path d="M1440,89.2c-28.5,9.1-53.2,16.2-74,21.3c-50.2,12.3-158.3,12.3-266.3,0C993.3,98.2,885.3,75.9,777.3,53.7 C669.3,31.4,561.3,9.1,453.3,12.3C345.3,15.5,237.3,44.1,129.3,72.7C73.8,87.4,36.9,98.2,0,105.4V120h1440V89.2z"></path>
+        </svg>
+        <div class="footer-content fade-in">
+            <p>
+                <img src="photo/logo_techstar.png" alt="科技之星交通股份有限公司 Logo" class="techstar-logo">
+            </p>
+            <p>科技之星交通股份有限公司 | 內部專案報告 | 報告製作：Polo | 網頁製作：Jeff</p>
+            <p>2025 年 7 月 18 日</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 互動式頁籤 (Tabs) 功能 ---
+        const tabsContainer = document.querySelector('.tabs-container');
+        if (tabsContainer) {
+            const tabButtons = tabsContainer.querySelectorAll('.tab-button');
+            const tabContents = tabsContainer.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    button.classList.add('active');
+                    document.getElementById('tab-' + tabId).classList.add('active');
+                });
+            });
+        }
+
+        // --- 滾動載入動畫 ---
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // 動畫只觸發一次
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeInElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

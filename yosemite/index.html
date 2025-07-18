@@ -26,7 +26,6 @@
             --gradient-end:   #f7f9f9; /* 與背景色融合 */
         }
 
-        /* [FIX] Added universal box-sizing for predictable layout */
         *, *::before, *::after {
             box-sizing: border-box;
         }
@@ -159,7 +158,13 @@
             box-shadow: 0 12px 35px rgba(44, 62, 80, 0.12);
         }
         .card h3 { font-size: 1.5rem; color: var(--tech-blue); margin-top: 0; }
-        .card .big-number { font-size: 3.2rem; font-weight: 700; color: var(--red-accent); margin: 15px 0; }
+        .card .big-number {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--red-accent);
+            margin: 15px 0;
+            word-break: break-all; /* 確保長數字能斷行 */
+        }
         .card p, .card ul { text-align: left; color: #556; }
         .card ul { padding-left: 0; list-style: none; }
         .card ul li { position: relative; padding-left: 28px; margin-bottom: 10px; }
@@ -221,6 +226,28 @@
             font-size: 0.9rem;
             opacity: 0.8;
         }
+
+        /* [FIX] Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .header h1, .section h2 {
+                font-size: 2.2rem;
+            }
+            .section-alt, .cta-section {
+                margin: 0;
+                padding: 40px 20px;
+            }
+            .card .big-number {
+                font-size: 2.5rem; /* Reduced font size for big numbers */
+            }
+            .card {
+                padding: 20px; /* Reduced padding for cards */
+            }
+            .tab-button {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>

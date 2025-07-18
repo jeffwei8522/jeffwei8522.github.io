@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技之星營運專員職涯發展計畫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Blue & Slate Neutrals -->
+    <!-- Application Structure Plan: A recruitment-focused, single-page application designed as a personal invitation. The structure guides the candidate through a narrative: 1. The solid, secure offer. 2. A detailed, interactive career journey. 3. The exciting long-term vision. 4. A summary of why our team is the right choice. This flow is designed to build trust and excitement, directly addressing a candidate's potential questions about stability, growth, and future prospects. -->
+    <!-- Visualization & Content Choices: 
+    - The Offer -> Goal: Build trust & show stability -> Viz: Icon-based info cards (HTML/CSS) -> Interaction: None, static -> Justification: Clearly and quickly communicates core benefits like salary and stability.
+    - Career Path -> Goal: Detail growth opportunities -> Viz: Interactive vertical timeline/stepper (HTML/CSS/JS) -> Interaction: Click to expand details of each phase -> Justification: An engaging way to present a multi-year plan, making it feel like a journey.
+    - Phase 2 Options -> Goal: Clarify choices -> Viz: Tabbed interface (HTML/CSS/JS) within the timeline -> Interaction: Click to switch between Option A and B -> Justification: Neatly organizes the two distinct paths, highlighting the element of choice.
+    - Long-Term Vision -> Goal: Inspire with future potential -> Viz: Simple flowchart diagram (HTML/CSS) -> Interaction: None, static -> Justification: Visually represents the growth from a single project to a large-scale business park.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #2563eb; /* blue-600 */
+        }
+        .active-tab {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 48px;
+            width: 2px;
+            height: calc(100% - 48px);
+            background-color: #e2e8f0; /* slate-200 */
+        }
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 9px;
+            top: 32px;
+            height: 24px;
+            width: 24px;
+            border-width: 2px;
+            border-color: #e2e8f0; /* slate-200 */
+            background-color: white;
+            z-index: 10;
+        }
+        .timeline-item.is-active .timeline-dot {
+            border-color: #2563eb; /* blue-600 */
+            background-color: #60a5fa; /* blue-400 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-lg font-bold text-slate-800">科技之星公司</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#offer" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">我們的承諾</a>
+                        <a href="#path" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">您的職涯路徑</a>
+                        <a href="#vision" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">共同的願景</a>
+                        <a href="#join" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">為何加入我們</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+                    與科技之星共創未來
+                </h2>
+                <p class="mt-4 text-2xl font-semibold text-blue-600">一份為您擘劃的營運專員職涯發展計畫</p>
+                <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-600">
+                    呂同學您好，這不僅是一份工作邀請，更是一份我們對人才的長期投資計畫。我們尋找的不是短期職員，而是能與集團共同成長、開創事業的核心夥伴。
+                </p>
+            </div>
+        </section>
+
+        <section id="offer" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">一份穩固的承諾與保障</h2>
+                    <p class="mt-4 text-lg text-slate-600">我們相信，提供堅實的後盾是建立信任的第一步。</p>
+                </div>
+                <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                    <div class="text-center p-6 bg-white rounded-xl shadow-lg border-t-4 border-blue-500">
+                        <div class="text-4xl text-blue-500 mb-4">🏢</div>
+                        <h3 class="text-xl font-bold text-slate-800">集團正式聘用</h3>
+                        <p class="mt-2 text-slate-600">您將是「科技之星客運集團」的正式營運專員，享完整福利與勞動保障，職位穩定性與集團掛鉤。</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl shadow-lg border-t-4 border-blue-500">
+                        <div class="text-4xl text-green-500 mb-4">💰</div>
+                        <h3 class="text-xl font-bold text-slate-800">保障薪資 $40,000</h3>
+                        <p class="mt-2 text-slate-600">固定月薪四萬元，薪酬與專案初期營收完全脫鉤，無業績壓力，讓您專注於學習與執行。</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl shadow-lg border-t-4 border-blue-500">
+                        <div class="text-4xl text-amber-500 mb-4">🛡️</div>
+                        <h3 class="text-xl font-bold text-slate-800">零風險的舞台</h3>
+                        <p class="mt-2 text-slate-600">初期任務「綠色小徑」為集團自有資產活化，資金穩定，所有營運風險由集團承擔，非關個人成敗。</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl shadow-lg border-t-4 border-blue-500">
+                        <div class="text-4xl text-indigo-500 mb-4">📈</div>
+                        <h3 class="text-xl font-bold text-slate-800">彈性的額外收入</h3>
+                        <p class="mt-2 text-slate-600">週末非強制出勤，若您願意支援，將依法規核發加班費，或透過專案勤務獲取額外趟次津貼。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="path" class="py-16 sm:py-24 bg-slate-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">您的成長旅程：雙軌制職涯路徑</h2>
+                    <p class="mt-4 text-lg text-slate-600">我們提供清晰且具選擇性的發展框架，讓您厚植實力，逐步成為集團核心幹部。</p>
+                </div>
+                <div class="mt-16 max-w-4xl mx-auto">
+                    <div class="relative">
+                        <!-- Timeline Item 1 -->
+                        <div class="timeline-item is-active relative pb-12 pl-12">
+                            <div class="timeline-dot rounded-full"></div>
+                            <h3 class="text-2xl font-bold text-slate-800">階段一：營運基礎建構 (1-2年)</h3>
+                            <p class="mt-2 text-slate-600">在「綠色小徑」的實戰場域中，建立紮實的在地事業營運管理能力。</p>
+                            <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-slate-700 mb-3">核心學習範疇：</h4>
+                                <div class="grid grid-cols-2 gap-4 text-slate-600">
+                                    <p>✓ 資產管理與空間規劃</p>
+                                    <p>✓ 服務流程設計與品管</p>
+                                    <p>✓ 供應鏈管理與成本控制</p>
+                                    <p>✓ 行銷推廣與在地合作</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Timeline Item 2 -->
+                        <div class="timeline-item relative pb-12 pl-12">
+                            <div class="timeline-dot rounded-full"></div>
+                            <h3 class="text-2xl font-bold text-slate-800">階段二：跨領域幹部培訓 (自由選擇)</h3>
+                            <p class="mt-2 text-slate-600">當您完成第一階段任務後，可依個人志向，選擇最適合您的深化路徑，成為不可取代的跨領域人才。</p>
+                            <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
+                                <div class="mb-4 border-b border-slate-200">
+                                    <nav class="flex -mb-px" aria-label="Tabs">
+                                        <button id="tab-optionA" class="tab-btn-career active-tab w-1/2 py-3 px-1 text-center font-medium text-sm rounded-t-lg">
+                                            選項A：深化營運管理
+                                        </button>
+                                        <button id="tab-optionB" class="tab-btn-career w-1/2 py-3 px-1 text-center font-medium text-sm text-slate-500 hover:text-blue-600 rounded-t-lg">
+                                            選項B：增值第一線實務
+                                        </button>
+                                    </nav>
+                                </div>
+                                <div id="content-optionA" class="tab-content-career">
+                                    <h4 class="font-bold text-blue-700">成為集團核心業務的儲備管理人才</h4>
+                                    <p class="mt-2 text-slate-600">您將參與客運本業的後勤與行政管理，接觸路線規劃、營運數據分析、車輛調度、合約標案等核心事務，為晉升管理職奠定基礎。</p>
+                                </div>
+                                <div id="content-optionB" class="tab-content-career hidden">
+                                    <h4 class="font-bold text-blue-700">獲取專業證照與額外收入</h4>
+                                    <p class="mt-2 text-slate-600">可選擇性安排小客車駕駛勤務，每月預計增加 <span class="font-bold">NT$10,000至$20,000</span> 收入。若您有志深入，集團更將補助您考取職業大客車駕照，完成對您個人的長期職能投資。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Timeline Item 3 -->
+                        <div class="timeline-item relative pb-4 pl-12">
+                            <div class="timeline-dot rounded-full"></div>
+                            <h3 class="text-2xl font-bold text-slate-800">長期發展：事業規劃者 (5-7年願景)</h3>
+                            <p class="mt-2 text-slate-600">您的最終目標，是從專案執行者，轉型為事業規劃者與高階管理者。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vision" class="py-16 sm:py-24">
+             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">我們的共同願景：東香園區事業群</h2>
+                    <p class="mt-4 text-lg text-slate-600">您的職涯終點，將是推動一個大型在地事業群的核心管理者。</p>
+                </div>
+                <div class="mt-16 max-w-5xl mx-auto p-8 bg-white rounded-xl shadow-2xl">
+                    <div class="grid md:grid-cols-3 gap-4 text-center items-center">
+                        <div class="p-4 border border-slate-200 rounded-lg">
+                            <p class="font-bold text-blue-600">您的經驗累積</p>
+                            <p class="text-sm text-slate-500">綠色小徑 (旅遊事業)<br/>+<br/>客運本業 (交通事業)</p>
+                        </div>
+                        <div class="text-4xl font-bold text-slate-400 mx-auto">→</div>
+                        <div class="p-4 border border-slate-200 rounded-lg bg-blue-50">
+                            <p class="font-bold text-blue-800">您的未來角色</p>
+                            <p class="text-sm text-slate-600">東香園區事業群<br/>核心管理幹部</p>
+                        </div>
+                    </div>
+                    <div class="text-center my-4 text-2xl text-slate-400">↓</div>
+                    <div class="p-6 bg-slate-100 rounded-lg">
+                        <h4 class="text-center font-bold text-slate-800">東香園區：多元事業拓展計畫</h4>
+                        <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
+                            <div class="p-2 bg-white rounded shadow">核心：東香停車場及保養廠</div>
+                            <div class="p-2 bg-white rounded shadow">拓展一：寵物紀念園區</div>
+                            <div class="p-2 bg-white rounded shadow">拓展二：文化休閒設施</div>
+                            <div class="p-2 bg-white rounded shadow">更多元事業...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="join" class="py-16 sm:py-24 bg-slate-800 text-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">為何選擇科技之星？</h2>
+                    <p class="mt-4 text-lg text-slate-300">我們是一個值得您信賴與投入的專業團隊。</p>
+                </div>
+                <div class="mt-16 max-w-4xl mx-auto grid md:grid-cols-3 gap-10">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-blue-300">專業的團隊</h3>
+                        <p class="mt-2 text-slate-400">我們擁有豐富的產業經驗與執行能力，您將與一群務實、高效的夥伴共事。</p>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-blue-300">清晰的願景</h3>
+                        <p class="mt-2 text-slate-400">我們不僅專注當下，更有長遠的事業藍圖，提供您穩定且具想像力的未來。</p>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-blue-300">對人才的重視</h3>
+                        <p class="mt-2 text-slate-400">我們提供選擇權與發展藍圖，相信這比口頭承諾更能體現對人才的實際保障。</p>
+                    </div>
+                </div>
+                <div class="mt-20 text-center">
+                     <button class="bg-blue-600 text-white font-bold py-4 px-10 rounded-lg hover:bg-blue-700 transition-colors shadow-lg text-lg">
+                        期待與您面談
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const careerTabs = document.querySelectorAll('.tab-btn-career');
+    const careerTabContents = document.querySelectorAll('.tab-content-career');
+
+    careerTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            careerTabs.forEach(item => {
+                item.classList.remove('active-tab');
+                item.classList.add('text-slate-500', 'hover:text-blue-600');
+            });
+            tab.classList.add('active-tab');
+            tab.classList.remove('text-slate-500', 'hover:text-blue-600');
+
+            const target = document.querySelector(tab.id.replace('tab-', '#content-'));
+            careerTabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            target.classList.remove('hidden');
+        });
+    });
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Simple timeline interaction logic
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach(item => {
+        item.addEventListener('click', () => {
+            timelineItems.forEach(i => i.classList.remove('is-active'));
+            item.classList.add('is-active');
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>

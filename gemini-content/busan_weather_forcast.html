@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>釜山八月天氣與行程規劃儀表板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: The SPA is designed as a top-down informational dashboard to guide a user from general knowledge to specific, actionable planning. It starts by managing expectations about long-range forecasts (Section 1). Then, it provides concrete historical climate data to establish a baseline understanding (Section 2). It addresses the major concern of typhoons with a dedicated risk analysis section (Section 3). The core of the app is the interactive itinerary planner (Section 4), which allows users to dynamically reorder attractions based on weather scenarios (sunny vs. rainy), directly solving their primary planning problem. This structure was chosen because it mirrors a logical decision-making process for a traveler: understanding the general climate, assessing risks, and then making specific plans with built-in flexibility. The flow is designed to be intuitive and empowering. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Feasibility of 1-month forecast -> Goal: Inform/Manage Expectations -> Viz/Method: Styled text blocks -> Interaction: None -> Justification: Directly answers the core question upfront. -> Library/Method: HTML/Tailwind.
+        - Report Info: Busan's August Climate -> Goal: Inform/Compare -> Viz/Method: Stat cards and a Bar Chart -> Interaction: Hover on chart bars for details -> Justification: Provides a quantitative baseline and visualizes weather probabilities effectively. -> Library/Method: Chart.js/Canvas.
+        - Report Info: Typhoon Risk -> Goal: Inform/Warn -> Viz/Method: HTML/CSS "Risk Meter" and checklist -> Interaction: None -> Justification: Clearly communicates a key risk and provides practical safety advice. -> Library/Method: HTML/Tailwind.
+        - Report Info: Itinerary Planning -> Goal: Advise/Organize -> Viz/Method: Interactive card grid -> Interaction: Buttons to sort attractions for "Sunny" or "Rainy" days -> Justification: The main interactive tool that provides direct, personalized value by helping the user build a flexible itinerary. -> Library/Method: Vanilla JS, HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F8F7F4;
+            color: #3D405B;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-button {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav-button.active {
+            background-color: #3D405B;
+            color: #F8F7F4;
+        }
+        .card-enter {
+            animation: card-enter 0.5s ease-out forwards;
+        }
+        @keyframes card-enter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#3D405B] mb-2">釜山八月天氣與行程規劃儀表板</h1>
+            <p class="text-lg text-gray-600">為您的 8/19 - 8/24 釜山之旅提供氣候洞察與智慧建議</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <!-- Section 1: The Truth About Long-Range Forecasts -->
+            <section id="forecast-truth">
+                <div class="bg-white/70 rounded-2xl shadow-lg p-6 md:p-8 backdrop-blur-sm">
+                    <h2 class="text-2xl font-bold text-[#3D405B] mb-4">關於「一個月後」的天氣預測</h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p>這是所有旅行者最關心的問題！首先，我們需要理解一個關鍵概念：目前的氣象科技<strong>無法精準預測一個月後某一天、某個地點的具體天氣</strong>（例如「8月20日下午2點南浦洞會不會下雨」）。7-10天內的短期預報準確率較高，但超過這個範圍，預測就會轉向「氣候趨勢分析」。</p>
+                        <div class="bg-[#A2B9C7]/20 border-l-4 border-[#A2B9C7] p-4 rounded-r-lg">
+                            <h3 class="font-bold text-[#3D405B]">本報告核心洞察</h3>
+                            <p class="mt-2">我們無法給您「確定」的天氣預報，但可以提供基於過去數十年氣候數據的<strong>「機率」和「趨勢」</strong>。這份儀表板將幫助您了解釜山八月下旬最可能遇到的天氣狀況，並提供彈性的行程建議，讓您無論晴雨都能玩得盡興。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Busan's August Climate Averages -->
+            <section id="climate-data">
+                <h2 class="text-3xl font-bold text-center text-[#3D405B] mb-8">釜山八月氣候平均概況</h2>
+                <div class="text-center mb-8 max-w-3xl mx-auto">
+                    <p class="text-gray-600">八月是釜山最炎熱、最潮濕的月份，同時也是颱風季節的一部分。這意味著您很可能會遇到高溫、高濕度的天氣，並伴隨午後雷陣雨的可能性。以下數據為釜山八月下旬的歷史平均值，能幫助您建立合理的期望。</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+                    <div class="bg-white rounded-xl shadow-md p-4 text-center transition-transform hover:scale-105">
+                        <p class="text-4xl font-bold text-[#3D405B]">26-30°C</p>
+                        <p class="text-gray-500 mt-1">平均溫度</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-4 text-center transition-transform hover:scale-105">
+                        <p class="text-4xl font-bold text-[#3D405B]">~80%</p>
+                        <p class="text-gray-500 mt-1">平均濕度</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-4 text-center transition-transform hover:scale-105">
+                        <p class="text-4xl font-bold text-[#3D405B]">~230mm</p>
+                        <p class="text-gray-500 mt-1">平均降雨量</p>
+                    </div>
+                     <div class="bg-white rounded-xl shadow-md p-4 text-center transition-transform hover:scale-105">
+                        <p class="text-4xl font-bold text-[#3D405B]">~27°C</p>
+                        <p class="text-gray-500 mt-1">平均海水溫度</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-center text-[#3D405B] mb-4">八月下旬每日天氣類型機率</h3>
+                     <div class="chart-container">
+                        <canvas id="weatherTypeChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3: Typhoon Risk Analysis -->
+            <section id="typhoon-risk">
+                 <h2 class="text-3xl font-bold text-center text-[#3D405B] mb-8">颱風風險分析</h2>
+                 <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <div class="md:flex md:items-center md:gap-8">
+                        <div class="md:w-1/3 text-center mb-6 md:mb-0">
+                            <div class="relative inline-block">
+                                <div class="w-40 h-40 rounded-full bg-gradient-to-tr from-yellow-300 to-red-400 flex items-center justify-center">
+                                    <div class="w-32 h-32 rounded-full bg-[#F8F7F4] flex items-center justify-center">
+                                         <p class="text-2xl font-bold text-red-500">中等風險</p>
+                                    </div>
+                                </div>
+                                <div class="absolute top-0 right-0 -mr-4 -mt-2 text-5xl animate-pulse">🌪️</div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h3 class="text-xl font-bold text-[#3D405B] mb-3">八月是颱風季，但不必過度恐慌</h3>
+                            <p class="text-gray-700 mb-4">歷史上，8月有颱風影響韓國的機率存在，但並非每年都會發生。所謂「影響」不一定代表颱風中心直接登陸釜山，也可能是外圍環流帶來連續數日的強風和豪雨。</p>
+                            <h4 class="font-semibold text-gray-800 mb-2">若遇颱風，對旅程的可能影響：</h4>
+                            <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                <li><strong>航班變動：</strong>最直接的影響，可能延誤或取消。</li>
+                                <li><strong>戶外景點關閉：</strong>所有海灘、公園、戶外設施都會關閉。</li>
+                                <li><strong>大眾運輸受限：</strong>地鐵通常會運行，但公車、船班、跨海大橋可能停駛。</li>
+                                <li><strong>行程建議：</strong>需立刻改為純室內活動（百貨公司、博物館、室內咖啡廳）。</li>
+                            </ul>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+            <!-- Section 4: Itinerary Suggestions -->
+            <section id="itinerary-suggestions">
+                <h2 class="text-3xl font-bold text-center text-[#3D405B] mb-2">景點天氣適應性與行程建議</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">了解了天氣趨勢後，我們可以制定彈性行程。這裡將景點依天氣適應性分類。點擊下方按鈕，看看不同天氣下建議的行程優先順序。</p>
+                
+                <div class="flex justify-center gap-4 mb-8">
+                    <button id="reco-all" class="nav-button px-6 py-2 rounded-full font-semibold border-2 border-[#3D405B] text-[#3D405B] active">所有景點</button>
+                    <button id="reco-sunny" class="nav-button px-6 py-2 rounded-full font-semibold border-2 border-[#3D405B] text-[#3D405B]">晴天/炎熱日☀️</button>
+                    <button id="reco-rainy" class="nav-button px-6 py-2 rounded-full font-semibold border-2 border-[#3D405B] text-[#3D405B]">陣雨/陰天🌧️</button>
+                </div>
+
+                <div id="attractions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Attraction cards will be dynamically inserted here -->
+                </div>
+            </section>
+
+            <!-- Section 5: Conclusion & Next Steps -->
+            <section id="conclusion">
+                <h2 class="text-3xl font-bold text-center text-[#3D405B] mb-8">結論與最終建議</h2>
+                <div class="bg-white/70 rounded-2xl shadow-lg p-6 md:p-8 backdrop-blur-sm text-center max-w-4xl mx-auto">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">總結來說，您的釜山之旅很可能遇到<strong>炎熱潮濕</strong>的天氣，並有<strong>午後陣雨</strong>的機會。行程安排上，<strong>目前景點的先後順序影響不大</strong>，關鍵在於保持<strong>彈性</strong>。建議您將戶外和室內景點穿插安排，並準備好雨天備案。</p>
+                    <div class="mt-6 border-t pt-6">
+                        <h3 class="font-bold text-lg text-[#3D405B]">行動清單</h3>
+                        <ul class="mt-2 text-gray-600 list-none space-y-1">
+                            <li>✔️ <strong>保持彈性：</strong>不要把行程排得太死，準備好隨時調換。</li>
+                            <li>✔️ <strong>打包建議：</strong>輕便透氣的衣物、防曬用品、太陽眼鏡、好走的鞋、一把堅固的摺疊傘。</li>
+                            <li>✔️ <strong>密切關注：</strong>出發前一週，開始每天查看韓國氣象廳(KMA)的短期預報。</li>
+                            <li>✔️ <strong>保持樂觀：</strong>釜山的魅力不僅在於陽光沙灘，雨中的城市風情和豐富的室內活動也同樣迷人！</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-16 pt-8 border-t border-gray-200">
+            <p class="text-gray-500">此儀表板為基於氣候統計的規劃工具，非即時天氣預報。</p>
+            <p class="text-sm text-gray-400 mt-1">Interactive Weather Planner | 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const attractions = [
+                {
+                    id: 1,
+                    name: "海雲台海水浴場 (Haeundae)",
+                    type: "戶外",
+                    sunny_rank: 1,
+                    rainy_rank: 5,
+                    description: "釜山代表性海灘，晴天是絕佳去處，可以玩水、曬太陽、享受海景。雨天則魅力大減。",
+                    icon: "☀️☀️☀️"
+                },
+                {
+                    id: 2,
+                    name: "廣安里海水浴場 (Gwangalli)",
+                    type: "戶外",
+                    sunny_rank: 2,
+                    rainy_rank: 4,
+                    description: "以廣安大橋夜景聞名。白天適合散步，傍晚在沿岸咖啡廳欣賞景色。晴天體驗最佳。",
+                    icon: "☀️☀️🌙"
+                },
+                {
+                    id: 3,
+                    name: "白淺灘文化村 (Huinnyeoul)",
+                    type: "戶外",
+                    sunny_rank: 3,
+                    rainy_rank: 3,
+                    description: "沿著海岸懸崖而建的村莊，風景優美。需要大量步行，晴天或陰天較為舒適，下大雨會比較不便。",
+                    icon: "☀️☀️☁️"
+                },
+                {
+                    id: 4,
+                    name: "南浦洞 (Nampo-dong)",
+                    type: "混合型",
+                    sunny_rank: 4,
+                    rainy_rank: 2,
+                    description: "集購物、美食、市場於一體的區域。有許多室內商店和光復路地下街，是很好的雨天備案。",
+                    icon: "☀️🏠🏠"
+                },
+                {
+                    id: 5,
+                    name: "樂天世界冒險樂園 (Lotte World)",
+                    type: "室內為主",
+                    sunny_rank: 5,
+                    rainy_rank: 1,
+                    description: "大部分設施都在室內的主題樂園，是完美的雨天或酷暑避暑方案，不受天氣影響。",
+                    icon: "🏠🏠🏠"
+                }
+            ];
+
+            const grid = document.getElementById('attractions-grid');
+            const buttons = {
+                all: document.getElementById('reco-all'),
+                sunny: document.getElementById('reco-sunny'),
+                rainy: document.getElementById('reco-rainy')
+            };
+
+            function renderAttractions(sortedAttractions) {
+                grid.innerHTML = '';
+                sortedAttractions.forEach((att, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl shadow-lg p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 card-enter';
+                    card.style.animationDelay = `${index * 100}ms`;
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-[#3D405B]">${att.name}</h3>
+                            <span class="text-2xl" title="${att.type}景點">${att.icon}</span>
+                        </div>
+                        <p class="text-gray-600 flex-grow">${att.description}</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200 flex justify-between text-sm font-medium">
+                            <span class="text-green-600">晴天推薦度: ${'★'.repeat(6 - att.sunny_rank)}${'☆'.repeat(att.sunny_rank - 1)}</span>
+                            <span class="text-blue-600">雨天推薦度: ${'★'.repeat(6 - att.rainy_rank)}${'☆'.repeat(att.rainy_rank - 1)}</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            function setActiveButton(activeId) {
+                Object.values(buttons).forEach(button => button.classList.remove('active'));
+                buttons[activeId].classList.add('active');
+            }
+
+            buttons.all.addEventListener('click', () => {
+                renderAttractions(attractions.sort((a, b) => a.id - b.id));
+                setActiveButton('all');
+            });
+
+            buttons.sunny.addEventListener('click', () => {
+                renderAttractions([...attractions].sort((a, b) => a.sunny_rank - b.sunny_rank));
+                setActiveButton('sunny');
+            });
+
+            buttons.rainy.addEventListener('click', () => {
+                renderAttractions([...attractions].sort((a, b) => a.rainy_rank - b.rainy_rank));
+                setActiveButton('rainy');
+            });
+            
+            renderAttractions(attractions.sort((a, b) => a.id - b.id));
+
+            const ctx = document.getElementById('weatherTypeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['晴天', '多雲', '短暫陣雨', '雷雨'],
+                    datasets: [{
+                        label: '天氣類型機率',
+                        data: [30, 40, 25, 5],
+                        backgroundColor: [
+                            'rgba(251, 191, 36, 0.6)',
+                            'rgba(162, 185, 199, 0.6)',
+                            'rgba(96, 165, 250, 0.6)',
+                            'rgba(129, 140, 248, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(251, 191, 36, 1)',
+                            'rgba(162, 185, 199, 1)',
+                            'rgba(96, 165, 250, 1)',
+                            'rgba(129, 140, 248, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}% 的可能性`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '機率 (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

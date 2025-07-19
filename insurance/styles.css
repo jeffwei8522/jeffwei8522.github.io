@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #2c3e50;
+}
+
+header p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+.insurance-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.insurance-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.insurance-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.insurance-card.recommended {
+    border: 3px solid #ffc107; /* Gold border for primary recommendation */
+    transform: scale(1.05);
+}
+
+.card-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #34495e;
+}
+
+.card-header h3 {
+    margin: 5px 0 15px 0;
+    font-size: 1.1em;
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #fff;
+}
+
+.tag-primary {
+    background-color: #ffc107; /* Gold */
+    color: #333;
+}
+
+.tag-secondary {
+    background-color: #95a5a6; /* Silver/Grey */
+}
+
+.price-section {
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.premium {
+    margin: 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.premium span {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #e74c3c;
+}
+
+.features-list {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.features-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.features-list.icon {
+    font-size: 1.5em;
+    margin-right: 15px;
+    width: 30px;
+    text-align: center;
+}
+
+.text-success {
+    color: #27ae60;
+    font-weight: 700;
+}
+
+.cta-button {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 0 20px 20px 20px;
+    padding: 15px;
+    background-color: #3498db;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #2980b9;
+}
+
+.recommended.cta-button {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.recommended.cta-button:hover {
+    background-color: #e6ac00;
+}
+
+@media (max-width: 1024px) {
+   .insurance-card.recommended {
+        transform: none;
+    }
+}

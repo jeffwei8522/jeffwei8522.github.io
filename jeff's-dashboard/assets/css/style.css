@@ -237,3 +237,188 @@ footer {
     font-size: 0.95em;
     color: #666;
 }
+
+/* --- 新增：營運明細總表 (年份選擇) --- */
+.year-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.year-card {
+    display: block;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.year-card:hover {
+    text-decoration: none;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+.year-card h3 {
+    margin: 0;
+    font-size: 2.5em;
+    color: var(--primary-color);
+}
+
+.year-card p {
+    margin: 0.5rem 0 0 0;
+    color: #555;
+}
+
+/* --- 營運明細總表 (月曆視圖) --- */
+.summary-grid .year-group {
+    margin-bottom: 2rem;
+}
+
+.summary-grid .year-title {
+    font-size: 1.8em;
+    color: var(--primary-color);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.months-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.month-card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.month-card.updated {
+    border-left: 5px solid var(--status-completed);
+}
+
+.month-card.pending {
+    border-left: 5px solid var(--status-draft);
+    background-color: #fcfcfc;
+}
+
+.month-card h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.month-card p {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9em;
+    color: #555;
+    flex-grow: 1; /* 讓 p 區塊佔滿多餘空間，將 status 推到底部 */
+    min-height: 40px; 
+}
+
+.month-card .status {
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-top: auto; /* 將 status 推到底部 */
+}
+
+.month-card .status.status-updated {
+    color: var(--status-completed);
+}
+.month-card .status.status-pending {
+    color: var(--status-draft);
+}
+
+.month-card a {
+    font-weight: bold;
+}
+
+/* --- 新增：讓可點擊的月份卡片樣式更自然 --- */
+
+/* 重置包住卡片的 a 標籤的預設樣式 */
+.month-card-link {
+    text-decoration: none; /* 移除底線 */
+    color: inherit;        /* 繼承父層的文字顏色，避免所有字變藍色 */
+}
+
+/* 當滑鼠移到連結上時，讓卡片本身產生互動效果 */
+.month-card-link:hover .month-card {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    border-color: var(--primary-color); /* 增加邊框顏色變化 */
+}
+
+/* --- 新增：紀錄表單樣式 --- */
+.record-form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box; 
+}
+
+.form-group select[disabled] {
+    background-color: #f4f4f4;
+    cursor: not-allowed;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    text-align: right;
+    margin-top: 2rem;
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* 為了讓 a 標籤也像按鈕 */
+}
+
+.button-primary:hover {
+    background-color: #004a80;
+}

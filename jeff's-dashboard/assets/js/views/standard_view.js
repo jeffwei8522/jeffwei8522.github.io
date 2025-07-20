@@ -1,18 +1,16 @@
-// assets/js/views/standard_view.js
+// 檔案路徑: assets/js/views/standard_view.js
 
-/**
- * 渲染標準分類頁面
- * @param {HTMLElement} container - 要渲染內容的容器元素
- * @param {object} config - 專案的設定檔內容
- * @param {Array<object>} records - 已篩選和排序好的資料
- * @param {string} categoryName - 當前分類的名稱
- */
-export function render(container, config, records, categoryName) {
+// 【修正點】增加 params 參數，即使未使用
+export function render(container, config, records, categoryInfo, params) {
+    // 因為 categoryInfo 可能是物件或字串，從中取出名稱
+    const categoryName = typeof categoryInfo === 'object' ? categoryInfo.name : categoryInfo;
+    const sortedRecords = [...records].sort((a, b) => new Date(b.date) - new Date(a.date));
+
     document.title = `${categoryName} - ${config.name} - 控制面板`;
 
     let gridContent = '';
-    if (records.length > 0) {
-        records.forEach(item => {
+    if (sortedRecords.length > 0) {
+        sortedRecords.forEach(item => {
             gridContent += createDataCardHtml(item);
         });
     } else {
@@ -36,9 +34,7 @@ export function render(container, config, records, categoryName) {
     `;
 }
 
-/**
- * 建立單張資料卡片的 HTML 字串 (輔助函式)
- */
+// createDataCardHtml 函式維持不變，此處省略...
 function createDataCardHtml(item) {
     const statusClass = item.status ? `status-${item.status.toLowerCase()}` : '';
     return `

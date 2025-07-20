@@ -6,8 +6,11 @@
     "title": "2025年7月貨物稅退稅申請表",
     "date": "2025-07-20",
     "description": "協助叔叔依財政部格式填寫申報，已完成送件，待審查結果通知。",
-    "url": "https://example.com/doc1",
-    "tags": ["除濕機", "表單"],
+    "url": "https://docs.google.com/document/d/1gywVmdULpDEsPqmk0g7W5--Ihh4Cb5DhPzHhVQ8QRJY/edit?tab=t.0",
+    "tags": [
+      "除濕機",
+      "表單"
+    ],
     "status": "已完成",
     "visible": true,
     "author": "Wei"
@@ -20,7 +23,10 @@
     "date": "2025-06-15",
     "description": "審核與房東的第二期租賃合約，確保權益。",
     "url": "https://example.com/doc2",
-    "tags": ["合約", "法律"],
+    "tags": [
+      "合約",
+      "法律"
+    ],
     "status": "已歸檔",
     "visible": true,
     "author": "Wei"
@@ -33,7 +39,9 @@
     "date": "2025-07-21",
     "description": "初步整理Q2財務數據，待會計師確認。",
     "url": "https://example.com/doc3",
-    "tags": ["季度報表"],
+    "tags": [
+      "季度報表"
+    ],
     "status": "草稿",
     "visible": true,
     "author": "Wei"
@@ -46,7 +54,10 @@
     "date": "2025-04-30",
     "description": "完成四月份冷氣機的退稅申請流程。",
     "url": "https://example.com/doc4",
-    "tags": ["冷氣機", "表單"],
+    "tags": [
+      "冷氣機",
+      "表單"
+    ],
     "status": "已完成",
     "visible": true,
     "author": "Wei"
@@ -59,7 +70,10 @@
     "date": "2025-01-10",
     "description": "向智慧財產局提出商標延展申請，追蹤進度。",
     "url": "https://example.com/doc5",
-    "tags": ["智慧財產權", "送審中"],
+    "tags": [
+      "智慧財產權",
+      "送審中"
+    ],
     "status": "審核中",
     "visible": true,
     "author": "Wei"
@@ -72,7 +86,10 @@
     "date": "2025-07-18",
     "description": "研究如何並行處理多個非同步請求，適用於這次的 Dashboard 改造。",
     "url": "https://example.com/dev1",
-    "tags": ["JavaScript", "Async"],
+    "tags": [
+      "JavaScript",
+      "Async"
+    ],
     "status": "已發佈",
     "visible": true,
     "author": "Jeff"
@@ -85,7 +102,9 @@
     "date": "2024-12-25",
     "description": "舊的年度報表，已封存。",
     "url": "https://example.com/doc6",
-    "tags": ["年度報表"],
+    "tags": [
+      "年度報表"
+    ],
     "status": "作廢",
     "visible": false,
     "author": "Wei"
@@ -96,9 +115,13 @@
     "category": "營運明細總表",
     "title": "2025-02 車輛營運明細",
     "date": "2025-07-21",
+    "reportMonth": "2025-02",
     "description": "2025年2月份 車輛營運明細總表之草稿",
     "url": "https://docs.google.com/spreadsheets/d/1pTEotGEO42wWUafNTnuewl4bSQ08Od124AiS7qMJAOg/edit?gid=0#gid=0",
-    "tags": ["營運", "月度報表"],
+    "tags": [
+      "營運",
+      "月度報表"
+    ],
     "status": "草稿",
     "visible": true,
     "author": "Jeff"
@@ -111,7 +134,10 @@
     "date": "2025-07-15",
     "description": "完成資料與設定分離的架構，提升可擴展性。",
     "url": "https://example.com/tech2",
-    "tags": ["重構", "JavaScript"],
+    "tags": [
+      "重構",
+      "JavaScript"
+    ],
     "status": "已完成",
     "visible": true,
     "author": "Jeff"
@@ -124,9 +150,45 @@
     "date": "2025-07-20",
     "description": "購買節能電器退還減徵貨物稅。",
     "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/purchase-energy-saving-appliance-reduced-commodity-tax-refund-area/consumer-online-apply",
-    "tags": ["退稅", "家電"],
+    "tags": [
+      "退稅",
+      "家電"
+    ],
     "status": "已完成",
     "visible": true,
     "author": "Jeff"
+  },
+  {
+    "id": "r-20250721-011",
+    "project": "techstar",
+    "category": "營運明細總表",
+    "title": "2024-09 車輛營運明細",
+    "date": "2025-07-20",
+    "reportMonth": "2024-09",
+    "description": "2024年9月份 車輛營運明細總表之草稿",
+    "url": "https://docs.google.com/spreadsheets/d/1MVhSjRLB_s7gFe_l6GVzA081cyb9huVFgSB-6xNK1H0/edit?gid=0#gid=0",
+    "tags": [
+      "營運",
+      "月度報表"
+    ],
+    "status": "已完成",
+    "visible": true,
+    "author": "Jeff"
+  },
+  {
+    "id": "r-20250720-549ob",
+    "project": "techstar",
+    "category": "營運明細總表",
+    "title": "2025-01 車輛營運明細",
+    "date": "2025-07-20",
+    "description": "",
+    "url": "https://docs.google.com/spreadsheets/d/1_IIx5JdL_Zo_W7l8xbwyMBAdeoFukbmuM8qX3OvIilo/edit?gid=0#gid=0",
+    "tags": [
+      "月報"
+    ],
+    "status": "已完成",
+    "visible": true,
+    "author": "Jeff",
+    "reportMonth": "2025-01"
   }
 ]

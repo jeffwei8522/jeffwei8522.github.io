@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增紀錄 - 控制面板</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>新增一筆紀錄</h1>
+        <p><a href="index.html">&larr; 返回首頁</a></p>
+    </header>
+    <main>
+        <form id="add-record-form" class="record-form">
+            
+            <div class="form-group">
+                <label for="project-select">選擇專案 (必填)</label>
+                <select id="project-select" required>
+                    <option value="">請先選擇專案...</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="category-select">選擇分類 (必填)</label>
+                <select id="category-select" required disabled>
+                    <option value="">請先選擇專案</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="title-input">標題 (必填)</label>
+                <input type="text" id="title-input" placeholder="例如：2025年8月營運明細總表" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="report-month-input">報表月份 (格式 YYYY-MM，營運總表專用，可選)</label>
+                <input type="text" id="report-month-input" placeholder="例如：2025-08">
+            </div>
+
+            <div class="form-group">
+                <label for="url-input">連結 (必填)</label>
+                <input type="url" id="url-input" placeholder="https://docs.google.com/..." required>
+            </div>
+            
+            <div class="form-group">
+                <label for="tags-input">標籤 (用逗號 , 分隔)</label>
+                <input type="text" id="tags-input" placeholder="例如：財務, 月報, 緊急">
+            </div>
+
+            <div class="form-group">
+                <label for="status-select">狀態</label>
+                <select id="status-select">
+                    <option value="草稿">草稿</option>
+                    <option value="進行中">進行中</option>
+                    <option value="已完成" selected>已完成</option>
+                    <option value="已歸檔">已歸檔</option>
+                    <option value="審核中">審核中</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="author-input">建立者</label>
+                <input type="text" id="author-input" value="Jeff"> </div>
+
+            <div class="form-group">
+                <label for="description-textarea">補充說明</label>
+                <textarea id="description-textarea" rows="4"></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="button-primary">儲存紀錄</button>
+            </div>
+        </form>
+    </main>
+    <script type="module" src="assets/js/add-record.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+/* Add your custom CSS here */
+/* --- 全域與基本設定 --- */
+:root {
+    --primary-color: #005A9C;
+    --secondary-color: #f4f4f4;
+    --font-color: #333;
+    --border-color: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --status-completed: #28a745;
+    --status-draft: #6c757d;
+    --status-review: #ffc107;
+    --status-archived: #17a2b8;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    background-color: #f9f9f9;
+    color: var(--font-color);
+}
+
+header, main, footer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+header {
+    border-bottom: 2px solid var(--primary-color);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+}
+
+h1 {
+    margin-bottom: 0.5rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* --- 首頁專案列表 --- */
+.project-list .project-card {
+    display: block;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.project-list .project-card:hover {
+    text-decoration: none;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+.project-list .project-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.project-list .project-card p {
+    margin-bottom: 0;
+    color: #555;
+}
+
+/* --- 資料卡片網格 (haotenburg.html) --- */
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.data-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.data-card:hover {
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+.data-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.data-card h3 {
+    margin: 0;
+    font-size: 1.2em;
+    flex-grow: 1; /* 讓標題佔據更多空間 */
+}
+
+.data-card .card-meta {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.data-card .card-meta .author {
+    margin-left: 1rem;
+}
+
+.data-card .description {
+    font-size: 0.95em;
+    flex-grow: 1; /* 讓描述區塊填滿剩餘空間 */
+    margin-bottom: 1rem;
+}
+
+/* --- 標籤 (Tags) 與 狀態 (Status) --- */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto; /* 將標籤推到底部 */
+}
+
+.tag {
+    background-color: var(--secondary-color);
+    color: #555;
+    padding: 0.25em 0.75em;
+    border-radius: 1em;
+    font-size: 0.8em;
+}
+
+.status {
+    padding: 0.25em 0.75em;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #fff;
+    flex-shrink: 0; /* 防止狀態標籤被壓縮 */
+    margin-left: 1rem;
+}
+
+.status-已完成 { background-color: var(--status-completed); }
+.status-草稿 { background-color: var(--status-draft); }
+.status-審核中 { background-color: var(--status-review); color: #333; }
+.status-已歸檔 { background-color: var(--status-archived); }
+
+/* --- 提示訊息 --- */
+.loading-message, .error-message {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2em;
+    color: #888;
+}
+.error-message {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border: 1px solid #D8000C;
+    border-radius: 8px;
+}
+
+/* --- 響應式設計 --- */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+    header, main, footer {
+        padding: 1rem;
+    }
+    .data-grid {
+        grid-template-columns: 1fr; /* 在小螢幕上變為單欄 */
+    }
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "hdbg-20240720-001",
+    "title": "2024年7月貨物稅退稅申請表",
+    "url": "https://docs.google.com/document/d/1gywVmdULpDEsPqmk0g7W5--Ihh4Cb5DhPzHhVQ8QRJY/edit?tab=t.0",
+    "tags": ["退稅", "營運", "表單"],
+    "date": "2024-07-20",
+    "description": "協助叔叔依照財政部格式完成報表，待送件。",
+    "status": "已完成",
+    "visible": true,
+    "project": "haotenburg",
+    "author": "Wei"
+  },
+  {
+    "id": "hdbg-20240715-002",
+    "title": "2024年Q2公司財報初稿",
+    "url": "https://docs.google.com/document/d/example2",
+    "tags": ["財報", "營運"],
+    "date": "2024-07-15",
+    "description": "第二季財報草稿，數據待財務確認。",
+    "status": "草稿",
+    "visible": true,
+    "project": "haotenburg",
+    "author": "Wei"
+  },
+  {
+    "id": "hdbg-20240630-003",
+    "title": "辦公室租賃合約掃描檔",
+    "url": "https://drive.google.com/file/d/example3",
+    "tags": ["法律", "附件"],
+    "date": "2024-06-30",
+    "description": "與房東簽訂的正式租賃合約，已歸檔。",
+    "status": "已歸檔",
+    "visible": true,
+    "project": "haotenburg",
+    "author": "Wei"
+  },
+  {
+    "id": "hdbg-20240610-004",
+    "title": "商標註冊申請進度追蹤",
+    "url": "https://docs.google.com/document/d/example4",
+    "tags": ["法律", "送審中"],
+    "date": "2024-06-10",
+    "description": "已委託律師事務所辦理，目前在智慧財產局審核中。",
+    "status": "審核中",
+    "visible": true,
+    "project": "haotenburg",
+    "author": "Wei"
+  },
+  {
+    "id": "hdbg-20240520-005",
+    "title": "舊的供應商聯絡清單 (已作廢)",
+    "url": "https://docs.google.com/spreadsheets/d/example5",
+    "tags": ["營運"],
+    "date": "2024-05-20",
+    "description": "此清單已停止使用，僅供歷史參考。",
+    "status": "作廢",
+    "visible": false,
+    "project": "haotenburg",
+    "author": "Wei"
+  }
+]

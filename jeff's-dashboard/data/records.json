@@ -113,18 +113,17 @@
     "id": "r-20250721-008",
     "project": "techstar",
     "category": "營運明細總表",
-    "title": "2025-02 車輛營運明細",
-    "date": "2025-07-21",
-    "reportMonth": "2025-02",
-    "description": "2025年2月份 車輛營運明細總表之草稿",
+    "title": "2025年02月營運明細總表",
+    "date": "2025-07-20",
+    "description": "",
     "url": "https://docs.google.com/spreadsheets/d/1pTEotGEO42wWUafNTnuewl4bSQ08Od124AiS7qMJAOg/edit?gid=0#gid=0",
     "tags": [
-      "營運",
-      "月度報表"
+      "月報"
     ],
-    "status": "草稿",
+    "status": "已完成",
     "visible": true,
-    "author": "Jeff"
+    "author": "Jeff",
+    "reportMonth": "2025-02"
   },
   {
     "id": "r-20250715-009",
@@ -162,24 +161,23 @@
     "id": "r-20250721-011",
     "project": "techstar",
     "category": "營運明細總表",
-    "title": "2024-09 車輛營運明細",
+    "title": "2024年09月營運明細總表",
     "date": "2025-07-20",
-    "reportMonth": "2024-09",
-    "description": "2024年9月份 車輛營運明細總表之草稿",
+    "description": "",
     "url": "https://docs.google.com/spreadsheets/d/1MVhSjRLB_s7gFe_l6GVzA081cyb9huVFgSB-6xNK1H0/edit?gid=0#gid=0",
     "tags": [
-      "營運",
-      "月度報表"
+      "月報"
     ],
     "status": "已完成",
     "visible": true,
-    "author": "Jeff"
+    "author": "Jeff",
+    "reportMonth": "2024-09"
   },
   {
     "id": "r-20250720-549ob",
     "project": "techstar",
     "category": "營運明細總表",
-    "title": "2025-01 車輛營運明細",
+    "title": "2025年01月營運明細總表",
     "date": "2025-07-20",
     "description": "",
     "url": "https://docs.google.com/spreadsheets/d/1_IIx5JdL_Zo_W7l8xbwyMBAdeoFukbmuM8qX3OvIilo/edit?gid=0#gid=0",
@@ -190,5 +188,51 @@
     "visible": true,
     "author": "Jeff",
     "reportMonth": "2025-01"
+  },
+  {
+    "id": "r-20250720-72kku",
+    "project": "techstar",
+    "category": "營運明細總表",
+    "title": "2024年12月營運明細總表",
+    "date": "2025-07-20",
+    "description": "",
+    "url": "https://docs.google.com/spreadsheets/d/1y0SJJNSHM9rudAzWwpjitYyDTBIKZaUqWVf6Ht7hPDw/edit?gid=0#gid=0",
+    "tags": [
+      "月報"
+    ],
+    "status": "已完成",
+    "visible": true,
+    "author": "Jeff",
+    "reportMonth": "2024-12"
+  },
+  {
+    "id": "r-20250720-8dxok",
+    "project": "techstar",
+    "category": "客運車營業額",
+    "title": "客運車營業額每月登記表格",
+    "date": "2025-07-20",
+    "description": "",
+    "url": "https://docs.google.com/spreadsheets/d/1AZMiJvq0e5r57PsQxjlNZ50w5rvtLq0cOKOHb50nqF0/edit?gid=1370954422#gid=1370954422",
+    "tags": [
+      "月報"
+    ],
+    "status": "已完成",
+    "visible": true,
+    "author": "Jeff"
+  },
+  {
+    "id": "r-20250720-n8dgh",
+    "project": "haotenburg",
+    "category": "退稅",
+    "title": "釋慧寶第一名退稅",
+    "date": "2025-07-20",
+    "description": "釋慧寶第一名",
+    "url": "https://docs.google.com/document/d/1DGZutr6TnVTF9AxHbCo7gndcGz0TsJnFKmc7pFDIJiQ/edit?tab=t.0",
+    "tags": [
+      "退稅"
+    ],
+    "status": "已完成",
+    "visible": true,
+    "author": "Jeff"
   }
 ]

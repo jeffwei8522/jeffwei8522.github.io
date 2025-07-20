@@ -422,3 +422,13 @@ footer {
 .button-primary:hover {
     background-color: #004a80;
 }
+
+/* --- 新增：年月選擇器樣式 --- */
+.year-month-selector {
+    display: flex;
+    gap: 1rem;
+}
+
+.year-month-selector select {
+    flex: 1; /* 讓兩個下拉選單平分寬度 */
+}

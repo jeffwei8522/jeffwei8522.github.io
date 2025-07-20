@@ -28,14 +28,17 @@
                 </select>
             </div>
 
+            <div id="report-month-section" class="form-group" style="display: none;">
+                <label>報表年月 (必填)</label>
+                <div class="year-month-selector">
+                    <select id="report-year-select" required></select>
+                    <select id="report-month-select" required></select>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="title-input">標題 (必填)</label>
-                <input type="text" id="title-input" placeholder="例如：2025年8月營運明細總表" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="report-month-input">報表月份 (格式 YYYY-MM，營運總表專用，可選)</label>
-                <input type="text" id="report-month-input" placeholder="例如：2025-08">
+                <input type="text" id="title-input" required>
             </div>
 
             <div class="form-group">
@@ -61,7 +64,8 @@
 
             <div class="form-group">
                 <label for="author-input">建立者</label>
-                <input type="text" id="author-input" value="Jeff"> </div>
+                <input type="text" id="author-input" value="Jeff">
+            </div>
 
             <div class="form-group">
                 <label for="description-textarea">補充說明</label>

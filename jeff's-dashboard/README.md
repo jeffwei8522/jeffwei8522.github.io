@@ -1,3 +1,3 @@
-# My Dashboard
+# 個人專案控制面板
 
-This project is for managing categorized project links and documents.
+統一管理跨事業體專案的資訊與文件。

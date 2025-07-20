@@ -1,0 +1,6 @@
+{
+  "project": "techstar",
+  "name": "科技之星(TechStar)",
+  "description": "一個關於科技之星的維護資料表。",
+  "categories": ["營運明細總表", "客運車營業額", "車種基本資料", "其他"]
+}

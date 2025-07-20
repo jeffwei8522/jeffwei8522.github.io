@@ -1,76 +1,161 @@
-// JavaScript to load and render JSON data
 document.addEventListener('DOMContentLoaded', () => {
-    // 獲取 HTML 頁面的容器元素
-    const dataContainer = document.getElementById('data-container');
-    if (!dataContainer) {
-        console.error('Error: Data container #data-container not found.');
-        return;
+    // 判斷目前在哪種類型的頁面
+    if (document.getElementById('project-container')) {
+        initProjectPage(); // 初始化專案頁面 (e.g., haotenburg.html)
+    } else if (document.getElementById('category-container')) {
+        initCategoryPage(); // 初始化分類內容頁 (category.html)
     }
-
-    // 從當前頁面的 URL 猜測 JSON 檔案的名稱
-    // 例如: "haotenburg.html" -> "haotenburg"
-    const path = window.location.pathname;
-    const pageName = path.split("/").pop().replace('.html', '');
-
-    if (!pageName || pageName === 'index') {
-        // 如果是首頁或無法解析，則不執行載入
-        return;
-    }
-
-    const jsonPath = `data/${pageName}.json`;
-    
-    // 顯示載入中訊息
-    dataContainer.innerHTML = '<p class="loading-message">資料載入中...</p>';
-
-    // 使用 fetch API 取得 JSON 資料
-    fetch(jsonPath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`無法載入資料: ${response.status} ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // 清空載入中訊息
-            dataContainer.innerHTML = '';
-            
-            // 篩選出 visible 為 true 的項目
-            const visibleData = data.filter(item => item.visible);
-
-            if (visibleData.length === 0) {
-                dataContainer.innerHTML = '<p>目前沒有可顯示的資料。</p>';
-                return;
-            }
-
-            // 遍歷每一筆資料並生成 HTML
-            visibleData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'data-card';
-                card.setAttribute('data-id', item.id);
-
-                // 根據狀態給予不同的 class
-                const statusClass = item.status ? `status-${item.status.toLowerCase()}` : '';
-
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3><a href="${item.url}" target="_blank">${item.title}</a></h3>
-                        <span class="status ${statusClass}">${item.status}</span>
-                    </div>
-                    <div class="card-meta">
-                        <span class="date">日期: ${item.date}</span>
-                        <span class="author">建立者: ${item.author}</span>
-                    </div>
-                    <p class="description">${item.description}</p>
-                    <div class="tags-container">
-                        ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                `;
-                dataContainer.appendChild(card);
-            });
-        })
-        .catch(error => {
-            console.error('讀取 JSON 檔案時發生錯誤:', error);
-            dataContainer.innerHTML = `<p class="error-message">資料載入失敗！請檢查
-             <code>${jsonPath}</code> 檔案是否存在且格式正確。</p>`;
-        });
 });
+
+/**
+ * 初始化專案頁面，渲染「分類卡片」
+ */
+async function initProjectPage() {
+    const container = document.getElementById('project-container');
+    container.innerHTML = '<p class="loading-message">專案資料載入中...</p>';
+
+    const projectId = window.location.pathname.split("/").pop().replace('.html', '');
+    if (!projectId || projectId === 'index') return;
+
+    try {
+        const response = await fetch(`config/${projectId}.json`);
+        if (!response.ok) throw new Error(`無法載入設定檔 config/${projectId}.json`);
+        const config = await response.json();
+
+        // 動態設定網頁標題
+        document.title = `${config.name} 分類總覽 - 控制面板`;
+        
+        let content = `
+            <header>
+                <h1>${config.name}</h1>
+                <p>${config.description}</p>
+                <p><a href="index.html">&larr; 返回首頁</a></p>
+            </header>
+            <main>
+                <div class="category-grid">
+        `;
+
+        // 遍歷 config 中的 categories 來生成卡片
+        config.categories.forEach(category => {
+            // 將分類名稱編碼，以安全地放在 URL 中
+            const encodedCategory = encodeURIComponent(category);
+            content += `
+                <a href="category.html?project=${config.project}&category=${encodedCategory}" class="category-card">
+                    <h3>${category}</h3>
+                    <p>點此查看所有「${category}」相關資料</p>
+                </a>
+            `;
+        });
+
+        content += `
+                </div>
+            </main>
+            <footer>
+                <p>&copy; 2025 您的個人控制面板</p>
+            </footer>
+        `;
+        
+        container.innerHTML = content;
+
+    } catch (error) {
+        console.error('渲染專案頁面時發生錯誤:', error);
+        container.innerHTML = `<p class="error-message">錯誤: ${error.message}。</p>`;
+    }
+}
+
+/**
+ * 初始化分類內容頁面，渲染「資料卡片」
+ */
+async function initCategoryPage() {
+    const container = document.getElementById('category-container');
+    container.innerHTML = '<p class="loading-message">分類資料載入中...</p>';
+
+    // 從 URL 參數中獲取 project 和 category
+    const params = new URLSearchParams(window.location.search);
+    const projectId = params.get('project');
+    const category = params.get('category');
+
+    if (!projectId || !category) {
+        container.innerHTML = `<p class="error-message">錯誤: 缺少 project 或 category 參數。</p>`;
+        return;
+    }
+
+    try {
+        const [configRes, recordsRes] = await Promise.all([
+            fetch(`config/${projectId}.json`),
+            fetch(`data/records.json`)
+        ]);
+
+        if (!configRes.ok) throw new Error(`無法載入設定檔 config/${projectId}.json`);
+        if (!recordsRes.ok) throw new Error('無法載入資料檔 data/records.json');
+
+        const [config, allRecords] = await Promise.all([configRes.json(), recordsRes.json()]);
+
+        // 動態設定網頁標題
+        document.title = `${category} - ${config.name} - 控制面板`;
+        
+        // 篩選出符合 project、category 且 visible 的資料，並排序
+        const records = allRecords
+            .filter(r => r.project === projectId && r.category === category && r.visible)
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        let content = `
+            <header>
+                <h1>${config.name}</h1>
+                <p><a href="${projectId}.html">&larr; 返回 ${config.name} 分類列表</a></p>
+            </header>
+            <main>
+                <section class="category-section">
+                    <h2 class="category-title">${category}</h2>
+                    <div class="data-grid">
+        `;
+
+        if (records.length > 0) {
+            records.forEach(item => {
+                content += createDataCardHtml(item); // 使用一個輔助函式來生成卡片HTML
+            });
+        } else {
+            content += '<p class="no-data-message">此分類下無資料</p>';
+        }
+
+        content += `
+                    </div>
+                </section>
+            </main>
+            <footer>
+                <p>&copy; 2025 您的個人控制面板</p>
+            </footer>
+        `;
+
+        container.innerHTML = content;
+
+    } catch (error) {
+        console.error('渲染分類頁面時發生錯誤:', error);
+        container.innerHTML = `<p class="error-message">錯誤: ${error.message}。</p>`;
+    }
+}
+
+/**
+ * 建立單張資料卡片的 HTML 字串 (輔助函式)
+ * @param {object} item - 單筆資料記錄
+ * @returns {string} - 代表資料卡片的 HTML 字串
+ */
+function createDataCardHtml(item) {
+    const statusClass = item.status ? `status-${item.status.toLowerCase()}` : '';
+    return `
+        <div class="data-card" data-id="${item.id}">
+            <div class="card-header">
+                <h3><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+                <span class="status ${statusClass}">${item.status || ''}</span>
+            </div>
+            <div class="card-meta">
+                <span class="date">日期: ${item.date}</span>
+                <span class="author">建立者: ${item.author || ''}</span>
+            </div>
+            <p class="description">${item.description || ''}</p>
+            <div class="tags-container">
+                ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+        </div>
+    `;
+}

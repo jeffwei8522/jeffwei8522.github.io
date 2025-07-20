@@ -36,18 +36,18 @@ h1, h2, h3 {
     color: var(--primary-color);
 }
 
-h1 {
-    margin-bottom: 0.5rem;
+h1 { margin-bottom: 0.5rem; }
+h2.category-title {
+    margin-top: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 a {
     color: var(--primary-color);
     text-decoration: none;
 }
-
-a:hover {
-    text-decoration: underline;
-}
+a:hover { text-decoration: underline; }
 
 footer {
     text-align: center;
@@ -68,28 +68,31 @@ footer {
     margin-bottom: 1rem;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-
 .project-list .project-card:hover {
     text-decoration: none;
     transform: translateY(-5px);
     box-shadow: 0 8px 15px var(--shadow-color);
 }
-
 .project-list .project-card h3 {
     margin-top: 0;
     margin-bottom: 0.5rem;
 }
-
 .project-list .project-card p {
     margin-bottom: 0;
     color: #555;
 }
 
-/* --- 資料卡片網格 (haotenburg.html) --- */
+/* --- 新增：分類區塊 --- */
+.category-section {
+    margin-bottom: 2rem;
+}
+
+/* --- 資料卡片網格 --- */
 .data-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.5rem;
+    margin-top: 1rem;
 }
 
 .data-card {
@@ -102,37 +105,29 @@ footer {
     box-shadow: 0 4px 6px var(--shadow-color);
     transition: box-shadow 0.3s ease;
 }
-
 .data-card:hover {
     box-shadow: 0 8px 15px var(--shadow-color);
 }
-
 .data-card .card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 0.75rem;
 }
-
 .data-card h3 {
     margin: 0;
     font-size: 1.2em;
-    flex-grow: 1; /* 讓標題佔據更多空間 */
+    flex-grow: 1;
 }
-
 .data-card .card-meta {
     font-size: 0.85em;
     color: #666;
     margin-bottom: 1rem;
 }
-
-.data-card .card-meta .author {
-    margin-left: 1rem;
-}
-
+.data-card .card-meta .author { margin-left: 1rem; }
 .data-card .description {
     font-size: 0.95em;
-    flex-grow: 1; /* 讓描述區塊填滿剩餘空間 */
+    flex-grow: 1;
     margin-bottom: 1rem;
 }
 
@@ -141,9 +136,8 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: auto; /* 將標籤推到底部 */
+    margin-top: auto;
 }
-
 .tag {
     background-color: var(--secondary-color);
     color: #555;
@@ -151,17 +145,15 @@ footer {
     border-radius: 1em;
     font-size: 0.8em;
 }
-
 .status {
     padding: 0.25em 0.75em;
     border-radius: 4px;
     font-size: 0.8em;
     font-weight: bold;
     color: #fff;
-    flex-shrink: 0; /* 防止狀態標籤被壓縮 */
+    flex-shrink: 0;
     margin-left: 1rem;
 }
-
 .status-已完成 { background-color: var(--status-completed); }
 .status-草稿 { background-color: var(--status-draft); }
 .status-審核中 { background-color: var(--status-review); color: #333; }
@@ -180,16 +172,68 @@ footer {
     border: 1px solid #D8000C;
     border-radius: 8px;
 }
+.no-data-message {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    text-align: center;
+    color: #777;
+    margin-top: 1rem;
+}
 
 /* --- 響應式設計 --- */
 @media (max-width: 600px) {
-    body {
-        font-size: 14px;
-    }
-    header, main, footer {
-        padding: 1rem;
-    }
-    .data-grid {
-        grid-template-columns: 1fr; /* 在小螢幕上變為單欄 */
-    }
+    body { font-size: 14px; }
+    header, main, footer { padding: 1rem; }
+    .data-grid { grid-template-columns: 1fr; }
+}
+
+/* --- 新增：專案頁上的分類卡片 --- */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.category-card {
+    display: block;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    color: var(--font-color);
+}
+
+.category-card:hover {
+    text-decoration: none;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+.category-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+}
+
+/* 新增一個小箭頭圖示 */
+.category-card h3::after {
+    content: '→';
+    margin-left: auto;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover h3::after {
+    transform: translateX(8px);
+}
+
+.category-card p {
+    margin: 0;
+    font-size: 0.95em;
+    color: #666;
 }

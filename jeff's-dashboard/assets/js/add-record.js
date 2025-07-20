@@ -96,13 +96,20 @@ function updateFormState() {
     // 根據是否為月報，決定顯示/隱藏與欄位狀態
     if (isMonthlyReport) {
         reportMonthSection.style.display = 'block';
+        reportYearSelect.disabled = false;   // 【修正】啟用年份選擇
+        reportMonthSelect.disabled = false;  // 【修正】啟用月份選擇
         titleInput.readOnly = true; // 鎖定標題，由程式自動產生
-        populateYearMonthSelectors(categoryInfo.startYear);
+        // 確保 populateYearMonthSelectors 在啟用後才執行
+        if (reportYearSelect.options.length === 0) { // 避免重複填充
+             populateYearMonthSelectors(categoryInfo.startYear);
+        }
         updateTitleForMonthlyReport();
     } else {
         reportMonthSection.style.display = 'none';
+        reportYearSelect.disabled = true;   // 【修正】禁用年份選擇
+        reportMonthSelect.disabled = true;  // 【修正】禁用月份選擇
         titleInput.readOnly = false; // 解鎖標題，讓使用者自由輸入
-        titleInput.value = ''; // 清空標題
+        // titleInput.value = ''; // 這行建議還是移除，以防清除使用者輸入
         titleInput.placeholder = '請輸入文件或事件的標題'; // 設定通用提示
     }
 }

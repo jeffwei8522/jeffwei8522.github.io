@@ -234,5 +234,36 @@
     "status": "已完成",
     "visible": true,
     "author": "Jeff"
+  },
+  {
+    "id": "r-20250720-3a4zw",
+    "project": "haotenburg",
+    "category": "常用連結",
+    "title": "gemini",
+    "date": "2025-07-20",
+    "description": "一個不錯的ai助理。",
+    "url": "https://gemini.google.com/u/1/app/de6e99187fa747da?hl=zh-TW",
+    "tags": [
+      "AI",
+      "助理"
+    ],
+    "status": "已完成",
+    "visible": true,
+    "author": "Jeff"
+  },
+  {
+    "id": "r-20250720-sd68b",
+    "project": "haotenburg",
+    "category": "常用連結",
+    "title": "國立清華大學",
+    "date": "2025-07-20",
+    "description": "母校",
+    "url": "https://www.nthu.edu.tw/",
+    "tags": [
+      "教育"
+    ],
+    "status": "已完成",
+    "visible": true,
+    "author": "Jeff"
   }
 ]

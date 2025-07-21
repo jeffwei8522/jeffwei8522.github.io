@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯電交通車合約報價分析 (2025年2月)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8fafc; /* Light gray background */
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1e3a8a; /* Dark Blue */
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .kpi-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1d4ed8; /* Blue */
+        }
+        .kpi-label {
+            font-size: 0.875rem;
+            color: #64748b; /* Slate */
+            margin-top: 0.25rem;
+        }
+        .table-header {
+            background-color: #eef2ff; /* Indigo-100 */
+            color: #312e81; /* Indigo-900 */
+            font-weight: 600;
+        }
+        .highlight-red {
+            color: #dc2626; /* Red-600 */
+            font-weight: 600;
+        }
+        .highlight-green {
+            color: #16a34a; /* Green-600 */
+            font-weight: 600;
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            background-color: #3730a3; /* Indigo-800 */
+            transform: scale(1.05);
+        }
+        .details-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-blue-900">聯電交通車合約報價分析</h1>
+            <nav class="hidden md:flex space-x-2">
+                <a href="#summary" class="nav-button bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium">核心摘要</a>
+                <a href="#data-insight" class="nav-button bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium">數據洞察</a>
+                <a href="#cross-route-analysis" class="nav-button bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium">跨線分析</a>
+                <a href="#recommendation" class="nav-button bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium">最終建議</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <!-- Section 1: Core Summary -->
+        <section id="summary" class="py-12">
+            <h2 class="section-title">核心摘要：三大關鍵點</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1: Profitability Issue -->
+                <div class="card p-6 text-center">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">獲利能力不足</h3>
+                    <p class="text-gray-600">聯電專案盈餘率僅 <strong class="text-red-600 text-lg">35%</strong>，顯著低於公司平均的 <strong class="text-green-600 text-lg">45%</strong>。主因是偏高的薪資與油料成本。</p>
+                </div>
+                <!-- Card 2: Market Position -->
+                <div class="card p-6 text-center">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">市場定位與空間</h3>
+                    <p class="text-gray-600">目前單趟報價市場排名第3，但與第2名有 <strong class="text-blue-600 text-lg">10%以上</strong> 的差距，存在明確的調價空間。</p>
+                </div>
+                <!-- Card 3: Recommended Action -->
+                <div class="card p-6 text-center">
+                     <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">建議行動方案</h3>
+                    <p class="text-gray-600">建議將每趟單價調漲至 <strong class="text-green-600 text-lg">1,500-1,600元</strong>，將盈餘率提升至40%的健康水位，且報價仍具競爭力。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Data Insights -->
+        <section id="data-insight" class="py-12">
+            <h2 class="section-title">數據洞察：問題與機會</h2>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Chart 1: Company Operation Overview -->
+                <div class="card p-6">
+                    <h3 class="font-bold text-lg text-center text-gray-800 mb-4">公司整體營運概況 (廠商平均值)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase table-header">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3">廠商</th>
+                                    <th scope="col" class="px-4 py-3 text-right">平均盈餘</th>
+                                    <th scope="col" class="px-4 py-3 text-right">盈餘率</th>
+                                    <th scope="col" class="px-4 py-3 text-right">平均薪資</th>
+                                    <th scope="col" class="px-4 py-3 text-right">平均油料</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-red-50 border-b">
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">聯電</th>
+                                    <td class="px-4 py-3 text-right">61,190</td>
+                                    <td class="px-4 py-3 text-right highlight-red">35%</td>
+                                    <td class="px-4 py-3 text-right highlight-red">51,655</td>
+                                    <td class="px-4 py-3 text-right highlight-red">36,117</td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">光磊/台亞</th>
+                                    <td class="px-4 py-3 text-right">74,788</td>
+                                    <td class="px-4 py-3 text-right highlight-green">43%</td>
+                                    <td class="px-4 py-3 text-right">64,156</td>
+                                    <td class="px-4 py-3 text-right">38,022</td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">旺宏</th>
+                                    <td class="px-4 py-3 text-right">83,931</td>
+                                    <td class="px-4 py-3 text-right highlight-green">51%</td>
+                                    <td class="px-4 py-3 text-right">45,442</td>
+                                    <td class="px-4 py-3 text-right">19,715</td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">矽品</th>
+                                    <td class="px-4 py-3 text-right">81,685</td>
+                                    <td class="px-4 py-3 text-right highlight-green">48%</td>
+                                    <td class="px-4 py-3 text-right">46,183</td>
+                                    <td class="px-4 py-3 text-right">26,750</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">群創</th>
+                                    <td class="px-4 py-3 text-right">46,382</td>
+                                    <td class="px-4 py-3 text-right">39%</td>
+                                    <td class="px-4 py-3 text-right">39,591</td>
+                                    <td class="px-4 py-3 text-right">18,816</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                     <p class="text-xs text-center mt-4 text-slate-500">結論：聯電的盈餘率(35%)顯著低於公司平均(45%)，且薪資與油料成本居於高位，是侵蝕獲利的主因。</p>
+                </div>
+                <!-- Chart 2: Market Price Comparison -->
+                <div class="card p-6">
+                    <h3 class="font-bold text-lg text-center text-gray-800 mb-4">市場報價對比 (每趟單價中位數)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase table-header">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">排名</th>
+                                    <th scope="col" class="px-6 py-3">廠商</th>
+                                    <th scope="col" class="px-6 py-3 text-right">單價 (中位數)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b"><td class="px-6 py-3 font-bold">1</td><td class="px-6 py-3 font-medium">光磊/台亞</td><td class="px-6 py-3 text-right font-bold text-green-700">2,330 元</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-3 font-bold">2</td><td class="px-6 py-3 font-medium">榮創</td><td class="px-6 py-3 text-right font-bold text-green-600">1,575 元</td></tr>
+                                <tr class="bg-blue-50 border-b"><td class="px-6 py-3 font-bold text-blue-800">3</td><td class="px-6 py-3 font-medium text-blue-800">聯電</td><td class="px-6 py-3 text-right font-bold text-blue-800">1,418 元</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-3 font-bold">4</td><td class="px-6 py-3 font-medium">茂矽</td><td class="px-6 py-3 text-right">1,320 元</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-3 font-bold">5</td><td class="px-6 py-3 font-medium">矽品</td><td class="px-6 py-3 text-right">1,298 元</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-3 font-bold">6</td><td class="px-6 py-3 font-medium">群創*</td><td class="px-6 py-3 text-right">1,290 元</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-3 font-bold">7</td><td class="px-6 py-3 font-medium">南茂</td><td class="px-6 py-3 text-right">1,140 元</td></tr>
+                                <tr class="bg-white border-b"><td class="px-6 py-3 font-bold">8</td><td class="px-6 py-3 font-medium">力成</td><td class="px-6 py-3 text-right">1,110 元</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-slate-500">*群創平均值受16,100元極端值影響，中位數更能反映常態。聯電單價(1,418)與第二名榮創(1,575)有超過10%的調價潛力。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Cross-Route Vehicle Analysis -->
+        <section id="cross-route-analysis" class="py-12">
+            <h2 class="section-title">補充分析：跨線車輛的真實影響</h2>
+            <div class="card max-w-4xl mx-auto p-6">
+                <button id="details-toggle" class="w-full text-left font-bold text-lg text-indigo-800 flex justify-between items-center">
+                    <span>點擊展開：為何需要單獨分析跨線車輛？</span>
+                    <svg id="arrow-icon" class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="details-content" class="details-content mt-4 text-gray-700">
+                    <div class="space-y-4 p-4 border-t border-gray-200">
+                        <p><strong>核心發現：</strong>與直覺相反，同時服務聯電長短途的2輛跨線車（大埔/天后宮 + DL廠區接駁），因包含低價短駁線，<strong class="text-red-600">反而拉低了整體的平均單價與盈餘率約 2-3%</strong>。</p>
+                        <div class="bg-amber-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-amber-800">這意味著什麼？</h4>
+                            <p class="mt-2">如果我們排除這2輛跨線車的影響，專跑長途線的車輛，其真實的平均單趟成本價僅為 <strong class="text-red-700 text-xl">1,322元</strong>，這比帳面上看到的1,379元更低，也遠低於市場行情。這更加凸顯了長途路線<strong class="text-red-700">利潤被嚴重壓縮</strong>的現實。</p>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 pt-2">談判槓桿：</h4>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li><strong>展示真實成本：</strong>可以清楚地向客戶展示，其核心的長途路線報價（1,322元）遠低於市場水位，漲價是合理的成本反映。</li>
+                            <li><strong>提供選項：</strong>
+                                <ol class="list-decimal list-inside ml-4 mt-1">
+                                    <li>將長途線路調漲至目標價 <strong class="text-green-600">1,500-1,600元</strong>。</li>
+                                    <li>或，若客戶希望維持現行跨線調度模式，則需為低價的DL接駁線提供額外補貼。</li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Section 4: Recommendation -->
+        <section id="recommendation" class="py-16 bg-blue-900 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">最終建議與目標</h2>
+                <p class="text-lg text-blue-200 mb-8 max-w-3xl mx-auto">綜合以上數據分析，為達成長期穩健的合作關係，我們提出以下具體調價方案。</p>
+                <div class="bg-white text-gray-800 rounded-xl shadow-2xl p-8 max-w-2xl mx-auto">
+                    <h3 class="text-xl font-bold text-blue-800">目標報價</h3>
+                    <p class="kpi-value text-blue-600 my-2">1,500 ~ 1,600 <span class="text-xl font-medium">元 / 趟</span></p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-left">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800">預期效益</h4>
+                            <p class="text-sm text-green-700 mt-1">將專案盈餘率從35%提升至約 <strong class="text-lg">40%</strong>，回到健康且可持續的水平。</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-800">競爭力分析</h4>
+                            <p class="text-sm text-blue-700 mt-1">調價後，報價仍低於光磊/台亞(2,330元)，與榮創(1,575元)在同一區間，<strong class="text-lg">極具市場競爭力</strong>。</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-500 mt-6">此調整能合理反映我們為聯電路線投入的較高薪資與油料成本，並確保服務品質的穩定。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-6 bg-slate-100">
+        <p class="text-sm text-gray-500">報表生成日期：2025年7月21日 | 內部參考資料</p>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('details-toggle');
+        const content = document.getElementById('details-content');
+        const arrow = document.getElementById('arrow-icon');
+
+        toggleButton.addEventListener('click', () => {
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        });
+    </script>
+
+</body>
+</html>

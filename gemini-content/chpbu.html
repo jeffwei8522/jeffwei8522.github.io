@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式合約風險分析儀表板 - 竹北市黃金通學車</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Stone, Slate, Muted Teal) -->
+    <!-- Application Structure Plan: 採用互動式儀表板設計，左側為固定導覽列，右側為動態內容區。使用者點擊導覽項目後，右側會顯示對應的風險分析卡片。此結構將複雜的法律分析拆解為獨立、易於管理的區塊，透過並排比較和視覺化圖表，讓使用者能快速聚焦、理解並採取行動，遠優於傳統線性報告的閱讀體驗。 -->
+    <!-- Visualization & Content Choices: 風險類別 -> 目標 -> 呈現方式 -> 互動 -> 理由 -> 使用技術。 1. 站點合法性 -> 強調法律衝突 -> 高風險標籤卡片、圖示化並排比較 -> 點擊顯示法規細節 -> 視覺化法律紅線 -> HTML/CSS。 2. 罰則 -> 量化財務風險 -> 長條圖 -> 滑鼠懸停提示金額 -> 讓數字更有感，強化談判急迫性 -> Chart.js。 3. 結論 -> 提供行動綱領 -> 步驟流程圖 -> 點擊展開建議 -> 引導使用者後續操作 -> HTML/CSS。 -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .nav-item {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-item.active {
+            background-color: #0d9488; /* teal-600 */
+            color: white;
+            transform: translateX(4px);
+        }
+        .nav-item:not(.active):hover {
+            background-color: #f1f5f9; /* slate-100 */
+            transform: translateX(2px);
+        }
+        .risk-tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+        }
+        .risk-high { background-color: #fee2e2; color: #b91c1c; } /* red-100, red-700 */
+        .risk-medium { background-color: #ffedd5; color: #c2410c; } /* orange-100, orange-700 */
+        .risk-low { background-color: #dcfce7; color: #166534; } /* green-100, green-700 */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="min-h-screen flex flex-col md:flex-row">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200 flex-shrink-0">
+            <div class="p-4 md:p-6 sticky top-0">
+                <h1 class="text-xl font-bold text-teal-700">合約風險分析</h1>
+                <p class="text-sm text-slate-500 mt-1">113年度竹北市黃金通學車</p>
+                <nav id="navigation" class="mt-6 space-y-2">
+                    <!-- Navigation items will be injected here by JS -->
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 md:p-8 lg:p-10">
+            <div id="content-area">
+                <!-- Content will be injected here by JS -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const reportData = {
+            overview: {
+                title: "總覽與核心摘要",
+                content: `
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-3">第三版合約審查報告摘要</h2>
+                        <div class="space-y-4 text-slate-600">
+                            <p><strong class="text-slate-700">審查前提：</strong>本報告基於最終履約車輛為「<span class="font-bold text-amber-600">遊覽車</span>」之最壞情況進行全面分析。</p>
+                            <p><strong class="text-slate-700">核心風險：</strong>第三版合約內容係由第一版（市區客運）及第二版（臨時通學車）沿革而來，其中仍包含大量僅適用於「市區客運（公車）」的規範與罰則，若以遊覽車履約，將面臨極高的違規、違約風險。</p>
+                            <p><strong class="text-slate-700">談判總體策略：</strong>在與業主（竹北市公所）溝通時，應強調所有修訂建議的目的是為了「<span class="font-bold text-teal-600">確保專案合法合規、順利執行</span>」，而非規避責任。鑑於車種的不確定性，合約必須具備彈性，明確區分客運車與遊覽車在履約責任、設備要求及驗收標準上的差異，以避免未來產生爭議。</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm mt-6">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">後續步驟建議</h3>
+                        <ol class="list-decimal list-inside space-y-3 text-slate-600">
+                            <li class="pl-2"><strong class="text-slate-700">正式函文：</strong>將分析報告整理為正式書函，在簽約前或議價階段提出，書面留存紀錄。</li>
+                            <li class="pl-2"><strong class="text-slate-700">召開協調會議：</strong>請求與公所承辦及法制單位開會，逐條討論修訂內容，並攜帶相關法規條文。</li>
+                            <li class="pl-2"><strong class="text-slate-700">鎖定關鍵人物：</strong>提供承辦人能向上級匯報的「理由」，即「為確保專案合法、避免未來爭議」。</li>
+                            <li class="pl-2"><strong class="text-slate-700">堅持底線：</strong><span class="font-bold text-red-600">「站牌合法性」</span>與<span class="font-bold text-red-600">「車身標示」</span>涉及明確違法，為不可退讓的紅線。</li>
+                        </ol>
+                    </div>
+                `
+            },
+            legality: {
+                title: "路線、站點與站牌的合法性",
+                risk: "high",
+                content: `
+                    <div class="mb-4">
+                        <p class="text-slate-600">此為本合約最高風險項目，涉及明確的法規衝突。若強制要求遊覽車比照公車模式設站停靠，將使整個專案處於違法狀態，可能導致主管機關裁罰及履約爭議。</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="border border-red-200 bg-red-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">✕</span>
+                                原合約條款 (有違法風險)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded"><strong>需求說明書 (九):</strong> 各**站**之**停靠點**由本所指定，**公車站牌標誌標線之設置**由得標廠商負責...</p>
+                        </div>
+                        <div class="border border-green-200 bg-green-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">✓</span>
+                                修訂建議 (合法合規)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded">各上下客之地點由甲方**勘選並指定合法、安全之地點**，供乙方臨時停靠。若履約車輛為遊覽車，則本條有關**公車站牌設置之規定不適用之**。</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 bg-white p-4 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-700 mb-2">分析與策略</h4>
+                        <ul class="list-disc list-inside space-y-2 text-sm text-slate-600">
+                            <li><strong>法規衝突：</strong>遊覽車依法不得設置及停靠固定「站牌」，此為市區客運業專屬權利。</li>
+                            <li><strong>實務困境：</strong>若依約設置「站牌」，將立即面臨監理機關的稽查與罰款。</li>
+                            <li><strong>潛在後果：</strong>遭主管機關裁罰、驗收不過、扣款，甚至終止合約。</li>
+                            <li><strong>談判策略：</strong>向業主說明此修訂是為**規避雙方的法律風險**，並將責任歸屬於甲方指定「合法」地點，是確保專案能順利推行的唯一解方。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            equipment: {
+                title: "車輛設備的強制要求",
+                risk: "medium",
+                content: `
+                    <div class="mb-4">
+                        <p class="text-slate-600">此條款雖已加上「營業遊覽大客車除外」的但書，但部分名詞定義模糊，可能在驗收時產生爭議。建議進一步明確化，區分不同車種的適用標準。</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="border border-orange-200 bg-orange-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-orange-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">!</span>
+                                原合約條款 (定義模糊)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded"><strong>需求說明書 (四)-4:</strong> **公車動態資訊顯示系統**(含GPS、GPRS站名播報系統)(**營業遊覽大客車除外**)。</p>
+                        </div>
+                        <div class="border border-green-200 bg-green-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">✓</span>
+                                修訂建議 (標準明確)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded">若為營業遊覽大客車，**廠商應提供車輛GPS訊號或相關定位資訊**，以利甲方掌握車輛位置，**但不強制要求安裝特定之公車動態資訊顯示系統**。</p>
+                        </div>
+                    </div>
+                     <div class="mt-6 bg-white p-4 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-700 mb-2">分析與策略</h4>
+                        <ul class="list-disc list-inside space-y-2 text-sm text-slate-600">
+                            <li><strong>定義模糊：</strong>「公車動態資訊顯示系統」定義不明，若業主要求介接特定API，遊覽車系統可能無法相容。</li>
+                            <li><strong>驗收爭議：</strong>但書雖免除安裝義務，但驗收人員仍可能因「缺乏」設備而提出疑義。</li>
+                             <li><strong>實務困境：</strong>為遊覽車加裝整套公車動態系統成本高昂且不符常規用途。</li>
+                            <li><strong>談判策略：</strong>肯定業主已考慮車種差異，提出此修訂是為了讓驗收標準更具體、無爭議。強調我方願意提供GPS訊號，已滿足業主掌握車輛動態的核心需求。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            marking: {
+                title: "車身標示的法規衝突",
+                risk: "high",
+                content: `
+                    <div class="mb-4">
+                        <p class="text-slate-600">此為另一項明確的違法要求。遊覽車車身標示有其專屬法規，若標示為「公車」將構成標示不實，會遭監理機關裁罰。</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="border border-red-200 bg-red-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">✕</span>
+                                原合約條款 (有違法風險)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded"><strong>需求說明書 (二):</strong> 車廂外應有明顯的**公車標示字樣**或圖樣...</p>
+                        </div>
+                        <div class="border border-green-200 bg-green-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">✓</span>
+                                修訂建議 (合法合規)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded">車廂外應有明顯的『**113年度竹北市黃金通學車**』標示字樣...。所有車身標示內容，應在**符合遊覽車相關法規前提下**，由甲乙雙方共同議定之。</p>
+                        </div>
+                    </div>
+                     <div class="mt-6 bg-white p-4 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-700 mb-2">分析與策略</h4>
+                        <ul class="list-disc list-inside space-y-2 text-sm text-slate-600">
+                            <li><strong>法規衝突：</strong>《汽車運輸業管理規則》對遊覽車車身標示有明確規範，標示「公車」屬於標示不實。</li>
+                            <li><strong>潛在後果：</strong>遭監理機關裁罰，並可能因違規而影響公司評鑑。</li>
+                            <li><strong>談判策略：</strong>直接拿出法規說明，標示「公車」是違法的。強調修改為「黃金通學車」同樣能達到識別目的，且完全合法，是保護雙方的最佳方式。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            age: {
+                title: "車輛年份要求",
+                risk: "low",
+                content: `
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-3">分析與說明</h2>
+                        <div class="space-y-4 text-slate-600">
+                            <p>此條款相較於第一版合約要求的12年以下，已放寬至15年，對遊覽車業者較為友善，**風險較低**。遊覽車市場上15年內的車輛供給充足。</p>
+                            <p class="font-medium text-teal-700"><strong>建議：</strong>此條款可視為業主釋出的彈性，在談判中可予以肯定。無需主動提出修改，可作為其他更關鍵條款談判時的籌碼。</p>
+                        </div>
+                    </div>
+                `
+            },
+            penalty: {
+                title: "排班與時間罰則",
+                risk: "high",
+                content: `
+                    <div class="mb-4">
+                        <p class="text-slate-600">罰則條款完全基於市區公車「固定站點、固定時刻」的營運模式設計，未考慮遊覽車「臨時停靠」的特性以及通學路線尖峰時段的交通變數，罰則過重且執行上易生爭議。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4">違約金分析 (單位：新台幣)</h3>
+                        <div class="chart-container">
+                            <canvas id="penaltyChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="border border-red-200 bg-red-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">✕</span>
+                                原合約條款 (風險高)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded"><strong>勞務採購契約 (第十九條):</strong> ...故意為之導致**誤點**者（超過十分鐘以上...）...每次各扣新臺幣**捌仟元**違約金...**誤點**者(二十分鐘以上)...每次各扣新臺幣**貳萬元**違約金...</p>
+                        </div>
+                        <div class="border border-green-200 bg-green-50/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800 mb-2 flex items-center">
+                                <span class="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center mr-2 text-sm font-bold">✓</span>
+                                修訂建議 (更合理)
+                            </h4>
+                            <p class="text-sm text-slate-600 bg-white p-3 rounded">若延誤係因**非可歸責於乙方之事由（如交通事故、道路壅塞等）**，並經乙方舉證及甲方確認後，**得免除罰則**。且有關『誤點』之罰則，應以**抵達最終目的地之時間**為主要判斷基準。</p>
+                        </div>
+                    </div>
+                     <div class="mt-6 bg-white p-4 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-700 mb-2">分析與策略</h4>
+                        <ul class="list-disc list-inside space-y-2 text-sm text-slate-600">
+                            <li><strong>實務困境：</strong>通學路線尖峰時段極易塞車，遊覽車無公車專用道，尋找臨時停靠點也需時間，非常容易因不可控因素導致「誤點」。</li>
+                             <li><strong>罰則過重：</strong>在無法規避交通風險的情況下，單次高達八千至二萬元的罰款將對營運造成巨大壓力。</li>
+                            <li><strong>談判策略：</strong>以實際路況（如建功高中周邊的塞車照片或新聞）說明罰則在實務上窒礙難行。強調合約應保留對不可控因素的彈性，讓罰則更「合理」。</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        const navigationData = [
+            { id: 'overview', text: '總覽與核心摘要', icon: ' M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' },
+            { id: 'legality', text: '路線、站點與站牌', risk: 'high', icon: 'M15 10.5a3 3 0 11-6 0 3 3 0 016 0z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z' },
+            { id: 'equipment', text: '車輛設備要求', risk: 'medium', icon: 'M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-1.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25' },
+            { id: 'marking', text: '車身標示衝突', risk: 'high', icon: 'M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9' },
+            { id: 'age', text: '車輛年份要求', risk: 'low', icon: 'M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M12 12.75h.008v.008H12v-.008z' },
+            { id: 'penalty', text: '排班與時間罰則', risk: 'high', icon: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z' }
+        ];
+
+        const contentArea = document.getElementById('content-area');
+        const navigation = document.getElementById('navigation');
+        let penaltyChartInstance = null;
+
+        function getRiskTag(risk) {
+            if (!risk) return '';
+            const riskMap = {
+                high: { class: 'risk-high', text: '高風險' },
+                medium: { class: 'risk-medium', text: '中風險' },
+                low: { class: 'risk-low', text: '低風險' }
+            };
+            const { class: riskClass, text: riskText } = riskMap[risk];
+            return `<span class="risk-tag ${riskClass} ml-auto">${riskText}</span>`;
+        }
+
+        function renderNavigation() {
+            navigationData.forEach(item => {
+                const navButton = document.createElement('a');
+                navButton.href = '#';
+                navButton.dataset.id = item.id;
+                navButton.className = 'nav-item w-full flex items-center p-3 rounded-md text-slate-600 font-medium';
+                navButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="${item.icon}" />
+                    </svg>
+                    <span>${item.text}</span>
+                    ${getRiskTag(item.risk)}
+                `;
+                navigation.appendChild(navButton);
+            });
+        }
+
+        function renderContent(id) {
+            const data = reportData[id];
+            if (!data) return;
+
+            const riskTagHtml = getRiskTag(navigationData.find(item => item.id === id)?.risk);
+            
+            contentArea.innerHTML = `
+                <div class="flex items-center mb-6">
+                    <h2 class="text-3xl font-bold text-slate-800">${data.title}</h2>
+                    ${id !== 'overview' ? riskTagHtml : ''}
+                </div>
+                ${data.content}
+            `;
+            
+            if (id === 'penalty') {
+                renderPenaltyChart();
+            }
+
+            updateActiveNav(id);
+        }
+
+        function renderPenaltyChart() {
+            const ctx = document.getElementById('penaltyChart')?.getContext('2d');
+            if (!ctx) return;
+
+            if (penaltyChartInstance) {
+                penaltyChartInstance.destroy();
+            }
+
+            penaltyChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['誤點 10-20分', '誤點 >20分', '提早過站 >5分'],
+                    datasets: [{
+                        label: '違約金 (新台幣)',
+                        data: [8000, 20000, 8000],
+                        backgroundColor: [
+                            'rgba(251, 146, 60, 0.6)', // orange-400
+                            'rgba(239, 68, 68, 0.6)',   // red-500
+                            'rgba(251, 146, 60, 0.6)'  // orange-400
+                        ],
+                        borderColor: [
+                            'rgba(251, 146, 60, 1)',
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(251, 146, 60, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return 'NT$ ' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += 'NT$ ' + context.parsed.y.toLocaleString();
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateActiveNav(id) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.id === id) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNavigation();
+            renderContent('overview');
+
+            navigation.addEventListener('click', (e) => {
+                e.preventDefault();
+                const navItem = e.target.closest('.nav-item');
+                if (navItem) {
+                    renderContent(navItem.dataset.id);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uniflow 智慧巡巴管理系統 | 內部流程優化提案</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* 使用 Noto Sans TC 作為主要字體，Inter 作為備用 */
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #f8fafc; /* light gray background */
+        }
+        /* 自定義漸層背景 */
+        .gradient-bg {
+            background-color: #1e3a8a; /* dark blue */
+            background-image: radial-gradient(circle at 1px 1px, #4f46e530 1px, transparent 0);
+            background-size: 2rem 2rem;
+        }
+        /* 卡片懸停效果 */
+        .card-hover {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        /* 標題動畫 */
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- Header -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-cogs text-2xl text-blue-700"></i>
+                <span class="text-xl font-bold text-gray-800">uniflow</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#challenge" class="text-gray-600 hover:text-blue-700 transition duration-300">當前挑戰</a>
+                <a href="#solution" class="text-gray-600 hover:text-blue-700 transition duration-300">解決方案</a>
+                <a href="#value" class="text-gray-600 hover:text-blue-700 transition duration-300">核心價值</a>
+                <a href="#next-steps" class="text-gray-600 hover:text-blue-700 transition duration-300">下一步</a>
+            </nav>
+            <a href="#next-steps" class="hidden md:block bg-blue-700 text-white px-5 py-2 rounded-full hover:bg-blue-800 transition duration-300 shadow-lg">
+                預約會議討論
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#challenge" class="block py-2 text-gray-600 hover:text-blue-700">當前挑戰</a>
+            <a href="#solution" class="block py-2 text-gray-600 hover:text-blue-700">解決方案</a>
+            <a href="#value" class="block py-2 text-gray-600 hover:text-blue-700">核心價值</a>
+            <a href="#next-steps" class="block py-2 text-gray-600 hover:text-blue-700">下一步</a>
+            <a href="#next-steps" class="block mt-4 bg-blue-700 text-white text-center px-5 py-2 rounded-full hover:bg-blue-800 transition duration-300">
+                預約會議討論
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Hero -->
+        <section id="hero" class="gradient-bg text-white pt-32 pb-20">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-black leading-tight mb-4 fade-in-up" style="animation-delay: 0.2s;">告別繁瑣，擁抱效率</h1>
+                <h2 class="text-xl md:text-2xl font-light mb-8 fade-in-up" style="animation-delay: 0.4s;">uniflow 智慧巡巴管理系統：將里程計算與費用估算的數日工作，壓縮至數秒完成。</h2>
+                <p class="max-w-3xl mx-auto text-blue-200 mb-12 fade-in-up" style="animation-delay: 0.6s;">
+                    我們正站在一個流程革新的起點。這不僅是關於一套系統，更是關於解放團隊的潛力，將寶貴的時間與精力，專注於真正的價值創造，而非重複的文書作業。
+                </p>
+                <a href="#challenge" class="bg-white text-blue-700 font-bold px-8 py-4 rounded-full text-lg hover:bg-gray-200 transition duration-300 shadow-2xl inline-block fade-in-up" style="animation-delay: 0.8s;">
+                    ↓ 了解我們如何實現
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 2: The Problem -->
+        <section id="challenge" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-2">我們今日的挑戰</h2>
+                    <p class="text-lg text-gray-600">反覆的計算，隱藏的風險，是否正悄悄地消耗我們的能量？</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Pain Point 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                        <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-eye"></i></div>
+                        <h3 class="text-xl font-bold mb-2">極度依賴人工判讀</h3>
+                        <p class="text-gray-600">`各車里程表` 充滿顏色標記與隱藏規則，判讀耗時且容易出錯，新人難以快速上手。</p>
+                    </div>
+                    <!-- Pain Point 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                        <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-pencil-alt"></i></div>
+                        <h3 class="text-xl font-bold mb-2">耗時的手動資料匯總</h3>
+                        <p class="text-gray-600">承辦需花費大量時間，扮演「人肉樞紐分析」，將原始數據手動轉錄、分類、加總至 `現況預估表`。</p>
+                    </div>
+                    <!-- Pain Point 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                        <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-lock"></i></div>
+                        <h3 class="text-xl font-bold mb-2">流程知識形成孤島</h3>
+                        <p class="text-gray-600">整個計算邏輯深埋在特定承辦的經驗中，無法被標準化與傳承，形成潛在的流程斷點。</p>
+                    </div>
+                    <!-- Pain Point 4 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                        <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-exclamation-triangle"></i></div>
+                        <h3 class="text-xl font-bold mb-2">難以應對業務變化</h3>
+                        <p class="text-gray-600">任何路線、班次的臨時調整，都意味著一次痛苦且高風險的手動重新計算，缺乏彈性與擴充性。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Solution -->
+        <section id="solution" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-2">智慧的轉變：uniflow 系統</h2>
+                    <p class="text-lg text-gray-600">化繁為簡，只需三步，徹底重塑數據的流動方式。</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4">
+                    <!-- Step 1 -->
+                    <div class="text-center max-w-sm">
+                        <div class="bg-blue-600 text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto text-4xl shadow-lg">
+                            <i class="fas fa-keyboard"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold my-4">Step 1: 輕鬆輸入</h3>
+                        <p class="text-gray-600">設計直觀的「出車日誌」線上表單，透過下拉選單、日期選擇器等元件，從源頭杜絕格式錯誤。</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="text-4xl text-gray-300 my-4 md:my-0 mx-8">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="text-center max-w-sm">
+                        <div class="bg-blue-600 text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto text-4xl shadow-lg">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold my-4">Step 2: 雲端運算</h3>
+                        <p class="text-gray-600">所有數據由系統後台依預設邏輯自動即時運算，將隱藏規則轉化為公開程式碼，保證 100% 準確。</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="text-4xl text-gray-300 my-4 md:my-0 mx-8">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="text-center max-w-sm">
+                        <div class="bg-blue-600 text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto text-4xl shadow-lg">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold my-4">Step 3: 一鍵產出</h3>
+                        <p class="text-gray-600">隨時登入系統，一鍵生成最新報表。輕鬆篩選、模擬不同情境，將數日等待縮短為數秒反應。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Value Proposition -->
+        <section id="value" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-2">為每一位角色，創造真實價值</h2>
+                    <p class="text-lg text-gray-600">不僅是效率提升，更是全面的價值賦能。</p>
+                </div>
+                <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-blue-600 card-hover">
+                        <h3 class="text-2xl font-bold mb-4">For 里程計算承辦</h3>
+                        <p class="text-gray-600 mb-6">告別耗神費力的辨色與填表，將您的專業經驗，轉向流程的監督與優化，而非執行。</p>
+                        <p class="font-bold text-blue-700">價值：從數據的搬運工，到流程的管理者。</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-blue-600 card-hover">
+                        <h3 class="text-2xl font-bold mb-4">For 費用估算承辦</h3>
+                        <p class="text-gray-600 mb-6">隨時獲取最即時、最準確的數據。輕鬆應對臨時提問，快速進行不同方案的成本模擬與效益分析。</p>
+                        <p class="font-bold text-blue-700">價值：從被動的報價員，到主動的成本分析師。</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-blue-600 card-hover">
+                        <h3 class="text-2xl font-bold mb-4">For 公司與管理層</h3>
+                        <p class="text-gray-600 mb-6">杜絕人工失誤、提升組織效率、沉澱數據資產，打造一個更穩健、更具競爭力、可傳承的營運體系。</p>
+                        <p class="font-bold text-blue-700">價值：打造更穩健、更具競爭力的營運基石。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Next Steps -->
+        <section id="next-steps" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="bg-blue-700 text-white rounded-2xl p-10 md:p-16 text-center shadow-2xl">
+                    <h2 class="text-4xl font-bold mb-4">下一步：讓我們共同實現</h2>
+                    <p class="text-lg text-blue-200 max-w-2xl mx-auto mb-8">一個好的系統，始於一次好的對話。我們提議在下週召開一次專案啟動會議。</p>
+                    <div class="text-left max-w-md mx-auto space-y-4 mb-10">
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-check-circle text-2xl text-green-400 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-xl">1. 確認痛點 (15分鐘)</h4>
+                                <p class="text-blue-200">再次確認目前流程中每一個讓您感到困擾的細節。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-check-circle text-2xl text-green-400 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-xl">2. 定義需求 (30分鐘)</h4>
+                                <p class="text-blue-200">共同設計「出車日誌」表單，確保系統符合您的實際操作。</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start space-x-4">
+                            <i class="fas fa-check-circle text-2xl text-green-400 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-xl">3. 規劃藍圖 (15分鐘)</h4>
+                                <p class="text-blue-200">展示初步系統原型與開發時程，確保成果符合期待。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold mt-12">您的投入，是這個專案成功的關鍵。</h3>
+                    <p class="text-lg text-blue-200">期待在會議中，與您一同擘劃一個更高效的未來。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p class="font-bold">uniflow 智慧巡巴管理系統 | 內部流程優化提案</p>
+            <p class="text-sm mt-2">提案人: Jeff </p>
+            <p class="text-sm mt-2">&copy; 2025 TechStar All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileMenuLinks = mobileMenu.getElementsByTagName('a');
+        for (let link of mobileMenuLinks) {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        }
+    </script>
+
+</body>
+</html>

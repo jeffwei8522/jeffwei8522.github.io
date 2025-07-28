@@ -1,0 +1,10 @@
+[
+  {
+    "id": "bx794", "date": "2025-08-19", "airline": "Air Busan / 釜山航空", "flight_no": "BX 794",
+    "dep_time": "13:25", "arr_time": "16:45", "dep_airport": "TPE", "arr_airport": "PUS", "note": "去程"
+  },
+  {
+    "id": "bx791", "date": "2025-08-24", "airline": "Air Busan / 釜山航空", "flight_no": "BX 791",
+    "dep_time": "14:15", "arr_time": "16:10", "dep_airport": "PUS", "arr_airport": "TPE", "note": "回程"
+  }
+]

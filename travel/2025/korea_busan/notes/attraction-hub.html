@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>景點資訊</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <main>
+        <section id="hub-detail">
+            <a href="javascript:history.back()" class="btn" style="margin-bottom: 2rem; background-color: #6c757d;">
+                <i class="fa-solid fa-arrow-left"></i> 返回上一頁
+            </a>
+            
+            <img id="hub-image" src="" alt="景點示意圖" class="hotel-detail-main-img" style="display: none;">
+            <h2 id="hub-title">讀取中...</h2>
+
+            <div class="hotel-info-box">
+                <p id="hub-brief">請稍候，正在為您載入詳細資訊。</p>
+                <table id="hub-table" class="hotel-info-table" style="display: none;">
+                    </table>
+                <a id="hub-external-link" href="#" class="btn" target="_blank" style="display: none;">
+                    </a>
+            </div>
+        </section>
+    </main>
+    <script src="../main.js" defer></script>
+</body>
+</html>

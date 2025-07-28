@@ -1,0 +1,10 @@
+[
+  {
+    "id": "h_avenue", "name_zh": "H-Avenue Hotel Seomyeon Station", "name_en": "H-Avenue Hotel Seomyeon Station",
+    "area": "Seomyeon", "check_in": "2025-08-19 16:00", "check_out": "2025-08-21 12:00", "img": "h_avenue.jpg"
+  },
+  {
+    "id": "ms_hotel", "name_zh": "MS Hotel Haeundae", "name_en": "MS Hotel Haeundae",
+    "area": "Haeundae", "check_in": "2025-08-21 15:00", "check_out": "2025-08-24 11:00", "img": "ms_hotel.jpg"
+  }
+]

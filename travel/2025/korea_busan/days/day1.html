@@ -3,67 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 1: 抵達與初見 - 2025 Busan Love Trip</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <title>Day 1: 抵達與西面初探 - 2025 Busan Love Trip</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="../style.css">
 </head>
 <body class="day-1">
-  <header>
-    <h1>2025 Busan Love Trip 💕</h1>
-    <p>Chi & 未婚妻的粉紅沙灘之旅</p>
-  </header>
-
-  <nav>
-    <ul>
-      <li><a href="../index.html">回到主頁</a></li>
-      <li><a href="../notes/itinerary.html">行程總表</a></li>
-    </ul>
-  </nav>
-
   <main>
+    <nav class="day-switcher">
+      <a href="../notes/itinerary.html" class="btn back-to-itinerary"><i class="fa-solid fa-calendar-days"></i> 行程總表</a>
+      <a href="day1.html" class="btn active">Day 1</a>
+      <a href="day2.html" class="btn">Day 2</a>
+      <a href="day3.html" class="btn">Day 3</a>
+      <a href="day4.html" class="btn">Day 4</a>
+      <a href="day5.html" class="btn">Day 5</a>
+      <a href="day6.html" class="btn">Day 6</a>
+    </nav>
     <section id="daily-timeline">
-      <h2><i class="fa-solid fa-plane-arrival"></i> Day 1: 2025/08/19 (星期二) - 抵達與初見</h2>
-      
+      <h2><i class="fa-solid fa-plane-arrival"></i> Day 1 · 2025/08/19 (星期二)</h2>
       <div class="timeline-container">
 
-        <div class="timeline-item">
-          <div class="timeline-time">14:00</div>
-          <div class="timeline-connector"><div class="timeline-dot"></div></div>
-          <div class="timeline-content">
-            <h3>抵達金海國際機場 (PUS)</h3>
-            <p>終於踏上釜山的土地！空氣中充滿著期待的味道。</p>
-          </div>
-        </div>
-
-        <a href="../hotels/lotte.html" class="timeline-link">
+        <a href="../notes/flight-hub.html?id=bx794" class="timeline-link">
           <div class="timeline-item">
-            <div class="timeline-time">16:00</div>
+            <div class="timeline-time">13:25</div>
             <div class="timeline-connector"><div class="timeline-dot"></div></div>
             <div class="timeline-content">
-              <img src="../photos/hotel-lotte.jpg" alt="釜山樂天飯店">
-              <h3><i class="fa-solid fa-arrow-up-right-from-square"></i> 飯店 Check-in (釜山樂天飯店)</h3>
-              <p>抵達我們精心挑選的飯店，稍作休息。點擊此區塊查看飯店詳細資訊。</p>
+              <h3><i class="fa-solid fa-plane-departure"></i> 起飛 (釜山航空 BX 794)</h3>
+              <p>點此查看詳細航班資訊</p>
             </div>
           </div>
         </a>
 
-        <div class="timeline-item">
-          <div class="timeline-time">18:30</div>
-          <div class="timeline-connector"><div class="timeline-dot"></div></div>
-          <div class="timeline-content">
-            <h3><a href="#" class="disabled">晚餐：雙胞胎豬肉湯飯</a></h3>
-            <p>來釜山的第一餐，當然要獻給道地的豬肉湯飯！熱騰騰的湯頭，溫暖了我們的胃和心。(未來可點擊查看食記)</p>
+        <a href="../hotels/h_avenue.html" class="timeline-link">
+          <div class="timeline-item">
+            <div class="timeline-time">18:00</div>
+            <div class="timeline-connector"><div class="timeline-dot"></div></div>
+            <div class="timeline-content">
+              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="H-Avenue Hotel 示意圖">
+              <h3><i class="fa-solid fa-bed"></i> Check-in: H-Avenue Hotel</h3>
+              <p>入住我們在西面的溫馨小屋</p>
+            </div>
           </div>
-        </div>
+        </a>
+
+        <a href="../notes/attraction-hub.html?id=ssangdwaeji-gukbap" class="timeline-link">
+          <div class="timeline-item">
+            <div class="timeline-time">18:30</div>
+            <div class="timeline-connector"><div class="timeline-dot"></div></div>
+            <div class="timeline-content">
+              <h3><i class="fa-solid fa-utensils"></i> 晚餐：雙胞胎豬肉湯飯</h3>
+              <p>點此查看地圖與資訊</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="../notes/attraction-hub.html?id=seomyeon-mall" class="timeline-link">
+          <div class="timeline-item">
+            <div class="timeline-time">20:00</div>
+            <div class="timeline-connector"><div class="timeline-dot"></div></div>
+            <div class="timeline-content">
+              <h3><i class="fa-solid fa-bag-shopping"></i> 西面地下街</h3>
+              <p>點此查看地圖與資訊</p>
+            </div>
+          </div>
+        </a>
+
       </div>
     </section>
   </main>
-
-  <footer>
-    <p>💗 與你相遇的每一天，都是我旅行的一部分。</p>
-  </footer>
+  <script src="../main.js" defer></script>
 </body>
 </html>

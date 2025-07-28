@@ -484,3 +484,58 @@ footer {
   font-size: 1rem;
   margin-top: 2rem;
 }
+
+/* --- 每日行程切換導覽列樣式 --- */
+.day-switcher {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.day-switcher .btn {
+  margin-top: 0;
+  background-color: #f8f9fa;
+  color: #d63384;
+  box-shadow: none;
+  border: 1px solid #ffe0ec;
+}
+.day-switcher .btn:hover {
+  background-color: #fff0f5;
+  transform: translateY(-2px);
+}
+.day-switcher .btn.active {
+  background-color: #d63384;
+  color: #fff;
+  border-color: #d63384;
+}
+.day-switcher .btn.back-to-itinerary {
+  background-color: #6c5ce7;
+  color: #fff;
+  margin-right: auto; /* 將這個按鈕推到最左邊 */
+}
+
+/* 航班資訊表專用 */
+.flight-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.flight-table thead th {
+  background-color: #ffdde7;
+  color: #a55;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 2px solid #ffe0ec;
+}
+.flight-table tbody td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ffe0ec;
+}
+.flight-table tbody tr:nth-child(even) {
+  background-color: #fff0f5;
+}

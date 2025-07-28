@@ -4,28 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>景點清單 - 2025 Busan Love Trip</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
-    </head>
+</head>
 <body>
     <main>
         <section id="destinations">
             <h2><i class="fa-solid fa-map-location-dot"></i> 📍 景點資料庫</h2>
-            <div class="dest-grid">
-                <div class="dest-card" id="gamcheon">
-                    <img src="https://images.unsplash.com/photo-1558313494-23DE15783438?w=800&q=80" alt="甘川洞文化村">
-                    <h4>甘川洞文化村</h4>
-                    <p>被稱為韓國的聖托里尼，有著繽紛的階梯式小屋與處處驚喜的藝術裝置。</p>
-                </div>
-                <div class="dest-card" id="songdo_cable">
-                    <img src="https://images.unsplash.com/photo-1694406803333-644b9356d7e0?w=800&q=80" alt="松島海上纜車">
-                    <h4>松島海上纜車</h4>
-                    <p>搭乘水晶車廂跨越大海，將松島風光盡收眼底，是絕佳的浪漫體驗。</p>
-                </div>
-                <div class="dest-card" id="haeundae_beach">
-                    <img src="https://images.unsplash.com/photo-1618503554153-50b69102432a?w=800&q=80" alt="海雲台沙灘">
-                    <h4>海雲台海灘</h4>
-                    <p>釜山最具代表性的沙灘，適合散步、踏浪，感受海風的溫柔吹拂。</p>
-                </div>
+
+            <div class="view-toggle-buttons">
+                <button id="view-all-btn" class="btn active">全部顯示</button>
+                <button id="view-categorized-btn" class="btn">按區域分類</button>
+            </div>
+
+            <div id="dest-content-area">
+                <p style="text-align: center;">景點清單載入中...</p>
             </div>
         </section>
     </main>

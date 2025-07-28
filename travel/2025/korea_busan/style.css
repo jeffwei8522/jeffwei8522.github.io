@@ -539,3 +539,39 @@ footer {
 .flight-table tbody tr:nth-child(even) {
   background-color: #fff0f5;
 }
+
+/* --- 景點資料庫卡片文字樣式優化 --- */
+.dest-grid .dest-card {
+    text-decoration: none; /* 移除整個卡片連結的底線 */
+}
+
+.dest-grid .dest-card h4 {
+    color: #d63384; /* 標題套用我們的主題粉色 */
+}
+
+.dest-grid .dest-card p {
+    color: #555; /* 內文使用深灰色，比純黑更柔和 */
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* --- 景點頁檢視模式切換按鈕樣式 --- */
+.view-toggle-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #ffe0ec;
+  padding-bottom: 1.5rem;
+}
+.view-toggle-buttons .btn {
+  margin-top: 0;
+  background-color: #fff0f5;
+  color: #d63384;
+  border: 1px solid #ffe0ec;
+}
+.view-toggle-buttons .btn.active {
+  background-color: #d63384;
+  color: #fff;
+  pointer-events: none; /* 當前選中的按鈕不可再點擊 */
+}

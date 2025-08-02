@@ -34,6 +34,26 @@
 </head>
 <body class="bg-gray-100 p-4 sm:p-8">
 
+    <!-- 自動產生返回主頁的麵包屑 -->
+  <div id="breadcrumb" class="max-w-4xl mx-auto mb-4"></div>
+  <script>
+    (function () {
+      // 1) 先用 <meta name="lesson-date">；若沒有，再嘗試從檔名推 YYMMDD
+      const metaDate = document.querySelector('meta[name="lesson-date"]')?.content?.trim();
+      let dateStr = metaDate && !isNaN(Date.parse(metaDate)) ? metaDate : null;
+      if (!dateStr) {
+        const m = location.pathname.match(/(\d{2})(\d{2})(\d{2})\.html$/);
+        if (m) dateStr = `20${m[1]}-${m[2]}-${m[3]}`;
+      }
+      const backUrl = dateStr ? `../index.html?date=${dateStr}#calendar-widget` : `../index.html#calendar-widget`;
+      document.getElementById('breadcrumb').innerHTML = `
+        <a href="${backUrl}" class="text-blue-600 hover:text-blue-800 hover:underline">&larr; 返回課程日曆</a>
+      `;
+    })();
+  </script>
+
+  <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-10">
+
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-10">
         <header class="text-center mb-12">
             <h1 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-2">高三學測英文 - 本週複習精華 ✍️</h1>

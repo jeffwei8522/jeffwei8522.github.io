@@ -9,7 +9,7 @@
   },
   {
     "day": 2, "date": "2025-08-20", "items": [
-      {"time": "08:15", "type": "hotel", "id": "h_avenue_departure_d2", "title_zh": "從西面飯店出發", "title_en": "Depart from Seomyeon"},
+      {"time": "08:15", "type": "hotel", "id": "h_avenue", "title_zh": "從西面飯店出發", "title_en": "Depart from Seomyeon"},
       {"time": "09:00", "type": "place", "ref_id": "gamcheon", "id": "gamcheon", "title_zh": "抵達：甘川洞文化村", "title_en": "Arrive: Gamcheon"},
       {"time": "10:00", "type": "place", "ref_id": "hanbok-experience", "id": "hanbok-experience", "title_zh": "韓服體驗", "title_en": "Hanbok Experience"},
       {"time": "11:00", "type": "place", "ref_id": "flipbook-making", "id": "flipbook-making", "title_zh": "手翻書製作", "title_en": "Flipbook Making"},
@@ -23,7 +23,7 @@
     "day": 3, "date": "2025-08-21", "items": [
       {"time": "08:00", "type": "hotel", "ref_id": "h_avenue", "id": "h_avenue_checkout", "title_zh": "Check-out 西面飯店", "title_en": "Check-out H-Avenue"},
       {"time": "09:00", "type": "hotel", "ref_id": "ms_hotel", "id": "ms_hotel_drop_luggage_d3", "title_zh": "抵達海雲台飯店寄放行李", "title_en": "Drop luggage at MS Hotel"},
-      {"time": "09:15", "type": "hotel", "id": "departure_for_yonggungsa", "title_zh": "從海雲台出發前往龍宮寺", "title_en": "Depart for Yonggungsa"},
+      {"time": "09:15", "type": "hotel", "id": "ms_hotel", "title_zh": "從海雲台出發前往龍宮寺", "title_en": "Depart for Yonggungsa"},
       {"time": "10:00", "type": "place", "id": "yonggungsa-temple", "title_zh": "抵達：海東龍宮寺", "title_en": "Arrive: Yonggungsa"},
       {"time": "12:00", "type": "place", "id": "lotte-world-busan", "title_zh": "樂天世界釜山", "title_en": "Lotte World"},
       {"time": "15:00", "type": "place", "id": "skyline-luge", "title_zh": "Skyline Luge", "title_en": "Luge"},
@@ -32,18 +32,18 @@
   },
   {
     "day": 4, "date": "2025-08-22", "items": [
-      {"time": "10:00", "type": "hotel", "id": "ms_hotel_departure_d4", "title_zh": "從海雲台飯店出發", "title_en": "Depart from Haeundae"},
+      {"time": "10:00", "type": "hotel", "id": "ms_hotel", "title_zh": "從海雲台飯店出發", "title_en": "Depart from Haeundae"},
       {"time": "10:30", "type": "place", "id": "sky-capsule", "title_zh": "海雲台天空膠囊列車 (尾浦站)", "title_en": "Sky Capsule (Mipo)"},
       {"time": "11:15", "type": "place", "ref_id": "cheongsapo-skywalk", "id": "cheongsapo-skywalk", "title_zh": "青沙浦天空步道與燈塔", "title_en": "Cheongsapo Skywalk"},
       {"time": "12:30", "type": "food", "id": "cheongsapo-lunch", "title_zh": "午餐：青沙浦周邊", "title_en": "Lunch near Cheongsapo"},
-      {"time": "15:00", "type": "hotel", "ref_id": "ms_hotel", "id": "ms_hotel_checkin", "title_zh": "回飯店辦理入住手續", "title_en": "Official Check-in"},
+      {"time": "15:00", "type": "hotel", "ref_id": "ms_hotel", "id": "ms_hotel_checkin", "title_zh": "回飯店休息", "title_en": "Official Check-in"},
       {"time": "17:00", "type": "place", "ref_id": "haeundae_beach", "id": "haeundae_beach", "title_zh": "海雲台沙灘", "title_en": "Haeundae Beach"},
       {"time": "19:00", "type": "place", "id": "x-the-sky", "title_zh": "Busan X the Sky", "title_en":"X the Sky"}
     ]
   },
   {
     "day": 5, "date": "2025-08-23", "items": [
-      {"time": "09:30", "type": "hotel", "id": "ms_hotel_departure_d5", "title_zh": "從海雲台飯店出發", "title_en": "Depart from Haeundae"},
+      {"time": "09:30", "type": "hotel", "id": "ms_hotel", "title_zh": "從海雲台飯店出發", "title_en": "Depart from Haeundae"},
       {"time": "10:00", "type": "place", "id": "shinsegae-centum", "title_zh": "抵達：新世界百貨 Centum", "title_en": "Arrive: Shinsegae"},
       {"time": "13:30", "type": "place", "id": "gwangalli-beach", "title_zh": "廣安里海灘", "title_en": "Gwangalli Beach"},
       {"time": "18:30", "type": "place", "id": "the-bay-101", "title_zh": "The Bay 101 遊艇", "title_en": "Bay101 Yacht"},

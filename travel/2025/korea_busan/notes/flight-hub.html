@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <title>航班資訊</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航班資訊</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <main>
-        <section id="hub-detail">
-            <a href="javascript:history.back()" class="btn" style="margin-bottom: 2rem; background-color: #6c757d;">
-                <i class="fa-solid fa-arrow-left"></i> 返回上一頁
-            </a>
-            
-            <h2 id="hub-title">讀取中...</h2>
-            <div class="hotel-info-box">
-                <p id="hub-brief">請稍候，正在為您載入航班詳細資訊。</p>
-                
-                <table id="hub-table" class="hotel-info-table flight-table">
-                  <thead>
-                    <tr><th>項目</th><th>內容</th></tr>
-                  </thead>
-                  <tbody>
-                    </tbody>
-                </table>
+  <main>
+    <section id="hub-detail">
+      <a href="javascript:history.back()" class="btn" style="margin-bottom: 2rem; background-color: #6c757d;">
+        <i class="fa-solid fa-arrow-left"></i> 返回上一頁
+      </a>
+      
+      <h2 id="hub-title">讀取中...</h2>
+      <div class="hotel-info-box">
+        <p id="hub-brief">請稍候，正在為您載入航班詳細資訊。</p>
+        
+        <table id="hub-table" class="hotel-info-table flight-table" style="display: none;">
+          </table>
 
-                <a id="hub-external-link" href="#" class="btn" target="_blank" style="display: none;"></a>
-            </div>
-        </section>
-    </main>
-    <script src="../main.js" defer></script>
+        <div id="hub-links-container" style="margin-top: 1rem;">
+             <a id="hub-external-link" href="#" class="btn" target="_blank" style="display: none;"></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="../main.js" defer></script>
 </body>
 </html>

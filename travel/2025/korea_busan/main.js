@@ -60,7 +60,7 @@
                     }
                     const iconMap = { flight: 'fa-plane', hotel: 'fa-bed', food: 'fa-utensils', place: 'fa-map-location-dot' };
                     const icon = iconMap[item.type] || 'fa-map-marker-alt';
-                    
+
                     let bookingIndicator = ''; // 預設為空
                     if (itemDetails && itemDetails.booking_url && itemDetails.booking_url !== "") {
                         // 如果這個景點有 booking_url 且不是空的
@@ -109,9 +109,38 @@
                 briefEl.innerText = `從 ${itemData.dep_airport} 前往 ${itemData.arr_airport} 的航班`;
                 tableEl.style.display = 'table';
                 tableEl.innerHTML = `<thead><tr><th>項目</th><th>內容</th></tr></thead><tbody><tr><td>航空公司</td><td>${itemData.airline}</td></tr><tr><td>航班號</td><td>${itemData.flight_no}</td></tr><tr><td>日期</td><td>${itemData.date}</td></tr><tr><td>出發</td><td>${itemData.dep_time} (${itemData.dep_airport})</td></tr><tr><td>抵達</td><td>${itemData.arr_time} (${itemData.arr_airport})</td></tr><tr><td>登機門 (Gate)</td><td>(待更新)</td></tr></tbody>`;
-                linkEl.style.display = 'inline-block';
-                linkEl.href = `https://www.airport.co.kr/gimhae/main.do`;
-                linkEl.innerHTML = `<i class="fa-solid fa-plane-departure"></i> 前往釜山機場官網`;
+                
+                const linksContainer = document.getElementById('hub-links-container');
+                linksContainer.innerHTML = ''; // 清空舊內容
+
+                // 官網按鈕
+                const officialLink = document.createElement('a');
+                officialLink.href = `https://www.airport.co.kr/gimhae/main.do`;
+                officialLink.target = '_blank';
+                officialLink.className = 'btn';
+                officialLink.innerHTML = `<i class="fa-solid fa-plane-departure"></i> 釜山機場官網`;
+                linksContainer.appendChild(officialLink);
+
+                // 抵達機場 (釜山) Naver Map 按鈕
+                const pusLink = document.createElement('a');
+                pusLink.href = `https://map.naver.com/p/search/김해국제공항`;
+                pusLink.target = '_blank';
+                pusLink.className = 'btn';
+                pusLink.style.marginLeft = '1rem';
+                pusLink.innerHTML = `<i class="fa-solid fa-map-location-dot"></i> 導航至釜山機場`;
+                linksContainer.appendChild(pusLink);
+                
+                // 出發機場 (桃園) Google Map 按鈕
+                const tpeLink = document.createElement('a');
+                tpeLink.href = `https://www.google.com/maps/search/?api=1&query=桃園國際機場`;
+                tpeLink.target = '_blank';
+                tpeLink.className = 'btn';
+                tpeLink.style.marginLeft = '1rem';
+                tpeLink.style.backgroundColor = '#6c757d';
+                tpeLink.innerHTML = `<i class="fa-solid fa-map-location-dot"></i> 查看桃園機場位置`;
+                linksContainer.appendChild(tpeLink);
+
+            } else if (itemType === 'hotel') {
             } else if (itemType === 'place') {
                 titleEl.innerText = itemData.name_zh;
                 briefEl.innerText = itemData.brief_zh;
@@ -125,8 +154,8 @@
                     tableEl.innerHTML = `<tr><td>開放時間</td><td>${itemData.open_hours}</td></tr>`;
                 }
                 linkEl.style.display = 'inline-block';
-                const query = itemData.name_zh || itemData.title_zh;
-                linkEl.href = `https://map.naver.com/p/search/${encodeURIComponent("부산 " + query)}`;
+                const query = itemData.name_ko || itemData.name_zh || itemData.title_zh; // 優先使用韓文名
+                linkEl.href = `https://map.naver.com/p/search/${encodeURIComponent(query)}`; // 搜尋時不再手動加上 "부산 "
                 linkEl.innerHTML = `<i class="fa-solid fa-map-location-dot"></i> 在 Naver Map 查看位置`;
                 if (itemData.hasOwnProperty('booking_url')) { // 檢查這個景點是否有預訂需求
                 const bookingBtn = document.createElement('a');

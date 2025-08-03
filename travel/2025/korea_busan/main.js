@@ -121,6 +121,27 @@
                 const query = itemData.name_zh || itemData.title_zh;
                 linkEl.href = `https://map.naver.com/p/search/${encodeURIComponent("부산 " + query)}`;
                 linkEl.innerHTML = `<i class="fa-solid fa-map-location-dot"></i> 在 Naver Map 查看位置`;
+                if (itemData.hasOwnProperty('booking_url')) { // 檢查這個景點是否有預訂需求
+                const bookingBtn = document.createElement('a');
+                bookingBtn.target = '_blank';
+                bookingBtn.className = 'btn';
+                bookingBtn.style.marginLeft = '1rem';
+
+                if (itemData.booking_url && itemData.booking_url !== "") {
+                    // --- 已預訂 ---
+                    bookingBtn.href = itemData.booking_url;
+                    bookingBtn.style.backgroundColor = '#28a745'; // 成功的綠色
+                    bookingBtn.innerHTML = `<i class="fa-solid fa-check"></i> 查看預訂憑證`;
+                } else {
+                    // --- 未預訂 ---
+                    bookingBtn.href = '#'; // 沒有連結
+                    bookingBtn.classList.add('disabled'); // 使用您 style.css 裡寫好的 disabled 樣式
+                    bookingBtn.innerHTML = `<i class="fa-solid fa-ticket"></i> 尚未預訂`;
+                    bookingBtn.onclick = (e) => e.preventDefault(); // 防止點擊跳轉
+                }
+                
+                linkEl.parentNode.insertBefore(bookingBtn, linkEl.nextSibling);
+            }
             }
         } catch (error) {
             console.error("Hub 頁面載入錯誤:", error);

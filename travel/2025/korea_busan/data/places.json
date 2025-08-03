@@ -1,94 +1,195 @@
 [
-  {
-    "id": "gamcheon", "name_zh": "甘川洞文化村", "area": "Saha", "img": "gamcheon-village.jpg", 
-    "brief_zh": "被稱為韓國的聖托里尼，有著繽紛的階梯式小屋與處處驚喜的藝術裝置。", "open_hours":"全天開放"
-  },
-  {
-    "id": "hanbok-experience", "name_zh": "韓服體驗", "area": "Saha", "img": "hanbok-experience.jpg",
-    "brief_zh": "穿上美麗的傳統韓服，漫步在文化村的巷弄間，拍下值得紀念的照片。", "open_hours":"依店家而定"
-  },
-  {
-    "id": "flipbook-making", "name_zh": "手翻書製作體驗", "area": "Saha", "img": "flipbook-making.jpg",
-    "brief_zh": "在充滿藝術氣息的工坊，親手製作一本獨一無二的動態手翻書，記錄甜蜜瞬間。", "open_hours":"依店家而定"
-  },
-  {
-    "id": "songdo_cable", "name_zh": "松島海上纜車", "area": "Seo", "img": "songdo-cable-car.jpg",
-    "brief_zh": "搭乘水晶車廂跨越大海，將松島風光盡收眼底。", "open_hours":"09:00 - 21:00"
-  },
-  {
-    "id": "nampo-pork-feet", "name_zh": "南浦洞豬腳", "area": "Nampo", "img": "nampo-jokbal.jpg",
-    "brief_zh": "南浦洞特色美食之一，Q彈的豬腳搭配清爽的配菜，是絕佳的午餐選擇。", "open_hours": "依店家而定"
-  },
-  {
-    "id": "biff-square-food", "name_zh": "BIFF廣場美食探索", "area": "Nampo", "img": "biff-square.jpg",
-    "brief_zh": "釜山電影節的核心地帶，更是街頭小吃的聖地，可以在此品嚐各式各樣的道地美味。", "open_hours": "下午至深夜"
-  },
-  {
-    "id": "haeundae_beach", "name_zh": "海雲台海灘", "area": "Haeundae", "img": "haeundae-beach.jpg",
-    "brief_zh": "釜山最具代表性的沙灘，適合散步、踏浪。", "open_hours":"全天開放"
-  },
-  {
-    "id": "ssangdwaeji-gukbap", "name_zh": "雙胞胎豬肉湯飯", "area": "Nam", "img": "pork-soup-restaurant.jpg",
-    "brief_zh": "釜山道地的豬肉湯飯代表店家之一，湯頭濃郁，是許多旅客的第一站。", "open_hours":"10:00 - 24:00"
-  },
-  {
-    "id": "seomyeon-mall", "name_zh": "西面地下街", "area": "Seomyeon", "img": "seomyeon-mall.jpg",
-    "brief_zh": "釜山最熱鬧的購物區之一，連接地鐵站，服飾、美妝應有盡有。", "open_hours":"10:00 - 22:00"
-  },
-  {
-    "id": "huinnyeoul-village", "name_zh": "白淺灘文化村", "area": "Yeongdo", "img": "huinnyeoul-village.jpg",
-    "brief_zh": "被譽為釜山的「絕影海岸散步路」，沿著海岸線的白色小屋充滿地中海風情。", "open_hours":"全天開放"
-  },
-  {
-    "id": "jagalchi-dinner", "name_zh": "札嘎其市場海鮮晚餐", "area": "Nampo", "img": "jagalchi-market.jpg",
-    "brief_zh": "韓國最大的海產市場，可以在此挑選新鮮漁獲後，直接請店家烹煮享用。", "open_hours":"05:00 - 22:00"
-  },
-  {
-    "id": "yonggungsa-temple", "name_zh": "海東龍宮寺", "area": "Gijang", "img": "yonggungsa-temple.jpg",
-    "brief_zh": "韓國唯一一座臨海而建的寺廟，海浪、峭壁與寺廟的結合非常壯觀。", "open_hours":"05:00 - 日落"
-  },
-  {
-    "id": "sky-capsule", "name_zh": "海雲台天空膠囊列車", "area": "Haeundae", "img": "sky-capsule.jpg",
-    "brief_zh": "繽紛可愛的海岸列車，以緩慢速度行駛在半空中，飽覽海雲台至青沙浦的海岸美景。", "open_hours": "09:30 - 19:00"
-  },
-  {
-    "id": "cheongsapo-skywalk", "name_zh": "青沙浦天空步道與紅白燈塔", "area": "Haeundae", "img": "cheongsapo-skywalk.jpg",
-    "brief_zh": "從天空膠囊列車終點站延伸，可在此散步、欣賞海景，並與浪漫的紅白燈塔合影。", "open_hours": "09:00 - 18:00"
-  },
-  {
-    "id": "cheongsapo-lunch", "name_zh": "青沙浦周邊午餐", "area": "Haeundae", "img": "cheongsapo-restaurants.jpg",
-    "brief_zh": "青沙浦有許多海景餐廳與咖啡廳，可以在此悠閒地享用午餐，欣賞海港風光。", "open_hours": "依店家而定"
-  },
-  {
-    "id": "x-the-sky", "name_zh": "Busan X the Sky", "area": "Haeundae", "img": "x-the-sky.jpg",
-    "brief_zh": "位於韓國第二高樓海雲台 LCT 的觀景台，可以360度欣賞釜山的日夜景色。", "open_hours": "10:00 - 21:00"
-  },
-  {
-    "id": "lotte-world-busan", "name_zh": "樂天世界釜山", "area": "Gijang", "img": "lotte-world-busan.jpg",
-    "brief_zh": "以童話王國為主題的樂園，擁有刺激的遊樂設施與精彩的巡遊表演。", "open_hours": "10:00 - 21:00"
-  },
-  {
-    "id": "skyline-luge", "name_zh": "Skyline Luge 釜山", "area": "Gijang", "img": "skyline-luge.jpg",
-    "brief_zh": "從山坡上搭乘無動力斜坡滑車順勢而下，體驗速度與馳騁的快感，是個刺激又有趣的活動。", "open_hours": "10:00 - 19:00"
-  },
-  {
-    "id": "spa-land", "name_zh": "新世界 Spa Land", "area": "Haeundae", "img": "spa-land.jpg",
-    "brief_zh": "位於新世界百貨內的高級汗蒸幕，提供多種不同主題的汗蒸房與溫泉池，是放鬆身心的絕佳去處。", "open_hours": "09:00 - 22:00"
-  },
-  {
-    "id": "shinsegae-centum", "name_zh": "新世界百貨 (Centum City)", "area": "Haeundae", "img": "shinsegae-department-store.jpg",
-    "brief_zh": "號稱全世界最大的百貨公司，集購物、娛樂、休閒於一體，可以在這裡逛上一整天。", "open_hours": "10:30 - 20:00"
-  },
-  {
-    "id": "gwangalli-beach", "name_zh": "廣安里海灘", "area": "Suyeong", "img": "gwangalli-beach.jpg",
-    "brief_zh": "以廣安大橋的壯麗夜景而聞名，是欣賞夜景、散步與品嚐美食的絕佳地點。", "open_hours": "全天開放"
-  },
-  {
-    "id": "the-bay-101", "name_zh": "The Bay 101 遊艇體驗", "area": "Haeundae", "img": "the-bay-101.jpg",
-    "brief_zh": "從海上欣賞釜山璀璨的摩天大樓夜景，感受浪漫的都市海港氛圍，是旅程中難忘的體驗。", "open_hours": "依船班而定"
-  },
-  {
-    "id": "matchandeul-bbq", "name_zh": "味贊王鹽烤肉", "area": "Seomyeon", "img": "matchandeul-bbq.jpg",
-    "brief_zh": "知名的厚切豬五花連鎖燒肉店，以高品質的豬肉和專人代烤服務聞名。", "open_hours": "12:00 - 23:00"
-  }
+    {
+        "id": "gamcheon",
+        "name_zh": "甘川洞文化村",
+        "area": "Saha",
+        "img": "gamcheon-village.jpg",
+        "brief_zh": "被稱為韓國的聖托里尼，有著繽紛的階梯式小屋與處處驚喜的藝術裝置。",
+        "open_hours": "全天開放"
+    },
+    {
+        "id": "hanbok-experience",
+        "name_zh": "韓服體驗",
+        "area": "Saha",
+        "img": "hanbok-experience.jpg",
+        "brief_zh": "穿上美麗的傳統韓服，漫步在文化村的巷弄間，拍下值得紀念的照片。",
+        "open_hours": "依店家而定",
+        "booking_url": "https://drive.google.com/file/d/1M8R3xSNL_XG8cvJbsIUvjMlWWATQsbjp/view?usp=drive_link"
+    },
+    {
+        "id": "flipbook-making",
+        "name_zh": "手翻書製作體驗",
+        "area": "Saha",
+        "img": "flipbook-making.jpg",
+        "brief_zh": "在充滿藝術氣息的工坊，親手製作一本獨一無二的動態手翻書，記錄甜蜜瞬間。",
+        "open_hours": "依店家而定",
+        "booking_url": ""
+    },
+    {
+        "id": "songdo_cable",
+        "name_zh": "松島海上纜車",
+        "area": "Seo",
+        "img": "songdo-cable-car.jpg",
+        "brief_zh": "搭乘水晶車廂跨越大海，將松島風光盡收眼底。",
+        "open_hours": "09:00 - 21:00",
+        "booking_url": ""
+    },
+    {
+        "id": "nampo-pork-feet",
+        "name_zh": "南浦洞豬腳",
+        "area": "Nampo",
+        "img": "nampo-jokbal.jpg",
+        "brief_zh": "南浦洞特色美食之一，Q彈的豬腳搭配清爽的配菜，是絕佳的午餐選擇。",
+        "open_hours": "依店家而定"
+    },
+    {
+        "id": "biff-square-food",
+        "name_zh": "BIFF廣場美食探索",
+        "area": "Nampo",
+        "img": "biff-square.jpg",
+        "brief_zh": "釜山電影節的核心地帶，更是街頭小吃的聖地，可以在此品嚐各式各樣的道地美味。",
+        "open_hours": "下午至深夜"
+    },
+    {
+        "id": "haeundae_beach",
+        "name_zh": "海雲台海灘",
+        "area": "Haeundae",
+        "img": "haeundae-beach.jpg",
+        "brief_zh": "釜山最具代表性的沙灘，適合散步、踏浪。",
+        "open_hours": "全天開放"
+    },
+    {
+        "id": "ssangdwaeji-gukbap",
+        "name_zh": "雙胞胎豬肉湯飯",
+        "area": "Nam",
+        "img": "pork-soup-restaurant.jpg",
+        "brief_zh": "釜山道地的豬肉湯飯代表店家之一，湯頭濃郁，是許多旅客的第一站。",
+        "open_hours": "10:00 - 24:00"
+    },
+    {
+        "id": "seomyeon-mall",
+        "name_zh": "西面地下街",
+        "area": "Seomyeon",
+        "img": "seomyeon-mall.jpg",
+        "brief_zh": "釜山最熱鬧的購物區之一，連接地鐵站，服飾、美妝應有盡有。",
+        "open_hours": "10:00 - 22:00"
+    },
+    {
+        "id": "huinnyeoul-village",
+        "name_zh": "白淺灘文化村",
+        "area": "Yeongdo",
+        "img": "huinnyeoul-village.jpg",
+        "brief_zh": "被譽為釜山的「絕影海岸散步路」，沿著海岸線的白色小屋充滿地中海風情。",
+        "open_hours": "全天開放"
+    },
+    {
+        "id": "jagalchi-dinner",
+        "name_zh": "札嘎其市場海鮮晚餐",
+        "area": "Nampo",
+        "img": "jagalchi-market.jpg",
+        "brief_zh": "韓國最大的海產市場，可以在此挑選新鮮漁獲後，直接請店家烹煮享用。",
+        "open_hours": "05:00 - 22:00"
+    },
+    {
+        "id": "yonggungsa-temple",
+        "name_zh": "海東龍宮寺",
+        "area": "Gijang",
+        "img": "yonggungsa-temple.jpg",
+        "brief_zh": "韓國唯一一座臨海而建的寺廟，海浪、峭壁與寺廟的結合非常壯觀。",
+        "open_hours": "05:00 - 日落"
+    },
+    {
+        "id": "sky-capsule",
+        "name_zh": "海雲台天空膠囊列車",
+        "area": "Haeundae",
+        "img": "sky-capsule.jpg",
+        "brief_zh": "繽紛可愛的海岸列車，以緩慢速度行駛在半空中，飽覽海雲台至青沙浦的海岸美景。",
+        "open_hours": "09:30 - 19:00",
+        "booking_url": "https://drive.google.com/file/d/1DKbSg-dAiYUyLE_WeFJb_bAlUatwZSFH/view?usp=drive_link"
+    },
+    {
+        "id": "cheongsapo-skywalk",
+        "name_zh": "青沙浦天空步道與紅白燈塔",
+        "area": "Haeundae",
+        "img": "cheongsapo-skywalk.jpg",
+        "brief_zh": "從天空膠囊列車終點站延伸，可在此散步、欣賞海景，並與浪漫的紅白燈塔合影。",
+        "open_hours": "09:00 - 18:00"
+    },
+    {
+        "id": "cheongsapo-lunch",
+        "name_zh": "青沙浦周邊午餐",
+        "area": "Haeundae",
+        "img": "cheongsapo-restaurants.jpg",
+        "brief_zh": "青沙浦有許多海景餐廳與咖啡廳，可以在此悠閒地享用午餐，欣賞海港風光。",
+        "open_hours": "依店家而定"
+    },
+    {
+        "id": "x-the-sky",
+        "name_zh": "Busan X the Sky",
+        "area": "Haeundae",
+        "img": "x-the-sky.jpg",
+        "brief_zh": "位於韓國第二高樓海雲台 LCT 的觀景台，可以360度欣賞釜山的日夜景色。",
+        "open_hours": "10:00 - 21:00",
+        "booking_url": ""
+    },
+    {
+        "id": "lotte-world-busan",
+        "name_zh": "樂天世界釜山",
+        "area": "Gijang",
+        "img": "lotte-world-busan.jpg",
+        "brief_zh": "以童話王國為主題的樂園，擁有刺激的遊樂設施與精彩的巡遊表演。",
+        "open_hours": "10:00 - 21:00",
+        "booking_url": ""
+    },
+    {
+        "id": "skyline-luge",
+        "name_zh": "Skyline Luge 釜山",
+        "area": "Gijang",
+        "img": "skyline-luge.jpg",
+        "brief_zh": "從山坡上搭乘無動力斜坡滑車順勢而下，體驗速度與馳騁的快感，是個刺激又有趣的活動。",
+        "open_hours": "10:00 - 19:00",
+        "booking_url": ""
+    },
+    {
+        "id": "spa-land",
+        "name_zh": "新世界 Spa Land",
+        "area": "Haeundae",
+        "img": "spa-land.jpg",
+        "brief_zh": "位於新世界百貨內的高級汗蒸幕，提供多種不同主題的汗蒸房與溫泉池，是放鬆身心的絕佳去處。",
+        "open_hours": "09:00 - 22:00",
+        "booking_url": ""
+    },
+    {
+        "id": "shinsegae-centum",
+        "name_zh": "新世界百貨 (Centum City)",
+        "area": "Haeundae",
+        "img": "shinsegae-department-store.jpg",
+        "brief_zh": "號稱全世界最大的百貨公司，集購物、娛樂、休閒於一體，可以在這裡逛上一整天。",
+        "open_hours": "10:30 - 20:00"
+    },
+    {
+        "id": "gwangalli-beach",
+        "name_zh": "廣安里海灘",
+        "area": "Suyeong",
+        "img": "gwangalli-beach.jpg",
+        "brief_zh": "以廣安大橋的壯麗夜景而聞名，是欣賞夜景、散步與品嚐美食的絕佳地點。",
+        "open_hours": "全天開放"
+    },
+    {
+        "id": "the-bay-101",
+        "name_zh": "The Bay 101 遊艇體驗",
+        "area": "Haeundae",
+        "img": "the-bay-101.jpg",
+        "brief_zh": "從海上欣賞釜山璀璨的摩天大樓夜景，感受浪漫的都市海港氛圍，是旅程中難忘的體驗。",
+        "open_hours": "依船班而定",
+        "booking_url": ""
+    },
+    {
+        "id": "matchandeul-bbq",
+        "name_zh": "海雲台味贊王鹽烤肉",
+        "area": "Haeundae",
+        "img": "matchandeul-bbq.jpg",
+        "brief_zh": "知名的厚切豬五花連鎖燒肉店，在海雲台也有分店，結束海邊行程後用餐非常方便。",
+        "open_hours": "12:00 - 23:00"
+    }
 ]

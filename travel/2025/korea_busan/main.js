@@ -60,7 +60,14 @@
                     }
                     const iconMap = { flight: 'fa-plane', hotel: 'fa-bed', food: 'fa-utensils', place: 'fa-map-location-dot' };
                     const icon = iconMap[item.type] || 'fa-map-marker-alt';
-                    timelineHTML += `<a href="${link}" class="timeline-link"><div class="timeline-item"><div class="timeline-time">${item.time}</div><div class="timeline-connector"><div class="timeline-dot"></div></div><div class="timeline-content">${imageHTML}<h3><i class="fa-solid ${icon}"></i> ${title}</h3><p>${subtitle}</p></div></div></a>`;
+                    
+                    let bookingIndicator = ''; // 預設為空
+                    if (itemDetails && itemDetails.booking_url && itemDetails.booking_url !== "") {
+                        // 如果這個景點有 booking_url 且不是空的
+                        bookingIndicator = ' <i class="fa-solid fa-circle-check" style="color: #28a745; font-size: 0.9rem;"></i>';
+                    }
+
+                    timelineHTML += `<a href="${link}" class="timeline-link"><div class="timeline-item"><div class="timeline-time">${item.time}</div><div class="timeline-connector"><div class="timeline-dot"></div></div><div class="timeline-content">${imageHTML}<h3><i class="fa-solid ${icon}"></i> ${title}${bookingIndicator}</h3><p>${subtitle}</p></div></div></a>`;
                 }
                 timelineContainer.innerHTML = timelineHTML;
             } catch (error) {

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>民宿網站專案藍圖 - 互動式報告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Subtle Accents -->
+    <!-- Application Structure Plan: A top-down, decision-flow structure. It starts with the high-level strategy (Why), moves to the architectural choices (How), and then to the implementation details (What). This guides the user through the report's logic, from strategic vision to technical execution. Key interactions include toggling between different technology options to see their pros and cons, and clicking on flowchart nodes to reveal detailed explanations. This structure was chosen because the source report is a strategic plan, and a decision-flow visualization is the most effective way to make complex strategic options understandable and comparable. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Strategic Positioning -> Goal: Inform -> Viz/Presentation: Key Value Cards -> Interaction: Hover for details -> Justification: Quickly conveys the core business strategies from the report.
+        - Report Info: Technology Stack Comparison (Frontend, CMS) -> Goal: Compare -> Viz/Presentation: Interactive Bar Chart & Feature Table -> Interaction: Click buttons to switch chart data and table content -> Justification: Allows for direct, side-by-side comparison of technical options, which is a core part of the report's recommendations.
+        - Report Info: System Architecture (Headless) -> Goal: Organize -> Viz/Presentation: HTML/CSS Flowchart -> Interaction: Click on nodes to highlight path and show detailed text -> Justification: Visually represents the complex data flow between different services (Astro, Strapi, Cloudflare), making the abstract architecture concrete and easy to follow.
+        - Report Info: Phased Rollout Plan -> Goal: Change/Process -> Viz/Presentation: Tabbed content sections -> Interaction: Click tabs for Phase 1 (MVP) and Phase 2 (Expansion) -> Justification: Clearly separates the recommended implementation stages, aligning with the report's phased approach.
+        - Library/Method: Chart.js for charts, Custom HTML/CSS/JS for flowchart and interactive elements. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FDFBF8;
+            color: #3a3a3a;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #D97706; /* Amber-600 */
+            border-bottom-color: #D97706;
+        }
+        .flowchart-node {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .flowchart-node.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(217, 119, 6, 0.5);
+            border-color: #D97706;
+        }
+        .flowchart-line {
+            transition: all 0.3s ease-in-out;
+        }
+        .flowchart-line.active {
+            stroke-width: 3;
+            stroke: #D97706;
+        }
+        .tab-button.active {
+            background-color: #FBBF24; /* Amber-400 */
+            color: #422006;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-amber-700">民宿網站戰略藍圖</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#strategy" class="nav-link font-medium">戰略定位</a>
+                <a href="#tech-stack" class="nav-link font-medium">技術選型</a>
+                <a href="#architecture" class="nav-link font-medium">架構設計</a>
+                <a href="#roadmap" class="nav-link font-medium">實施路徑</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <canvas id="menu-icon" width="24" height="24"></canvas>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#strategy" class="block py-2 px-6 text-sm hover:bg-amber-50">戰略定位</a>
+            <a href="#tech-stack" class="block py-2 px-6 text-sm hover:bg-amber-50">技術選型</a>
+            <a href="#architecture" class="block py-2 px-6 text-sm hover:bg-amber-50">架構設計</a>
+            <a href="#roadmap" class="block py-2 px-6 text-sm hover:bg-amber-50">實施路徑</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Section 1: Strategic Positioning -->
+        <section id="strategy" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4">戰略定位：從住宿到品牌體驗</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+                成功的網站始於清晰的戰略。我們的分析顯示，標竿網站 `doghowls.com.tw` 的核心是將自身從單純的住宿提供者，轉型為一個完整、有主題的度假體驗品牌。以下是您可以借鑒的三大核心戰略支柱。
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Strategy Card 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl text-amber-600">🎯</span>
+                        </div>
+                        <h3 class="text-xl font-bold">利基市場主導</h3>
+                    </div>
+                    <p class="text-gray-700">專注於特定客群（如：寵物友善、親子家庭），提供超越期望的專業設施與服務，建立難以被複製的品牌護城河。</p>
+                </div>
+                <!-- Strategy Card 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl text-green-600">✍️</span>
+                        </div>
+                        <h3 class="text-xl font-bold">內容轉換引擎</h3>
+                    </div>
+                    <p class="text-gray-700">將網站打造成行銷漏斗的頂端。透過發布在地化的旅遊指南與部落格，捕獲潛在客戶的搜尋流量，並在預訂前就建立專家信任感。</p>
+                </div>
+                <!-- Strategy Card 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-xl text-blue-600">🤝</span>
+                        </div>
+                        <h3 class="text-xl font-bold">聚焦社群建立</h3>
+                    </div>
+                    <p class="text-gray-700">集中資源在目標客群最活躍的單一社群平台（如 Facebook），分享使用者原創內容，培養「俱樂部」般的歸屬感，驅動口碑行銷。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Technology Stack Selection -->
+        <section id="tech-stack" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4">技術選型：打造可擴充的現代化基石</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+                從 GitHub Pages 的靜態託管，到一個功能完備的商業網站，是一次開發思維的轉變。我們推薦採用「可組合式應用程式」架構，讓每個部分都能獨立擴充。點擊下方按鈕，互動比較不同技術方案的優劣。
+            </p>
+            
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Tech Choice: Frontend -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">前端框架：使用者體驗的門面</h3>
+                        <div class="flex space-x-2 mb-4">
+                            <button id="btn-astro" class="tech-btn px-4 py-2 text-sm font-medium bg-amber-200 text-amber-800 rounded-full shadow-sm hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400">Astro (推薦)</button>
+                            <button id="btn-pelican" class="tech-btn px-4 py-2 text-sm font-medium bg-gray-200 text-gray-800 rounded-full shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">Pelican</button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="frontend-chart"></canvas>
+                        </div>
+                        <div id="frontend-details" class="mt-4 p-4 bg-gray-50 rounded-md"></div>
+                    </div>
+
+                    <!-- Tech Choice: CMS -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">內容管理：非技術人員的賦能中樞</h3>
+                        <div class="flex space-x-2 mb-4">
+                            <button id="btn-strapi" class="cms-btn px-4 py-2 text-sm font-medium bg-amber-200 text-amber-800 rounded-full shadow-sm hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400">Strapi (推薦)</button>
+                            <button id="btn-sanity" class="cms-btn px-4 py-2 text-sm font-medium bg-gray-200 text-gray-800 rounded-full shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">Sanity</button>
+                            <button id="btn-decap" class="cms-btn px-4 py-2 text-sm font-medium bg-gray-200 text-gray-800 rounded-full shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">Decap CMS</button>
+                        </div>
+                        <div id="cms-details" class="mt-4 space-y-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Architecture Design -->
+        <section id="architecture" class="mb-20 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4">架構設計：無頭 (Headless) 模式下的數據流</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+                這套架構的核心是「解耦」。內容、邏輯與呈現各自獨立，透過 API 互相溝通。這提供了極致的彈性與擴充性。點擊下方流程圖的節點，探索數據如何在系統中流動，以及每個服務扮演的角色。
+            </p>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="w-full overflow-x-auto">
+                    <div class="min-w-[800px] h-[500px] relative">
+                        <canvas id="flowchart-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                        
+                        <div id="node-user" class="flowchart-node absolute top-[210px] left-[20px] w-32 text-center p-3 bg-blue-100 border-2 border-blue-300 rounded-lg">
+                            <h4 class="font-bold">使用者</h4>
+                            <p class="text-xs">訪客/管理員</p>
+                        </div>
+                        <div id="node-astro" class="flowchart-node absolute top-[210px] left-[200px] w-32 text-center p-3 bg-green-100 border-2 border-green-300 rounded-lg">
+                            <h4 class="font-bold">Astro 前端</h4>
+                            <p class="text-xs">靜態網站</p>
+                        </div>
+                        <div id="node-strapi" class="flowchart-node absolute top-[80px] left-[400px] w-32 text-center p-3 bg-purple-100 border-2 border-purple-300 rounded-lg">
+                            <h4 class="font-bold">Strapi CMS</h4>
+                            <p class="text-xs">內容管理</p>
+                        </div>
+                        <div id="node-worker" class="flowchart-node absolute top-[210px] left-[580px] w-32 text-center p-3 bg-orange-100 border-2 border-orange-300 rounded-lg">
+                            <h4 class="font-bold">CF Worker</h4>
+                            <p class="text-xs">中介層邏輯</p>
+                        </div>
+                        <div id="node-d1" class="flowchart-node absolute top-[340px] left-[400px] w-32 text-center p-3 bg-red-100 border-2 border-red-300 rounded-lg">
+                            <h4 class="font-bold">Cloudflare D1</h4>
+                            <p class="text-xs">會員/訂單資料</p>
+                        </div>
+                         <div id="node-pages" class="flowchart-node absolute top-[80px] left-[580px] w-32 text-center p-3 bg-yellow-100 border-2 border-yellow-300 rounded-lg">
+                            <h4 class="font-bold">CF Pages</h4>
+                            <p class="text-xs">部署/託管</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="architecture-details" class="mt-6 p-6 bg-amber-50 rounded-lg min-h-[100px]">
+                    <p class="text-amber-800 text-center">點擊上方流程圖中的任一節點，查看其詳細說明。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Implementation Roadmap -->
+        <section id="roadmap" class="scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4">實施路徑圖：分階段迭代，穩健前行</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+                我們強烈建議採用分階段的開發策略。不要一開始就追求完美，先從一個精美的最小可行性產品 (MVP) 開始，驗證市場，然後再根據營運需求逐步擴充功能。
+            </p>
+            <div class="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+                <div class="mb-6 border-b border-gray-200">
+                    <nav class="flex space-x-4" aria-label="Tabs">
+                        <button id="tab-mvp" class="tab-button active font-medium px-4 py-3 text-gray-600 rounded-t-lg hover:text-amber-600">
+                            階段一：MVP (最小可行性產品)
+                        </button>
+                        <button id="tab-expansion" class="tab-button font-medium px-4 py-3 text-gray-600 rounded-t-lg hover:text-amber-600">
+                            階段二：業務擴充
+                        </button>
+                    </nav>
+                </div>
+                <div id="content-mvp" class="roadmap-content">
+                    <h3 class="text-2xl font-bold text-amber-700 mb-4">目標：用最小成本建立專業形象，並開始測試市場反應。</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-700">
+                        <li><span class="font-semibold">網站核心：</span>建立一個資訊完整、體驗精美的靜態網站，包含品牌故事、空間介紹、租賃規則等。高品質的攝影是此階段的靈魂。</li>
+                        <li><span class="font-semibold">「訂房」功能：</span>去系統化。採用 Google 表單作為「預訂諮詢單」，由營運專員人工確認特殊訂房邏輯（如假日包日），再提供匯款帳號。</li>
+                        <li><span class="font-semibold">「會員」功能：</span>去系統化。建立 LINE 官方帳號，在網站引導訪客加入，作為初期的會員溝通與客服管道。</li>
+                        <li><span class="font-semibold">技術實踐：</span>使用 Astro + Tailwind CSS 開發，部署於 Cloudflare Pages。此階段甚至可以暫時不用 Headless CMS，將內容直接寫在程式碼中。</li>
+                    </ul>
+                </div>
+                <div id="content-expansion" class="roadmap-content hidden">
+                    <h3 class="text-2xl font-bold text-amber-700 mb-4">目標：當人工處理訂單成為瓶頸時，引入自動化系統。</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-700">
+                        <li><span class="font-semibold">導入 Headless CMS：</span>引入 Strapi，將所有網站內容（房型、價格、文章）交由 GUI 後台管理，實現內容與程式碼的解耦，讓非技術人員也能輕鬆更新網站。</li>
+                        <li><span class="font-semibold">訂房系統升級 (選項A - 推薦)：</span>研究並導入成熟的第三方訂房系統 (SaaS)，將網站的預訂按鈕導向該系統，解決金流、房況同步、自動通知等問題。</li>
+                        <li><span class="font-semibold">訂房系統升級 (選項B - 高風險)：</span>若有極特殊的客製化需求，才考慮基於 Cloudflare Workers + D1 自行開發訂房後端邏輯。</li>
+                        <li><span class="font-semibold">會員系統升級：</span>當 LINE 無法滿足分眾行銷需求時，同樣基於 Workers + D1 建立更完整的會員資料庫與登入功能。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-20">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 民宿網站專案藍圖。本互動報告旨在輔助決策。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconCanvas = document.getElementById('menu-icon');
+            const menuIconCtx = menuIconCanvas.getContext('2d');
+
+            function drawMenuIcon(isOpen = false) {
+                menuIconCtx.clearRect(0, 0, 24, 24);
+                menuIconCtx.strokeStyle = '#4A5568';
+                menuIconCtx.lineWidth = 2;
+                if (isOpen) {
+                    menuIconCtx.beginPath();
+                    menuIconCtx.moveTo(4, 4);
+                    menuIconCtx.lineTo(20, 20);
+                    menuIconCtx.stroke();
+                    menuIconCtx.beginPath();
+                    menuIconCtx.moveTo(20, 4);
+                    menuIconCtx.lineTo(4, 20);
+                    menuIconCtx.stroke();
+                } else {
+                    menuIconCtx.beginPath();
+                    menuIconCtx.moveTo(3, 6);
+                    menuIconCtx.lineTo(21, 6);
+                    menuIconCtx.stroke();
+                    menuIconCtx.beginPath();
+                    menuIconCtx.moveTo(3, 12);
+                    menuIconCtx.lineTo(21, 12);
+                    menuIconCtx.stroke();
+                    menuIconCtx.beginPath();
+                    menuIconCtx.moveTo(3, 18);
+                    menuIconCtx.lineTo(21, 18);
+                    menuIconCtx.stroke();
+                }
+            }
+            drawMenuIcon(false);
+
+            mobileMenuButton.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('hidden');
+                drawMenuIcon(isOpen === false);
+            });
+
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    drawMenuIcon(false);
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            const frontendData = {
+                astro: {
+                    labels: ['性能', '開發體驗', '生態系', '擴充性'],
+                    values: [95, 90, 85, 95],
+                    details: `
+                        <h4 class="font-bold text-lg text-amber-800">Astro (推薦)</h4>
+                        <p class="text-sm text-gray-700">為內容密集型網站而生。其「島嶼架構」能在保持極速載入的同時，按需注入互動元件，完美契合從靜態內容到複雜功能的擴充路徑。</p>
+                    `
+                },
+                pelican: {
+                    labels: ['性能', '開發體驗', '生態系', '擴充性'],
+                    values: [80, 75, 60, 70],
+                    details: `
+                        <h4 class="font-bold text-lg text-gray-800">Pelican</h4>
+                        <p class="text-sm text-gray-700">基於您熟悉的 Python，是一個成熟穩定的選擇。但在整合現代 JavaScript 互動元件方面較為繁瑣，生態系活躍度也不及前者。</p>
+                    `
+                }
+            };
+
+            const frontendChartCtx = document.getElementById('frontend-chart').getContext('2d');
+            let frontendChart;
+
+            function updateFrontendChart(tech) {
+                const data = frontendData[tech];
+                if (frontendChart) {
+                    frontendChart.data.datasets[0].data = data.values;
+                    frontendChart.update();
+                } else {
+                    frontendChart = new Chart(frontendChartCtx, {
+                        type: 'radar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: tech.charAt(0).toUpperCase() + tech.slice(1),
+                                data: data.values,
+                                backgroundColor: 'rgba(251, 191, 36, 0.2)',
+                                borderColor: 'rgba(217, 119, 6, 1)',
+                                borderWidth: 2,
+                                pointBackgroundColor: 'rgba(217, 119, 6, 1)',
+                            }]
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                                    grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                                    pointLabels: { font: { size: 14 } },
+                                    suggestedMin: 0,
+                                    suggestedMax: 100
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            }
+                        }
+                    });
+                }
+                document.getElementById('frontend-details').innerHTML = data.details;
+            }
+
+            document.querySelectorAll('.tech-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    document.querySelectorAll('.tech-btn').forEach(btn => {
+                        btn.classList.remove('bg-amber-200', 'text-amber-800');
+                        btn.classList.add('bg-gray-200', 'text-gray-800');
+                    });
+                    e.target.classList.add('bg-amber-200', 'text-amber-800');
+                    e.target.classList.remove('bg-gray-200', 'text-gray-800');
+                    updateFrontendChart(e.target.id.split('-')[1]);
+                });
+            });
+
+            updateFrontendChart('astro');
+
+            const cmsData = {
+                strapi: {
+                    title: "Strapi (推薦)",
+                    details: "開源、可自架設。提供最大程度的控制權、數據主權與長期擴充彈性，技術棧與前端一致，是專案的理想長期核心。",
+                    icon: "📦"
+                },
+                sanity: {
+                    title: "Sanity",
+                    details: "雲端託管 (SaaS)。提供極致的開發者體驗與即時協作編輯器，適合追求快速啟動的專案。",
+                    icon: "☁️"
+                },
+                decap: {
+                    title: "Decap CMS",
+                    details: "完全免費的開源方案，內容直接儲存在 Git 儲存庫。功能相對基礎，適合非常簡單、純內容導向的網站。",
+                    icon: "📂"
+                }
+            };
+
+            function updateCmsDetails(cms) {
+                const data = cmsData[cms];
+                const html = `
+                    <div class="flex items-start p-4 bg-gray-50 rounded-lg border-l-4 border-amber-400">
+                        <div class="text-3xl mr-4">${data.icon}</div>
+                        <div>
+                            <h4 class="font-bold text-lg">${data.title}</h4>
+                            <p class="text-sm text-gray-600">${data.details}</p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('cms-details').innerHTML = html;
+            }
+            
+            document.querySelectorAll('.cms-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    document.querySelectorAll('.cms-btn').forEach(btn => {
+                        btn.classList.remove('bg-amber-200', 'text-amber-800');
+                        btn.classList.add('bg-gray-200', 'text-gray-800');
+                    });
+                    e.target.classList.add('bg-amber-200', 'text-amber-800');
+                    e.target.classList.remove('bg-gray-200', 'text-gray-800');
+                    const cmsId = e.target.id.split('-')[1];
+                    
+                    const cmsDetailsContainer = document.getElementById('cms-details');
+                    cmsDetailsContainer.innerHTML = '';
+                    
+                    Object.keys(cmsData).forEach(key => {
+                        const data = cmsData[key];
+                        const isActive = key === cmsId;
+                        const html = `
+                            <div class="flex items-start p-4 bg-gray-50 rounded-lg border-l-4 ${isActive ? 'border-amber-400' : 'border-gray-200'} transition-all">
+                                <div class="text-3xl mr-4">${data.icon}</div>
+                                <div>
+                                    <h4 class="font-bold text-lg">${data.title}</h4>
+                                    <p class="text-sm text-gray-600">${data.details}</p>
+                                </div>
+                            </div>
+                        `;
+                         if(isActive) {
+                           cmsDetailsContainer.insertAdjacentHTML('afterbegin', html);
+                         } else {
+                           cmsDetailsContainer.insertAdjacentHTML('beforeend', html);
+                         }
+                    });
+                });
+            });
+            
+            document.getElementById('btn-strapi').click();
+
+            const flowchartCanvas = document.getElementById('flowchart-canvas');
+            const flowchartCtx = flowchartCanvas.getContext('2d');
+            const nodes = {
+                user: { el: document.getElementById('node-user'), x: 84, y: 234 },
+                astro: { el: document.getElementById('node-astro'), x: 264, y: 234 },
+                strapi: { el: document.getElementById('node-strapi'), x: 464, y: 104 },
+                worker: { el: document.getElementById('node-worker'), x: 644, y: 234 },
+                d1: { el: document.getElementById('node-d1'), x: 464, y: 364 },
+                pages: { el: document.getElementById('node-pages'), x: 644, y: 104 },
+            };
+            const connections = [
+                { from: 'user', to: 'astro', id: 'l-user-astro' },
+                { from: 'astro', to: 'strapi', id: 'l-astro-strapi' },
+                { from: 'strapi', to: 'astro', id: 'l-strapi-astro' },
+                { from: 'astro', to: 'worker', id: 'l-astro-worker' },
+                { from: 'worker', to: 'd1', id: 'l-worker-d1' },
+                { from: 'strapi', to: 'pages', id: 'l-strapi-pages' },
+                { from: 'pages', to: 'astro', id: 'l-pages-astro' },
+            ];
+            
+            function drawArrow(ctx, fromx, fromy, tox, toy) {
+                const headlen = 10;
+                const dx = tox - fromx;
+                const dy = toy - fromy;
+                const angle = Math.atan2(dy, dx);
+                ctx.moveTo(fromx, fromy);
+                ctx.lineTo(tox, toy);
+                ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+                ctx.moveTo(tox, toy);
+                ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+            }
+
+            function drawFlowchart(activeNodeId = null) {
+                const canvas = flowchartCanvas;
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                
+                connections.forEach(conn => {
+                    const fromNode = nodes[conn.from];
+                    const toNode = nodes[conn.to];
+                    
+                    flowchartCtx.beginPath();
+                    flowchartCtx.strokeStyle = '#CBD5E1';
+                    flowchartCtx.lineWidth = 2;
+                    
+                    let isActive = false;
+                    if (activeNodeId) {
+                        if (conn.from === activeNodeId || conn.to === activeNodeId) {
+                           isActive = true;
+                        }
+                    }
+                    
+                    if(isActive) {
+                        flowchartCtx.strokeStyle = '#D97706';
+                        flowchartCtx.lineWidth = 3;
+                    }
+
+                    drawArrow(flowchartCtx, fromNode.x, fromNode.y, toNode.x, toNode.y);
+                    flowchartCtx.stroke();
+                });
+            }
+
+            const architectureDetails = {
+                user: "使用者透過瀏覽器與 Astro 建置的前端網站互動。對於需要權限的內容（如後台管理），則會登入 Strapi CMS。",
+                astro: "前端的門面。它在建置時向 Strapi API 拉取內容，生成超快速的靜態頁面。對於動態功能（如會員登入），它會呼叫 Cloudflare Worker 提供的 API。",
+                strapi: "內容的核心。非技術人員在此管理所有網站資訊。當內容更新時，它會透過 Deploy Hook 通知 Cloudflare Pages 重新建置網站。",
+                worker: "後端邏輯的大腦。它處理前端發來的請求（如表單提交、會員註冊），驗證資料後，再與 D1 資料庫溝通，實現動態功能。",
+                d1: "結構化資料的家。儲存關聯式資料，如使用者帳號、會員資格、訂單記錄等。只接受來自 Cloudflare Worker 的請求。",
+                pages: "部署與託管的平台。它從 GitHub 拉取程式碼，執行建置命令，並將最終的靜態網站發布到全球的邊緣網路上。"
+            };
+
+            Object.keys(nodes).forEach(nodeId => {
+                nodes[nodeId].el.addEventListener('click', () => {
+                    Object.values(nodes).forEach(n => n.el.classList.remove('active'));
+                    nodes[nodeId].el.classList.add('active');
+                    drawFlowchart(nodeId);
+                    document.getElementById('architecture-details').innerHTML = `<h4 class="font-bold text-lg mb-2">${nodes[nodeId].el.querySelector('h4').innerText}</h4><p>${architectureDetails[nodeId]}</p>`;
+                });
+            });
+
+            drawFlowchart();
+            
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const roadmapContents = document.querySelectorAll('.roadmap-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    roadmapContents.forEach(content => content.classList.add('hidden'));
+                    const targetContentId = 'content-' + e.target.id.split('-')[1];
+                    document.getElementById(targetContentId).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

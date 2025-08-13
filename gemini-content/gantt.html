@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>綠色小徑升級計畫｜完整甘特圖</title>
+    <title>綠色小徑升級計畫｜廠商進場排程甘特圖</title>
     <style>
         :root {
             --color-bg: #f8f9fa;
@@ -12,12 +12,6 @@
             --color-text-muted: #6c757d;
             --color-border: #dee2e6;
             --font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            
-            --phase1-color: #6c757d; /* Grey */
-            --phase2-color: #495057; /* Dark Grey */
-            --phase3-color: #007bff; /* Blue */
-            --phase4-color: #fd7e14; /* Orange */
-            --phase5-color: #28a745; /* Green */
         }
 
         body {
@@ -30,7 +24,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             background-color: var(--color-card-bg);
             border-radius: 12px;
@@ -54,7 +48,7 @@
 
         .summary-section {
             background-color: #f1f3f5;
-            border-left: 5px solid var(--phase3-color);
+            border-left: 5px solid #fd7e14;
             padding: 1.5rem 2rem;
             margin-bottom: 3rem;
             border-radius: 8px;
@@ -73,6 +67,10 @@
         .summary-section li {
             margin-bottom: 0.75rem;
         }
+        
+        .summary-section strong {
+            color: #007bff;
+        }
 
         .gantt-container {
             width: 100%;
@@ -81,18 +79,27 @@
         
         .gantt-chart {
             display: grid;
-            grid-template-columns: 300px 1fr;
-            min-width: 1200px;
+            grid-template-columns: 250px 150px 1fr; /* Task Name, Vendor, Timeline */
+            min-width: 1400px;
         }
 
         .gantt-header, .gantt-phase, .gantt-task {
-            display: contents; /* Makes children part of the parent grid */
+            display: contents;
+        }
+        
+        .gantt-header-item {
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-border);
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-align: left;
+            padding-left: 1rem;
         }
         
         .gantt-header-weeks {
-            grid-column: 2 / 3;
+            grid-column: 3 / 4;
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(16, 1fr); /* Extended to 16 weeks */
             text-align: center;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--color-border);
@@ -108,13 +115,20 @@
             font-weight: 700;
             color: #fff;
             border-radius: 6px;
+            background-color: #343a40;
         }
 
-        .gantt-task-name {
-            grid-column: 1 / 2;
+        .gantt-task-name, .gantt-task-vendor {
+            grid-row: span 1;
             padding: 0.8rem 1rem;
             border-bottom: 1px solid var(--color-border);
             font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .gantt-task-vendor {
+            color: var(--color-text-muted);
         }
         
         .gantt-task-name .item-id {
@@ -128,40 +142,36 @@
         }
 
         .gantt-task-bar-container {
-            grid-column: 2 / 3;
+            grid-column: 3 / 4;
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(16, 1fr);
             padding: 0.5rem 0;
             position: relative;
             border-bottom: 1px solid var(--color-border);
+            align-items: center;
         }
         
         .gantt-task-bar {
             height: 24px;
-            border-radius: 12px;
+            border-radius: 4px;
             opacity: 0.85;
             transition: opacity 0.2s ease;
+            background-color: #6c757d;
         }
         
         .gantt-task-bar:hover {
             opacity: 1;
         }
         
-        /* Phase Colors */
-        .phase-1-bg { background-color: var(--phase1-color); }
-        .phase-2-bg { background-color: var(--phase2-color); }
-        .phase-3-bg { background-color: var(--phase3-color); }
-        .phase-4-bg { background-color: var(--phase4-color); }
-        .phase-5-bg { background-color: var(--phase5-color); }
-
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             body { padding: 1rem; }
             .container { padding: 1.5rem; }
             header h1 { font-size: 1.8rem; }
             .gantt-chart { grid-template-columns: 1fr; min-width: 0; }
-            .gantt-header-weeks { display: none; }
+            .gantt-header-item, .gantt-header-weeks { display: none; }
             .gantt-task-name { text-align: left; border-bottom: none; padding-bottom: 0.2rem; }
-            .gantt-task-bar-container { border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; }
+            .gantt-task-vendor { display: none; } /* Hide vendor on mobile for simplicity */
+            .gantt-task-bar-container { border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; grid-column: 1 / -1; }
         }
 
     </style>
@@ -170,17 +180,17 @@
 
 <div class="container">
     <header>
-        <h1>綠色小徑—十年大修與營運升級計畫</h1>
-        <p>一份基於工業風設計的完整施工排程甘特圖，作為與設計師討論的起點。</p>
+        <h1>綠色小徑升級計畫 V3</h1>
+        <p>一份整合廠商分類與進場邏輯的施工排程甘特圖，作為專案執行的最終討論基礎。</p>
     </header>
 
     <section class="summary-section">
-        <h2>給設計師的重點摘要</h2>
+        <h2>給設計師與專案團隊的重點摘要</h2>
         <ul>
-            <li><strong>工業風設計前提：</strong>本排程已考量「管線外露、無天花板」的工業風設計，將「牆面與天花板塗裝」的順序提前。</li>
-            <li><strong>管線即是設計：</strong>所有外露管線（電力、網路、影音）的路徑、材質與顏色將成為視覺的一部分。需在第三階段前，優先確認管線佈局圖。</li>
-            <li><strong>階段依賴性：</strong>各階段有強烈的前後依賴關係，尤其是「塗裝完成」是「管線安裝」的先決條件，以確保牆面與管線的質感。</li>
-            <li><strong>彈性討論基礎：</strong>此甘特圖為理想排程，實際工期、人力調度與細節工法，可以此為基礎進行深入討論與調整。</li>
+            <li><strong>廠商為本的排程：</strong>此甘特圖已將「廠商分類」納入核心排程邏輯，以提升施工效率、方便發包與溝通。</li>
+            <li><strong>分批進場規劃：</strong>已預先規劃需要多次進場的廠商（如：<strong>水電、泥作、油漆</strong>），並在時間軸上明確標示其不同階段的工作任務。</li>
+            <li><strong>關鍵路徑依賴：</strong>排程嚴格遵守工程的關鍵路徑，例如：(1) 結構與防水優先，(2) 牆面與天花板塗裝必須在所有髒亂工程後，(3) 所有表面管線與設備安裝必須在塗裝完成後。</li>
+            <li><strong>協調與溝通：</strong>此圖表是理想的溝通藍圖，需以此為基礎，與各廠商協調確切的進場日期與工期，特別是多個廠商需同時作業的時段（如第七、八週）。</li>
         </ul>
     </section>
 
@@ -188,7 +198,8 @@
         <div class="gantt-chart" id="gantt-chart-container">
             <!-- Header -->
             <div class="gantt-header">
-                <div></div> <!-- Empty corner -->
+                <div class="gantt-header-item">工作項目</div>
+                <div class="gantt-header-item">廠商分類</div>
                 <div class="gantt-header-weeks">
                     <!-- Weeks will be generated by JS -->
                 </div>
@@ -203,77 +214,71 @@
 document.addEventListener('DOMContentLoaded', function() {
     const projectData = [
         {
-            phase: "第一階段：基礎與拆除工程",
-            phaseColor: "var(--phase1-color)",
+            phase: "第一階段：拆除、結構與基礎工程 (W1-W4)",
             tasks: [
-                { id: "10", name: "2F 鋁門拆除", start: 1, span: 1 },
-                { id: "2", name: "1F/2F 部分吊燈拆除/縮線", start: 1, span: 1 },
-                /*{ id: "17", name: "送餐電梯停用處理", start: 1, span: 2 },*/
-                { id: "6", name: "戶外陽台木平台施工", start: 1, span: 3 },
-                { id: "9", name: "2F 公廁恢復＋增設淋浴間", start: 2, span: 3 },
-                { id: "8", name: "2F 倉庫改裝一般房間", start: 2, span: 3 },
-                { id: "21", name: "大鐵箱管線浸水補強", start: 2, span: 2 },
-                { id: "7", name: "全棟室內牆裂痕補修 (僅補修)", start: 3, span: 2 },
+                { id: "10", name: "2F 鋁門拆除", vendor: "拆除工程", start: 1, span: 1, color: "#6c757d" },
+                { id: "17", name: "送餐電梯停用處理", vendor: "拆除工程", start: 1, span: 1, color: "#6c757d" },
+                { id: "2", name: "1F/2F 部分吊燈拆除/縮線", vendor: "拆除工程", start: 1, span: 1, color: "#6c757d" },
+                { id: "24", name: "停車場擋土設施", vendor: "泥作/防水", start: 1, span: 4, color: "#774936" },
+                { id: "25", name: "主建築工作間擋土設施", vendor: "泥作/防水", start: 1, span: 4, color: "#774936" },
+                { id: "6", name: "戶外陽台木平台施工", vendor: "木作/泥作", start: 2, span: 3, color: "#a47148" },
+                { id: "9", name: "2F 公廁恢復＋增設淋浴間 (拆除/管線/泥作)", vendor: "拆除/水電/泥作", start: 2, span: 3, color: "#774936" },
+                { id: "8", name: "2F 倉庫改裝一般房間 (拆除/管線/木作)", vendor: "拆除/水電/木作", start: 2, span: 3, color: "#a47148" },
+                { id: "21", name: "大鐵箱管線浸水補強", vendor: "泥作/防水", start: 3, span: 2, color: "#774936" },
+                { id: "7", name: "全棟室內牆裂痕補修", vendor: "泥作/防水", start: 4, span: 2, color: "#774936" },
             ]
         },
         {
-            phase: "第二階段：牆面與天花板塗裝 (工業風關鍵)",
-            phaseColor: "var(--phase2-color)",
+            phase: "第二階段：牆面工程 (W5-W8)",
             tasks: [
-                { id: "5", name: "1F 客廳天花(樓板)補漆/重刷", start: 5, span: 2 },
-                { id: "7", name: "全室補漆 (牆面)", start: 5, span: 2 },
+                { id: "23", name: "外牆重刷", vendor: "油漆工程", start: 5, span: 4, color: "#d4a373" },
+                { id: "5", name: "1F 客廳天花(樓板)補漆/重刷", vendor: "油漆工程", start: 7, span: 2, color: "#d4a373" },
+                { id: "7", name: "全室補漆 (牆面)", vendor: "油漆工程", start: 7, span: 2, color: "#d4a373" },
             ]
         },
         {
-            phase: "第三階段：管線、衛浴與門窗安裝",
-            phaseColor: "var(--phase3-color)",
+            phase: "第三階段：安裝工程 (W9-W12)",
             tasks: [
-                { id: "22", name: "中興保全監視器更新 (監視器本體)", start: 7, span: 1 },
-                { id: "A-3", name: "Unifi 監視器系統 (佈線)", start: 7, span: 1 },
-                { id: "A-5", name: "影音投影與音響系統 (佈線)", start: 7, span: 2 },
-                { id: "3", name: "全棟燈具換 LED (佈線與安裝)", start: 7, span: 2 },
-                { id: "13", name: "1F 男廁排風機檢修", start: 7, span: 1 },
-                { id: "15", name: "2F 大房馬桶更換", start: 7, span: 1 },
-                { id: "1", name: "大門換門片＋電子鎖", start: 8, span: 1 },
-                { id: "11", name: "1F 櫃台↔廚房加拉門", start: 8, span: 1 },
-                { id: "12", name: "監控室門加鎖", start: 8, span: 1 },
-                { id: "14", name: "2F 房間電子鎖", start: 8, span: 1 },
+                { id: "3", name: "全棟燈具換 LED (含佈線)", vendor: "水電工程", start: 9, span: 2, color: "#0077b6" },
+                { id: "A16", name: "戶外探照燈裝設定時器", vendor: "水電工程", start: 9, span: 1, color: "#0077b6" },
+                { id: "A17", name: "鐵門外加裝探照燈", vendor: "水電工程", start: 9, span: 1, color: "#0077b6" },
+                { id: "13", name: "1F 男廁排風機檢修", vendor: "水電工程", start: 9, span: 1, color: "#0077b6" },
+                { id: "15", name: "2F 大房馬桶更換", vendor: "水電工程", start: 9, span: 1, color: "#0077b6" },
+                { id: "A3", name: "Unifi 監視器系統 (佈線與安裝)", vendor: "網路監控系統", start: 9, span: 2, color: "#00b4d8" },
+                { id: "A5", name: "影音投影與音響系統 (佈線與安裝)", vendor: "影音系統工程", start: 9, span: 3, color: "#480ca8" },
+                { id: "22", name: "中興保全監視器更新", vendor: "保全系統", start: 10, span: 1, color: "#f72585" },
+                { id: "1", name: "大門換門片＋電子鎖", vendor: "門窗工程", start: 11, span: 1, color: "#fca311" },
+                { id: "11", name: "1F 櫃台↔廚房加拉門", vendor: "門窗工程", start: 11, span: 1, color: "#fca311" },
+                { id: "12", name: "監控室門加鎖", vendor: "門窗工程", start: 11, span: 1, color: "#fca311" },
+                { id: "14", name: "2F 房間電子鎖", vendor: "門窗工程", start: 11, span: 1, color: "#fca311" },
             ]
         },
         {
-            phase: "第四階段：核心設備與軟裝",
-            phaseColor: "var(--phase4-color)",
+            phase: "第四階段：軟裝、設備進場與收尾 (W13-W16)",
             tasks: [
-                { id: "A-5", name: "影音投影與音響系統 (設備安裝)", start: 9, span: 1 },
-                { id: "A10", name: "小房間 50 吋電視×2", start: 9, span: 1 },
-                { id: "A12", name: "白板、麥克風等", start: 9, span: 1 },
-                { id: "4", name: "1F 客廳防焰窗帘", start: 10, span: 1 },
-                { id: "16", name: "2F 房間窗簾", start: 10, span: 1 },
-                { id: "A4", name: "1F 大廳新沙發組", start: 10, span: 1 },
-                { id: "A6", name: "3–4 組放鬆沙發區", start: 10, span: 1 },
-                { id: "A1", name: "戶外草地搖椅×2", start: 10, span: 1 },
-                { id: "A2", name: "2F 陽台戶外桌椅", start: 10, span: 1 },
-            ]
-        },
-        {
-            phase: "第五階段：營運物品與最終優化",
-            phaseColor: "var(--phase5-color)",
-            tasks: [
-                { id: "A7", name: "籃球架", start: 11, span: 1 },
-                { id: "A8", name: "貨櫃屋層架", start: 11, span: 1 },
-                { id: "A9", name: "摺疊層架＋掛衣架", start: 11, span: 1 },
-                { id: "A13", name: "摺疊長桌", start: 11, span: 1 },
-                { id: "A14", name: "摺疊椅×15", start: 11, span: 1 },
-                { id: "A11", name: "電烤盤", start: 11, span: 1 },
-                { id: "A15", name: "氣炸鍋", start: 11, span: 1 },
-                { id: "18", name: "大房櫃子把手修繕", start: 12, span: 1 },
-                { id: "19", name: "櫃台排氣孔防蟲網", start: 12, span: 1 },
-                { id: "20", name: "2F 陽台排水孔濾網", start: 12, span: 1 },
+                { id: "4", name: "1F 客廳防焰窗帘", vendor: "設備/家具/軟裝", start: 13, span: 1, color: "#2a9d8f" },
+                { id: "16", name: "2F 房間窗簾", vendor: "設備/家具/軟裝", start: 13, span: 1, color: "#2a9d8f" },
+                { id: "A4", name: "1F 大廳新沙發組", vendor: "設備/家具/軟裝", start: 13, span: 2, color: "#2a9d8f" },
+                { id: "A6", name: "3–4 組放鬆沙發區", vendor: "設備/家具/軟裝", start: 13, span: 2, color: "#2a9d8f" },
+                { id: "A1", name: "戶外草地搖椅×2", vendor: "設備/家具/軟裝", start: 14, span: 1, color: "#2a9d8f" },
+                { id: "A2", name: "2F 陽台戶外桌椅", vendor: "設備/家具/軟裝", start: 14, span: 1, color: "#2a9d8f" },
+                { id: "A10", name: "小房間 50 吋電視×2", vendor: "設備/家具/軟裝", start: 14, span: 1, color: "#2a9d8f" },
+                { id: "A7", name: "籃球架", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "A8", name: "貨櫃屋層架", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "A9", name: "摺疊層架＋掛衣架", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "A12", name: "白板、麥克風等", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "A13", name: "摺疊長桌", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "A14", name: "摺疊椅×15", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "A11", name: "電烤盤", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "A15", name: "氣炸鍋", vendor: "設備/家具/軟裝", start: 15, span: 1, color: "#2a9d8f" },
+                { id: "18", name: "大房櫃子把手修繕", vendor: "雜項工程", start: 16, span: 1, color: "#e76f51" },
+                { id: "19", name: "櫃台排氣孔防蟲網", vendor: "雜項工程", start: 16, span: 1, color: "#e76f51" },
+                { id: "20", name: "2F 陽台排水孔濾網", vendor: "雜項工程", start: 16, span: 1, color: "#e76f51" },
             ]
         }
     ];
 
-    const totalWeeks = 12;
+    const totalWeeks = 16;
     const chartContainer = document.getElementById('gantt-chart-container');
     const weeksHeader = chartContainer.querySelector('.gantt-header-weeks');
 
@@ -285,14 +290,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Generate tasks
-    projectData.forEach((phaseData, index) => {
+    projectData.forEach((phaseData) => {
         const phaseEl = document.createElement('div');
         phaseEl.className = 'gantt-phase';
-        phaseEl.innerHTML = `
-            <div class="gantt-phase-title" style="background-color: ${phaseData.phaseColor};">
-                ${phaseData.phase}
-            </div>
-        `;
+        phaseEl.innerHTML = `<div class="gantt-phase-title">${phaseData.phase}</div>`;
         chartContainer.appendChild(phaseEl);
 
         phaseData.tasks.forEach(task => {
@@ -302,10 +303,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="gantt-task-name">
                     <span class="item-id">${task.id}</span>${task.name}
                 </div>
+                <div class="gantt-task-vendor">${task.vendor}</div>
                 <div class="gantt-task-bar-container">
                     <div class="gantt-task-bar" style="
                         grid-column: ${task.start} / span ${task.span}; 
-                        background-color: ${phaseData.phaseColor};
+                        background-color: ${task.color};
                     "></div>
                 </div>
             `;

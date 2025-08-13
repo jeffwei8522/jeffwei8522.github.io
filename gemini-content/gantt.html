@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>綠色小徑升級計畫｜完整甘特圖</title>
+    <style>
+        :root {
+            --color-bg: #f8f9fa;
+            --color-card-bg: #ffffff;
+            --color-text: #212529;
+            --color-text-muted: #6c757d;
+            --color-border: #dee2e6;
+            --font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            
+            --phase1-color: #6c757d; /* Grey */
+            --phase2-color: #495057; /* Dark Grey */
+            --phase3-color: #007bff; /* Blue */
+            --phase4-color: #fd7e14; /* Orange */
+            --phase5-color: #28a745; /* Green */
+        }
+
+        body {
+            font-family: var(--font-family-sans-serif);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--color-card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+            padding: 2rem 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--color-text);
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .summary-section {
+            background-color: #f1f3f5;
+            border-left: 5px solid var(--phase3-color);
+            padding: 1.5rem 2rem;
+            margin-bottom: 3rem;
+            border-radius: 8px;
+        }
+
+        .summary-section h2 {
+            margin-top: 0;
+            color: var(--color-text);
+        }
+
+        .summary-section ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        
+        .summary-section li {
+            margin-bottom: 0.75rem;
+        }
+
+        .gantt-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        
+        .gantt-chart {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-width: 1200px;
+        }
+
+        .gantt-header, .gantt-phase, .gantt-task {
+            display: contents; /* Makes children part of the parent grid */
+        }
+        
+        .gantt-header-weeks {
+            grid-column: 2 / 3;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-border);
+            font-weight: 600;
+            color: var(--color-text-muted);
+        }
+
+        .gantt-phase-title {
+            grid-column: 1 / -1;
+            padding: 0.75rem 1rem;
+            margin-top: 2rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            border-radius: 6px;
+        }
+
+        .gantt-task-name {
+            grid-column: 1 / 2;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--color-border);
+            font-weight: 500;
+        }
+        
+        .gantt-task-name .item-id {
+            display: inline-block;
+            font-size: 0.8em;
+            color: var(--color-text-muted);
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+
+        .gantt-task-bar-container {
+            grid-column: 2 / 3;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            padding: 0.5rem 0;
+            position: relative;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .gantt-task-bar {
+            height: 24px;
+            border-radius: 12px;
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        
+        .gantt-task-bar:hover {
+            opacity: 1;
+        }
+        
+        /* Phase Colors */
+        .phase-1-bg { background-color: var(--phase1-color); }
+        .phase-2-bg { background-color: var(--phase2-color); }
+        .phase-3-bg { background-color: var(--phase3-color); }
+        .phase-4-bg { background-color: var(--phase4-color); }
+        .phase-5-bg { background-color: var(--phase5-color); }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .container { padding: 1.5rem; }
+            header h1 { font-size: 1.8rem; }
+            .gantt-chart { grid-template-columns: 1fr; min-width: 0; }
+            .gantt-header-weeks { display: none; }
+            .gantt-task-name { text-align: left; border-bottom: none; padding-bottom: 0.2rem; }
+            .gantt-task-bar-container { border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>綠色小徑—十年大修與營運升級計畫</h1>
+        <p>一份基於工業風設計的完整施工排程甘特圖，作為與設計師討論的起點。</p>
+    </header>
+
+    <section class="summary-section">
+        <h2>給設計師的重點摘要</h2>
+        <ul>
+            <li><strong>工業風設計前提：</strong>本排程已考量「管線外露、無天花板」的工業風設計，將「牆面與天花板塗裝」的順序提前。</li>
+            <li><strong>管線即是設計：</strong>所有外露管線（電力、網路、影音）的路徑、材質與顏色將成為視覺的一部分。需在第三階段前，優先確認管線佈局圖。</li>
+            <li><strong>階段依賴性：</strong>各階段有強烈的前後依賴關係，尤其是「塗裝完成」是「管線安裝」的先決條件，以確保牆面與管線的質感。</li>
+            <li><strong>彈性討論基礎：</strong>此甘特圖為理想排程，實際工期、人力調度與細節工法，可以此為基礎進行深入討論與調整。</li>
+        </ul>
+    </section>
+
+    <div class="gantt-container">
+        <div class="gantt-chart" id="gantt-chart-container">
+            <!-- Header -->
+            <div class="gantt-header">
+                <div></div> <!-- Empty corner -->
+                <div class="gantt-header-weeks">
+                    <!-- Weeks will be generated by JS -->
+                </div>
+            </div>
+            <!-- Tasks will be generated by JS -->
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const projectData = [
+        {
+            phase: "第一階段：基礎與拆除工程",
+            phaseColor: "var(--phase1-color)",
+            tasks: [
+                { id: "10", name: "2F 鋁門拆除", start: 1, span: 1 },
+                { id: "2", name: "1F/2F 部分吊燈拆除/縮線", start: 1, span: 1 },
+                /*{ id: "17", name: "送餐電梯停用處理", start: 1, span: 2 },*/
+                { id: "6", name: "戶外陽台木平台施工", start: 1, span: 3 },
+                { id: "9", name: "2F 公廁恢復＋增設淋浴間", start: 2, span: 3 },
+                { id: "8", name: "2F 倉庫改裝一般房間", start: 2, span: 3 },
+                { id: "21", name: "大鐵箱管線浸水補強", start: 2, span: 2 },
+                { id: "7", name: "全棟室內牆裂痕補修 (僅補修)", start: 3, span: 2 },
+            ]
+        },
+        {
+            phase: "第二階段：牆面與天花板塗裝 (工業風關鍵)",
+            phaseColor: "var(--phase2-color)",
+            tasks: [
+                { id: "5", name: "1F 客廳天花(樓板)補漆/重刷", start: 5, span: 2 },
+                { id: "7", name: "全室補漆 (牆面)", start: 5, span: 2 },
+            ]
+        },
+        {
+            phase: "第三階段：管線、衛浴與門窗安裝",
+            phaseColor: "var(--phase3-color)",
+            tasks: [
+                { id: "22", name: "中興保全監視器更新 (監視器本體)", start: 7, span: 1 },
+                { id: "A-3", name: "Unifi 監視器系統 (佈線)", start: 7, span: 1 },
+                { id: "A-5", name: "影音投影與音響系統 (佈線)", start: 7, span: 2 },
+                { id: "3", name: "全棟燈具換 LED (佈線與安裝)", start: 7, span: 2 },
+                { id: "13", name: "1F 男廁排風機檢修", start: 7, span: 1 },
+                { id: "15", name: "2F 大房馬桶更換", start: 7, span: 1 },
+                { id: "1", name: "大門換門片＋電子鎖", start: 8, span: 1 },
+                { id: "11", name: "1F 櫃台↔廚房加拉門", start: 8, span: 1 },
+                { id: "12", name: "監控室門加鎖", start: 8, span: 1 },
+                { id: "14", name: "2F 房間電子鎖", start: 8, span: 1 },
+            ]
+        },
+        {
+            phase: "第四階段：核心設備與軟裝",
+            phaseColor: "var(--phase4-color)",
+            tasks: [
+                { id: "A-5", name: "影音投影與音響系統 (設備安裝)", start: 9, span: 1 },
+                { id: "A10", name: "小房間 50 吋電視×2", start: 9, span: 1 },
+                { id: "A12", name: "白板、麥克風等", start: 9, span: 1 },
+                { id: "4", name: "1F 客廳防焰窗帘", start: 10, span: 1 },
+                { id: "16", name: "2F 房間窗簾", start: 10, span: 1 },
+                { id: "A4", name: "1F 大廳新沙發組", start: 10, span: 1 },
+                { id: "A6", name: "3–4 組放鬆沙發區", start: 10, span: 1 },
+                { id: "A1", name: "戶外草地搖椅×2", start: 10, span: 1 },
+                { id: "A2", name: "2F 陽台戶外桌椅", start: 10, span: 1 },
+            ]
+        },
+        {
+            phase: "第五階段：營運物品與最終優化",
+            phaseColor: "var(--phase5-color)",
+            tasks: [
+                { id: "A7", name: "籃球架", start: 11, span: 1 },
+                { id: "A8", name: "貨櫃屋層架", start: 11, span: 1 },
+                { id: "A9", name: "摺疊層架＋掛衣架", start: 11, span: 1 },
+                { id: "A13", name: "摺疊長桌", start: 11, span: 1 },
+                { id: "A14", name: "摺疊椅×15", start: 11, span: 1 },
+                { id: "A11", name: "電烤盤", start: 11, span: 1 },
+                { id: "A15", name: "氣炸鍋", start: 11, span: 1 },
+                { id: "18", name: "大房櫃子把手修繕", start: 12, span: 1 },
+                { id: "19", name: "櫃台排氣孔防蟲網", start: 12, span: 1 },
+                { id: "20", name: "2F 陽台排水孔濾網", start: 12, span: 1 },
+            ]
+        }
+    ];
+
+    const totalWeeks = 12;
+    const chartContainer = document.getElementById('gantt-chart-container');
+    const weeksHeader = chartContainer.querySelector('.gantt-header-weeks');
+
+    // Generate weeks header
+    for (let i = 1; i <= totalWeeks; i++) {
+        const weekEl = document.createElement('div');
+        weekEl.innerText = `W${i}`;
+        weeksHeader.appendChild(weekEl);
+    }
+
+    // Generate tasks
+    projectData.forEach((phaseData, index) => {
+        const phaseEl = document.createElement('div');
+        phaseEl.className = 'gantt-phase';
+        phaseEl.innerHTML = `
+            <div class="gantt-phase-title" style="background-color: ${phaseData.phaseColor};">
+                ${phaseData.phase}
+            </div>
+        `;
+        chartContainer.appendChild(phaseEl);
+
+        phaseData.tasks.forEach(task => {
+            const taskEl = document.createElement('div');
+            taskEl.className = 'gantt-task';
+            taskEl.innerHTML = `
+                <div class="gantt-task-name">
+                    <span class="item-id">${task.id}</span>${task.name}
+                </div>
+                <div class="gantt-task-bar-container">
+                    <div class="gantt-task-bar" style="
+                        grid-column: ${task.start} / span ${task.span}; 
+                        background-color: ${phaseData.phaseColor};
+                    "></div>
+                </div>
+            `;
+            chartContainer.appendChild(taskEl);
+        });
+    });
+});
+</script>
+
+</body>
+</html>

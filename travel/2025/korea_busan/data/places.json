@@ -214,5 +214,15 @@
         "img": "matchandeul-bbq.jpg",
         "brief_zh": "知名的厚切豬五花連鎖燒肉店，在海雲台也有分店，結束海邊行程後用餐非常方便。",
         "open_hours": "12:00 - 23:00"
+    },
+    {
+        "id": "haeundae-grandma-gukbap",
+        "name_zh": "海雲台元祖奶奶湯飯",
+        "name_ko": "해운대원조할매국밥",
+        "img": "haeundae-grandma-gukbap.jpg",
+        "area": "Haeundae",
+        "brief_zh": "網路推薦名店: 釜山地鐵「203海雲台站」3號出口，步行約5分鐘",
+        "tel": "+82-51-746-0387",
+        "open_hours": "24h"
     }
 ]

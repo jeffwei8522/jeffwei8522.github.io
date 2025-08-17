@@ -27,7 +27,8 @@
       {"time": "10:00", "type": "place", "id": "yonggungsa-temple", "title_zh": "抵達：海東龍宮寺", "title_en": "Arrive: Yonggungsa"},
       {"time": "12:00", "type": "place", "id": "lotte-world-busan", "title_zh": "樂天世界釜山", "title_en": "Lotte World"},
       {"time": "15:00", "type": "place", "id": "skyline-luge", "title_zh": "Skyline Luge", "title_en": "Luge"},
-      {"time": "17:30", "type": "place", "id": "spa-land", "title_zh": "Centum City Spa Land", "title_en": "Spa Land"}
+      {"time": "17:30", "type": "place", "id": "spa-land", "title_zh": "Centum City Spa Land", "title_en": "Spa Land"},
+      {"time": "19:30", "type":"food", "id":"haeundae-grandma-gukbap", "title_zh":"晚餐：海雲台元祖奶奶湯飯", "title_en":"Haeundae Grandma Gukbap"}
     ]
   },
   {

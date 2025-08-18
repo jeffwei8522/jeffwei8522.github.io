@@ -224,5 +224,14 @@
         "brief_zh": "網路推薦名店: 釜山地鐵「203海雲台站」3號出口，步行約5分鐘",
         "tel": "+82-51-746-0387",
         "open_hours": "24h"
+    },
+    {
+        "id": "sea-life-busan",
+        "name_zh": "SEA LIFE 釜山水族館",
+        "name_ko": "SEA LIFE 부산아쿠아리움",
+        "area": "Haeundae",
+        "brief_zh": "海雲台沙灘旁的人氣水族館，從海雲台站步行約 7–10 分鐘；MS Hotel 走幾分鐘就到。",
+        "open_hours": "平日 10:00–19:00｜週末 10:00–20:00（最晚入場前 1 小時）",
+        "img": "sea-life-busan.jpg"
     }
 ]

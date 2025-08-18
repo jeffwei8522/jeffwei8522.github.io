@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>釜山行程天氣互動儀表板</title>
+
+  <!-- 關閉 Tailwind Preflight，避免與全站主題衝突 -->
+  <script>
+    window.tailwind = {
+      config: {
+        corePlugins: { preflight: false }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* 作用域鎖在 #wd-app，避免全站樣式互相覆蓋 */
+    #wd-app {
+      font-family: 'Inter','Noto Sans TC',sans-serif;
+      background-color: #FDFBF8; /* Warm neutral */
+    }
+    #wd-app .active-tab {
+      background-color: #A67B5B !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+    #wd-app .advice-toggle { transition: all 0.3s ease-in-out; }
+    #wd-app .advice-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out;
+    }
+    #wd-app .advice-content.open { max-height: 500px; }
+    #wd-app .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 8px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background-color: #D3B8A5; border: 2px solid #FDFBF8;
+    }
+    #wd-app .timeline-line {
+      position: absolute; left: -15px; top: 8px; bottom: 0;
+      width: 2px; background-color: #EAE0D9;
+    }
+  </style>
+</head>
+
+<body class="text-gray-700">
+  <!-- 作用域容器 -->
+  <div id="wd-app">
+    <div class="mx-auto p-4 sm:p-6 lg:p-8 max-w-5xl">
+      <header class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#A67B5B]">釜山行程天氣應對指南</h1>
+        <p class="text-lg text-gray-500 mt-2">2025年8月19日 - 8月24日</p>
+      </header>
+
+      <section id="overall-summary" class="bg-white rounded-2xl shadow-sm p-6 mb-8 border border-gray-200">
+        <h2 class="text-2xl font-bold text-[#A67B5B] mb-4">總體天氣展望</h2>
+        <div class="grid md:grid-cols-3 gap-4 text-center">
+          <div class="bg-[#FDFBF8] p-4 rounded-lg">
+            <p class="text-4xl mb-1">🌡️</p>
+            <p class="font-semibold text-lg">高溫高濕</p>
+            <p class="text-gray-600">30°C - 33°C，體感悶熱</p>
+          </div>
+          <div class="bg-[#FDFBF8] p-4 rounded-lg">
+            <p class="text-4xl mb-1">🌦️</p>
+            <p class="font-semibold text-lg">間歇性降雨</p>
+            <p class="text-gray-600">留意午後局部陣雨</p>
+          </div>
+          <div class="bg-[#FDFBF8] p-4 rounded-lg">
+            <p class="text-4xl mb-1">🌀</p>
+            <p class="font-semibold text-lg">無直接颱風</p>
+            <p class="text-gray-600">目前預報機率極低</p>
+          </div>
+        </div>
+      </section>
+
+      <nav id="day-navigation" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+      <main id="daily-content"></main>
+
+      <footer id="core-advice" class="bg-white rounded-2xl shadow-sm p-6 mt-8 border border-gray-200">
+        <h2 class="text-2xl font-bold text-[#A67B5B] mb-4">核心準備建議</h2>
+        <ul class="grid md:grid-cols-2 gap-x-8 gap-y-4 list-none">
+          <li class="flex items-start"><span class="mr-3 text-xl">👕</span><div><strong class="text-gray-800">輕便衣物：</strong>以透氣、快乾材質為主，可多備T恤替換。</div></li>
+          <li class="flex items-start"><span class="mr-3 text-xl">☂️</span><div><strong class="text-gray-800">防曬防暑：</strong>高係數防曬、太陽眼鏡、遮陽帽及晴雨傘必備。</div></li>
+          <li class="flex items-start"><span class="mr-3 text-xl">👟</span><div><strong class="text-gray-800">舒適鞋履：</strong>準備防水涼鞋或拖鞋，應對突發降雨和海灘活動。</div></li>
+          <li class="flex items-start"><span class="mr-3 text-xl">💧</span><div><strong class="text-gray-800">隨時補水：</strong>攜帶水瓶，善用便利商店與咖啡館補充水分。</div></li>
+        </ul>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // === 行程資料（加上 ISO 日期，支援自動開到今天 / 直達某天） ===
+    const tripData = [
+      {
+        day: 1, iso: "2025-08-19", date: "8月19日 (二)", title: "抵達日，陣雨中的西面探索",
+        weather: { tempMin: 26, tempMax: 30, rainProb: 60, desc: "上午有雨，下午轉多雲" },
+        itinerary: [
+          { time: "13:25", title: "抵達機場", risk: "低", impact: "抵達時可能仍在下雨，但不影響機場至飯店的交通。", advice: "建議預留充裕交通時間，直接搭乘地鐵或計程車前往飯店。" },
+          { time: "18:30", title: "雙胞胎豬肉湯飯", risk: "低", impact: "室內用餐，不受影響。", advice: "無需特別準備。" },
+          { time: "20:00", title: "西面地下街", risk: "極低", impact: "完美應對方案。完全室內活動，避開雨勢和悶熱天氣。", advice: "您的行程安排對天氣的耐受性極高，無需更改。" }
+        ]
+      },
+      {
+        day: 2, iso: "2025-08-20", date: "8月20日 (三)", title: "多雲下的文化村徒步挑戰",
+        weather: { tempMin: 26, tempMax: 32, rainProb: 30, desc: "全天多雲" },
+        itinerary: [
+          { time: "09:00", title: "甘川洞文化村", risk: "高", impact: "主要挑戰為高溫高濕。在丘陵地形大量步行是嚴峻的體力考驗。", advice: "防暑是關鍵！建議提早出發，利用早晨相對涼爽時段。隨時補充水分。" },
+          { time: "10:00", title: "韓服體驗", risk: "中", impact: "舒適度風險高。在悶熱天氣下穿著傳統韓服會非常炎熱。", advice: "可考慮縮短體驗時間，或選擇有室內攝影棚的店家。" },
+          { time: "12:30", title: "松島海上纜車", risk: "低", impact: "多雲天氣不影響營運，除非出現預報外的強風或雷暴。", advice: "隨身攜帶輕便雨具以防萬一。" },
+          { time: "15:00", title: "白淺灘文化村", risk: "高", impact: "與甘川洞類似，主要挑戰為高溫高濕。", advice: "每小時都應進入咖啡館或商店稍作休息，吹冷氣並補充水分。" },
+        ]
+      },
+      {
+        day: 3, iso: "2025-08-21", date: "8月21日 (四)", title: "晴雨兼備的海雲台智慧遊",
+        weather: { tempMin: 26, tempMax: 31, rainProb: 20, desc: "上午多雲，下午晴" },
+        itinerary: [
+          { time: "12:30", title: "海灘散步", risk: "低", impact: "天氣條件適合。下午陽光可能較強。", advice: "務必注意防曬，塗抹防曬霜。" },
+          { time: "13:30", title: "SEA LIFE 海雲台水族館", risk: "極低", impact: "絕佳的室內安排，能有效規避一天中最熱的時段。", advice: "本日行程結構極佳，無需調整。" },
+          { time: "17:30", title: "Centum City Spa Land", risk: "極低", impact: "完美的室內規劃，完全不受天氣影響。", advice: "無需備案，好好享受。" }
+        ]
+      },
+      {
+        day: 4, iso: "2025-08-22", date: "8月22日 (五)", title: "雲霧中的海岸線與高空景觀",
+        weather: { tempMin: 26, tempMax: 32, rainProb: 30, desc: "全天晴時多雲" },
+        itinerary: [
+          { time: "10:30", title: "海雲台天空膠囊列車", risk: "低", impact: "列車在雨天照常運行，主要影響是觀景視野。", advice: "攜帶雨具，並對視野受限有心理準備。" },
+          { time: "11:15", title: "青沙浦天空步道", risk: "中", impact: "若遇短時陣雨，步道可能會暫時關閉或因濕滑影響體驗。", advice: "出發前，可先查詢天空步道是否正常開放。" },
+          { time: "19:00", title: "Busan X the Sky", risk: "中", impact: "觀景風險。多雲天氣可能導致視野受限，無法看到最佳夜景。", advice: "保持彈性。當天早上再次確認天氣，若雲層厚，可考慮與第五天的室內購物行程對調。" }
+        ]
+      },
+      {
+        day: 5, iso: "2025-08-23", date: "8月23日 (六)", title: "面臨降雨考驗的廣安里之夜",
+        weather: { tempMin: 26, tempMax: 33, rainProb: 40, desc: "晴時多雲，降雨機率提升" },
+        itinerary: [
+          { time: "10:00", title: "新世界百貨", risk: "極低", impact: "室內活動，不受影響，是絕佳的雨天備案點。", advice: "若下午天氣不佳，可延長在此的停留時間。" },
+          { time: "13:30", title: "廣安里海灘", risk: "高", impact: "活動完全依賴天氣。40%降雨機率意味著很可能遇到陣雨。", advice: "當天下午若天氣不佳，應果斷放棄海灘行程。" },
+          { time: "18:30", title: "The Bay 101 遊艇", risk: "高", impact: "遊艇行程可能因雨取消。", advice: "預訂時，務必選擇因天氣不佳可全額退款或免費改期的供應商。啟動備案，改為探索廣安里周邊的室內咖啡館或餐廳。" }
+        ]
+      },
+      {
+        day: 6, iso: "2025-08-24", date: "8月24日 (日)", title: "歸途",
+        weather: { tempMin: 25, tempMax: 33, rainProb: 40, desc: "晴時多雲" },
+        itinerary: [
+          { time: "12:30", title: "機場免稅店", risk: "低", impact: "室內活動，不受影響。", advice: "無需特別準備。" },
+          { time: "14:15", title: "返台", risk: "中", impact: "主要風險在於若上午出現強雷陣雨，可能導致市區交通延誤。", advice: "考慮到降雨可能，建議比原計劃再提早30分鐘出發前往機場。出發前確認航班狀態。" }
+        ]
+      }
+    ];
+
+    // === DOM 參照 ===
+    const navContainer = document.getElementById('day-navigation');
+    const contentContainer = document.getElementById('daily-content');
+    let charts = {};
+
+    // === 工具 ===
+    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+    function getRiskColor(risk) {
+      switch (risk) {
+        case '高': return 'bg-red-100 text-red-800';
+        case '中': return 'bg-yellow-100 text-yellow-800';
+        case '低': return 'bg-green-100 text-green-800';
+        default: return 'bg-gray-100 text-gray-800';
+      }
+    }
+
+    function pickDefaultDay() {
+      // 1) ?day=3
+      const params = new URLSearchParams(location.search);
+      const byQuery = parseInt(params.get('day'));
+      if (!Number.isNaN(byQuery)) return clamp(byQuery, 1, tripData.length);
+
+      // 2) #day-3
+      if (location.hash.startsWith('#day-')) {
+        const byHash = parseInt(location.hash.replace('#day-', ''));
+        if (!Number.isNaN(byHash)) return clamp(byHash, 1, tripData.length);
+      }
+
+      // 3) 今天在旅程範圍內 → 開到今天；否則 Day 1
+      const today = new Date().toISOString().slice(0, 10);
+      const hit = tripData.find(d => d.iso === today);
+      return hit ? hit.day : 1;
+    }
+
+    function navigateToDay(day) {
+      showDay(day);
+      if (location.hash !== `#day-${day}`) {
+        history.replaceState(null, '', `#day-${day}`);
+      }
+    }
+
+    // === Render ===
+    function renderContent() {
+      tripData.forEach(dayData => {
+        // 導覽按鈕
+        const navButton = document.createElement('button');
+        navButton.className = 'px-4 py-2 rounded-lg font-semibold transition-all duration-300 bg-white border border-gray-200 text-gray-600 hover:bg-gray-50';
+        navButton.textContent = `Day ${dayData.day}`;
+        navButton.dataset.day = dayData.day;
+        navContainer.appendChild(navButton);
+
+        // 內容區
+        const dayContent = document.createElement('div');
+        dayContent.id = `day-${dayData.day}-content`;
+        dayContent.className = 'day-content hidden';
+
+        const itineraryHTML = dayData.itinerary.map(item => `
+          <div class="relative pl-8">
+            <div class="timeline-line"></div>
+            <div class="timeline-item mb-8">
+              <div class="flex items-center mb-2">
+                <p class="font-bold text-[#A67B5B] text-lg">${item.time}</p>
+                <span class="ml-3 px-2 py-0.5 text-xs font-medium rounded-full ${getRiskColor(item.risk)}">${item.risk}風險</span>
+              </div>
+              <div class="bg-white p-4 rounded-lg border border-gray-200">
+                <p class="font-semibold text-lg text-gray-800">${item.title}</p>
+                <div class="mt-3">
+                  <button class="advice-toggle text-sm font-semibold text-[#A67B5B] hover:text-[#8c6649] flex items-center">
+                    風險與建議
+                    <span class="ml-1 transform transition-transform">▼</span>
+                  </button>
+                  <div class="advice-content mt-2 text-gray-600 text-sm">
+                    <p><strong>影響評估：</strong>${item.impact}</p>
+                    <p class="mt-1"><strong>應對策略：</strong>${item.advice}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        dayContent.innerHTML = `
+          <section class="bg-[#F7F2EC] rounded-2xl p-6">
+            <div class="md:flex md:items-start md:gap-6">
+              <div class="flex-grow mb-6 md:mb-0">
+                <h2 class="text-2xl font-bold text-[#A67B5B]">${dayData.title}</h2>
+                <p class="text-gray-500">${dayData.date}</p>
+                <div class="mt-4">
+                  ${itineraryHTML}
+                </div>
+              </div>
+              <div class="md:w-1/3 flex-shrink-0">
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                  <h3 class="font-bold text-center mb-2 text-gray-800">當日天氣速覽</h3>
+                  <p class="text-center text-sm text-gray-500 mb-4">${dayData.weather.desc}</p>
+                  <div class="chart-container relative h-64 w-full max-w-xs mx-auto">
+                    <canvas id="chart-day-${dayData.day}"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        `;
+        contentContainer.appendChild(dayContent);
+      });
+    }
+
+    function createChart(day) {
+      if (charts[day]) charts[day].destroy();
+
+      const dayData = tripData.find(d => d.day === day);
+      const canvas = document.getElementById(`chart-day-${day}`);
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      charts[day] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['溫度 (°C)', '降雨機率 (%)'],
+          datasets: [
+            {
+              label: '溫度 (Max)',
+              data: [dayData.weather.tempMax, null],
+              backgroundColor: '#F5B041',
+              borderColor: '#F39C12',
+              borderWidth: 1,
+              stack: 't',
+              barThickness: 50
+            },
+            {
+              label: '溫度 (Min)',
+              data: [dayData.weather.tempMin, null],
+              backgroundColor: '#FAD7A0',
+              stack: 't',
+              barThickness: 50
+            },
+            {
+              label: '降雨機率',
+              data: [null, dayData.weather.rainProb],
+              backgroundColor: '#5DADE2',
+              borderColor: '#3498DB',
+              borderWidth: 1,
+              stack: 'r',
+              barThickness: 50
+            },
+            {
+              label: '無雨機率',
+              data: [null, 100 - dayData.weather.rainProb],
+              backgroundColor: '#D6EAF8',
+              stack: 'r',
+              barThickness: 50
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  if (context.raw == null) return '';
+                  const label = context.dataset.label;
+                  if (label.includes('溫度')) {
+                    return `溫度: ${dayData.weather.tempMin}°C - ${dayData.weather.tempMax}°C`;
+                  }
+                  if (label.includes('降雨')) {
+                    return `降雨機率: ${dayData.weather.rainProb}%`;
+                  }
+                  if (label.includes('無雨')) {
+                    return `無雨機率: ${100 - dayData.weather.rainProb}%`;
+                  }
+                  return '';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: { callback: (v) => v }
+            },
+            x: { stacked: true }
+          }
+        }
+      });
+    }
+
+    function showDay(day) {
+      document.querySelectorAll('.day-content').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`day-${day}-content`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('#day-navigation button').forEach(btn => {
+        if (parseInt(btn.dataset.day) === day) btn.classList.add('active-tab');
+        else btn.classList.remove('active-tab');
+      });
+
+      createChart(day);
+    }
+
+    // === 啟動 ===
+    document.addEventListener('DOMContentLoaded', () => {
+      renderContent();
+
+      navContainer.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+          const day = parseInt(e.target.dataset.day);
+          navigateToDay(day);
+        }
+      });
+
+      contentContainer.addEventListener('click', (e) => {
+        const toggleButton = e.target.closest('.advice-toggle');
+        if (toggleButton) {
+          const content = toggleButton.nextElementSibling;
+          const icon = toggleButton.querySelector('span');
+          content.classList.toggle('open');
+          icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+      });
+
+      window.addEventListener('hashchange', () => {
+        if (location.hash.startsWith('#day-')) {
+          const d = parseInt(location.hash.replace('#day-', ''));
+          if (!Number.isNaN(d)) showDay(clamp(d, 1, tripData.length));
+        }
+      });
+
+      navigateToDay(pickDefaultDay());
+    });
+  </script>
+
+  <!-- 共用 header/footer 注入（保留 defer） -->
+  <script src="../main.js" defer></script>
+</body>
+</html>
